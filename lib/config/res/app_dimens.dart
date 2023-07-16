@@ -11,6 +11,7 @@ abstract class AppDimens {
   static const size12 = 12.0;
   static const size16 = 16.0;
   static const size20 = 20.0;
+  static const size24 = 24.0;
   static const size30 = 30.0;
   static const size40 = 40.0;
   static const size50 = 50.0;
