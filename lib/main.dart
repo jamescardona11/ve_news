@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ve_news/config/theme/app_theme.dart';
+import 'package:ve_news/presentation/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,28 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('AppBar Text'),
-      ),
-      body: Container(
-        child: Text('HomePage'),
-      ),
+      theme: AppTheme.appTheme(),
+      home: HomeScreen(),
     );
   }
 }

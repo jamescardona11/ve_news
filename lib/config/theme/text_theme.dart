@@ -5,27 +5,27 @@ import 'package:ve_news/config/res/res.dart';
 class AppTextTheme extends TextTheme {
   AppTextTheme()
       : super(
-          headlineMedium: GoogleFonts.concertOne(
+          headlineMedium: GoogleFonts.montserrat(
             fontSize: fontSize800,
             fontWeight: FontWeight.w700,
             color: AppColors.black,
           ),
-          titleLarge: GoogleFonts.concertOne(
+          titleLarge: GoogleFonts.montserrat(
             fontSize: fontSize700,
             fontWeight: FontWeight.w600,
             color: AppColors.black,
           ),
-          titleMedium: GoogleFonts.notoSans(
+          titleMedium: GoogleFonts.montserrat(
             fontSize: fontSize500,
             fontWeight: FontWeight.w300,
             color: AppColors.black,
           ),
-          bodyMedium: GoogleFonts.notoSans(
+          bodyMedium: GoogleFonts.montserrat(
             fontSize: fontSize300,
             fontWeight: FontWeight.w500,
             color: AppColors.black,
           ),
-          bodySmall: GoogleFonts.notoSans(
+          bodySmall: GoogleFonts.montserrat(
             fontSize: fontSize200,
             fontWeight: FontWeight.w400,
             color: AppColors.black,
