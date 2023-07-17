@@ -67,3 +67,4 @@ env.g.dart
 .env.dev
 .env.stage
 .env.prod
+.flutgenrc
