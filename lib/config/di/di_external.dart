@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ve_news/core/data/data.dart';
+import 'package:ve_news/cross/data/connectivity_provider.dart';
 
 @module
 abstract class ExternalModule {

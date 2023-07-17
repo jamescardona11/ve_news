@@ -1,4 +1,4 @@
-import 'package:ve_news/core/data/data.dart';
+import 'package:ve_news/cross/data/connectivity_provider.dart';
 
 class HasInternetConnectionUseCase {
   final ConnectivityProvider connectivityProvider;
