@@ -13,18 +13,21 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:isar/isar.dart' as _i6;
 import 'package:shared_preferences/shared_preferences.dart' as _i7;
-import 'package:ve_news/config/di/di_core.dart' as _i12;
-import 'package:ve_news/config/di/di_data.dart' as _i13;
+import 'package:ve_news/config/di/di_core.dart' as _i13;
+import 'package:ve_news/config/di/di_data.dart' as _i14;
 import 'package:ve_news/config/di/di_external.dart' as _i4;
-import 'package:ve_news/config/di/di_use_cases.dart' as _i11;
+import 'package:ve_news/config/di/di_use_cases.dart' as _i12;
 import 'package:ve_news/core/data/app_shared_preferences.dart' as _i8;
-import 'package:ve_news/core/data/data.dart' as _i15;
+import 'package:ve_news/core/data/data.dart' as _i16;
 import 'package:ve_news/cross/data/connectivity_provider.dart' as _i3;
-import 'package:ve_news/cross/data/preferences_repository_impl.dart' as _i14;
+import 'package:ve_news/cross/data/preferences_repository_impl.dart' as _i15;
 import 'package:ve_news/cross/domain/repository/preferences_repository.dart'
     as _i9;
 import 'package:ve_news/cross/domain/use_cases/use_cases.dart' as _i5;
+import 'package:ve_news/data/channel/sources_repository.dart' as _i17;
 import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart'
+    as _i11;
+import 'package:ve_news/domain/channel/repository/sources_repository.dart'
     as _i10;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -67,12 +70,14 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.lazySingleton<_i9.PreferencesRepository>(
         () => dataModule.settingsRepository);
-    gh.singleton<_i10.AppSetupUseCase>(useCasesModule.appSetupUseCase);
+    gh.lazySingleton<_i10.SourcesRepository>(
+        () => dataModule.sourcesRepository);
+    gh.singleton<_i11.AppSetupUseCase>(useCasesModule.appSetupUseCase);
     return this;
   }
 }
 
-class _$UseCasesModule extends _i11.UseCasesModule {
+class _$UseCasesModule extends _i12.UseCasesModule {
   _$UseCasesModule(this._getIt);
 
   final _i1.GetIt _getIt;
@@ -84,20 +89,25 @@ class _$UseCasesModule extends _i11.UseCasesModule {
   _i5.WatchInternetConnectionUseCase get watchInternetConnection =>
       _i5.WatchInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
   @override
-  _i10.AppSetupUseCase get appSetupUseCase =>
-      _i10.AppSetupUseCase(_getIt<_i9.PreferencesRepository>());
+  _i11.AppSetupUseCase get appSetupUseCase => _i11.AppSetupUseCase(
+        _getIt<_i9.PreferencesRepository>(),
+        _getIt<_i10.SourcesRepository>(),
+      );
 }
 
 class _$ExternalModule extends _i4.ExternalModule {}
 
-class _$CoreModule extends _i12.CoreModule {}
+class _$CoreModule extends _i13.CoreModule {}
 
-class _$DataModule extends _i13.DataModule {
+class _$DataModule extends _i14.DataModule {
   _$DataModule(this._getIt);
 
   final _i1.GetIt _getIt;
 
   @override
-  _i14.PreferencesRepositoryImpl get settingsRepository =>
-      _i14.PreferencesRepositoryImpl(_getIt<_i15.AppSharedPreferences>());
+  _i15.PreferencesRepositoryImpl get settingsRepository =>
+      _i15.PreferencesRepositoryImpl(_getIt<_i16.AppSharedPreferences>());
+  @override
+  _i17.SourcesRepositoryImpl get sourcesRepository =>
+      _i17.SourcesRepositoryImpl(_getIt<_i6.Isar>());
 }

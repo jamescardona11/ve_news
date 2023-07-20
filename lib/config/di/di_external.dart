@@ -5,7 +5,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ve_news/cross/data/connectivity_provider.dart';
-import 'package:ve_news/data/channel/dto/isar_channel_dto.dart';
+import 'package:ve_news/data/channel/dto/isar_source_dto.dart';
 
 @module
 abstract class ExternalModule {
@@ -18,7 +18,7 @@ abstract class ExternalModule {
 
   @Named('IsarSchemas')
   List<CollectionSchema> get isarSchemas => [
-        IsarChannelDtoSchema,
+        IsarSourceDtoSchema,
       ];
 
   @singleton
