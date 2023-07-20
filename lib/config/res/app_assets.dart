@@ -1,26 +1,28 @@
 class AppAssets {
   AppAssets._();
 
-  static final channels = _AssetsChannels._();
+  static final sources = _AssetsSources._();
 }
 
-class _AssetsChannels {
-  _AssetsChannels._();
+class _AssetsSources {
+  _AssetsSources._();
 
-  final bbcPNG = 'assets/channels/bbc.png';
-  final bloombergPNG = 'assets/channels/bloomberg.png';
-  final cnbcPNG = 'assets/channels/cnbc.png';
-  final cnnPNG = 'assets/channels/cnn.png';
-  final dailyMailPNG = 'assets/channels/daily_mail.png';
-  final forbesPNG = 'assets/channels/forbes.png';
-  final foxNewsPNG = 'assets/channels/fox_news.png';
-  final msnPNG = 'assets/channels/msn.png';
-  final newYorkPostPNG = 'assets/channels/new_york_post.png';
-  final news18PNG = 'assets/channels/news_18.png';
-  final theGuardianPNG = 'assets/channels/the_guardian.png';
-  final theNewYorkTimesPNG = 'assets/channels/the_new_york_times.png';
-  final theSunPNG = 'assets/channels/the_sun.png';
-  final usaTodayPNG = 'assets/channels/usa_today.png';
-  final washingtonPostPNG = 'assets/channels/washington_post.png';
-  final yahooNewsPNG = 'assets/channels/yahoo_news.png';
+  static const _f = 'assets/sources';
+
+  final bbcImg = '$_f/bbc.png';
+  final bloombergImg = '$_f/bloomberg.png';
+  final cnbcImg = '$_f/cnbc.png';
+  final cnnImg = '$_f/cnn.png';
+  final dailyMailImg = '$_f/daily_mail.png';
+  final forbesImg = '$_f/forbes.png';
+  final foxNewsImg = '$_f/fox_news.png';
+  final msnImg = '$_f/msn.png';
+  final newYorkPostImg = '$_f/new_york_post.png';
+  final news18Img = '$_f/news_18.png';
+  final theGuardianImg = '$_f/the_guardian.png';
+  final theNewYorkTimesImg = '$_f/the_new_york_times.png';
+  final theSunImg = '$_f/the_sun.png';
+  final usaTodayImg = '$_f/usa_today.png';
+  final washingtonPostImg = '$_f/washington_post.png';
+  final yahooNewsImg = '$_f/yahoo_news.png';
 }
