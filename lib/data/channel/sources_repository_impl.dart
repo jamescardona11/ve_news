@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/data/channel/dto/isar_source_dto.dart';
 import 'package:ve_news/domain/channel/repository/sources_repository.dart';
+import 'package:ve_news/domain/channel/source_model.dart';
 
 final class SourcesRepositoryImpl extends SourcesRepository {
   final Isar _isar;
@@ -11,6 +12,12 @@ final class SourcesRepositoryImpl extends SourcesRepository {
   }
 
   late IsarCollection<IsarSourceDto> _isarStore;
+
+  @override
+  Stream<List<SourceModel>> watch() {
+    final filter = _isarStore.where().filter().isEnabledEqualTo(true).sortByIsFavorite().build();
+    return filter.watch().map((event) => event.map((e) => e.toModel()).toList());
+  }
 
   @override
   Future<void> createDefaultSources() async {

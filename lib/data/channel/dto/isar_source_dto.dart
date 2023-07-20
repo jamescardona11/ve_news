@@ -1,4 +1,6 @@
 import 'package:isar/isar.dart';
+import 'package:ve_news/cross/domain/models/image_value_object.dart';
+import 'package:ve_news/domain/channel/source_model.dart';
 
 part 'isar_source_dto.g.dart';
 
@@ -32,6 +34,15 @@ final class IsarSourceDto {
         name: name,
         url: url,
         logo: logo,
+        isFavorite: isFavorite,
+        isEnabled: isEnabled,
+      );
+
+  SourceModel toModel() => SourceModel(
+        id: id.toString(),
+        name: name,
+        url: url,
+        logo: ImageValueObject.create(logo),
         isFavorite: isFavorite,
         isEnabled: isEnabled,
       );
