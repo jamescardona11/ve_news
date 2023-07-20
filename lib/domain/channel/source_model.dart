@@ -1,23 +1,30 @@
 import 'package:equatable/equatable.dart';
 import 'package:ve_news/cross/domain/models/image_value_object.dart';
 
-final class ChannelModel with EquatableMixin {
+final class SourceModel with EquatableMixin {
   final String id;
   final String name;
-  final String code;
+  final String url;
   final ImageValueObject logo;
+  final bool isFavorite;
+  final bool isEnabled;
 
-  const ChannelModel({
+  const SourceModel({
     this.id = '',
     required this.name,
-    required this.code,
+    required this.url,
     required this.logo,
+    this.isFavorite = false,
+    this.isEnabled = true,
   });
 
   @override
   List<Object?> get props => [
+        id,
         name,
-        code,
+        url,
         logo,
+        isFavorite,
+        isEnabled,
       ];
 }
