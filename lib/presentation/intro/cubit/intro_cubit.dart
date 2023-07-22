@@ -13,8 +13,10 @@ class IntroCubit extends Cubit<IntroState> {
   Future<void> _init() async {
     emit(IntroLoading());
 
-    await _appSetupUseCase.call();
+    final isFirstTime = await _appSetupUseCase.call();
 
-    emit(IntroGoHome());
+    if (!isFirstTime) {
+      emit(IntroGoHome());
+    }
   }
 }

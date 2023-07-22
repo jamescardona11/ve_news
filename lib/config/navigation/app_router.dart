@@ -1,6 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ve_news/presentation/home/home_screen.dart';
+import 'package:ve_news/presentation/intro/intro_screen.dart';
+
 final class AppRouter {
-  // RouteInformationParser<Object>? get parser => _router.parser;
-  // RouterDelegate<Object>? get delegate => _router.delegate;
+  RouterConfig<Object>? get config => _router;
 
   static const String intro = '/';
+  static const String home = '/home';
+
+  final _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: intro,
+        builder: (context, state) => IntroScreen(),
+      ),
+      GoRoute(
+        path: home,
+        builder: (context, state) => const HomeScreen(),
+      ),
+    ],
+  );
 }

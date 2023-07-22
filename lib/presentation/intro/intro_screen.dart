@@ -2,7 +2,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ve_news/config/di/di.dart';
+import 'package:ve_news/config/navigation/app_router.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/cross/presentation/presentation.dart';
@@ -22,7 +24,9 @@ class IntroScreen extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => getIt<IntroCubit>(),
-      child: BlocBuilder<IntroCubit, IntroState>(
+      child: BlocConsumer<IntroCubit, IntroState>(
+        listenWhen: (previous, current) => current is IntroGoHome,
+        listener: (context, state) => goToHome(context),
         builder: (context, state) => Scaffold(
           body: Center(
             child: Stack(
@@ -72,7 +76,7 @@ class IntroScreen extends StatelessWidget {
                           color: AppColors.black,
                           iconColor: AppColors.white,
                           icon: FontAwesomeIcons.arrowRight,
-                          onPressed: () {},
+                          onPressed: () => goToHome(context),
                         ),
                       ),
                     ),
@@ -84,5 +88,9 @@ class IntroScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void goToHome(BuildContext context) {
+    context.replace(AppRouter.home);
   }
 }
