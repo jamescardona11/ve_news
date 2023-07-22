@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/config/theme/app_theme.dart';
-import 'package:ve_news/presentation/home/home_screen.dart';
+import 'package:ve_news/presentation/intro/intro_screen.dart';
 
-void main() {
+import 'config/di/di.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -15,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appTheme(),
-      home: HomeScreen(),
+      home: IntroScreen(),
     );
   }
 }

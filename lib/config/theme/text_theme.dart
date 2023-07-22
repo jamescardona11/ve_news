@@ -20,6 +20,11 @@ class AppTextTheme extends TextTheme {
             fontWeight: FontWeight.w300,
             color: AppColors.black,
           ),
+          bodyLarge: GoogleFonts.permanentMarker(
+            fontSize: fontSize600,
+            fontWeight: FontWeight.w500,
+            color: AppColors.black,
+          ),
           bodyMedium: GoogleFonts.montserrat(
             fontSize: fontSize300,
             fontWeight: FontWeight.w500,
@@ -44,8 +49,7 @@ class AppTextTheme extends TextTheme {
 
 // Alias
 extension AliasAppThemeX on TextTheme {
-  TextStyle? get mainTitle => headlineMedium?.copyWith(color: AppColors.white);
-  TextStyle? get subtitleWhite => bodyMedium?.copyWith(color: AppColors.white);
+  TextStyle? get mainTitle => headlineMedium;
 }
 
 extension ThemeContext on BuildContext {
