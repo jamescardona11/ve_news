@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:ve_news/core/data/data.dart';
 import 'package:ve_news/cross/data/preferences_repository_impl.dart';
 import 'package:ve_news/cross/domain/repository/preferences_repository.dart';
 import 'package:ve_news/data/article/articles_repository_impl.dart';
@@ -14,13 +13,17 @@ abstract class DataModule {
   @LazySingleton(as: PreferencesRepository)
   PreferencesRepositoryImpl get settingsRepository;
 
-  @LazySingleton(as: SourcesRepository, dispose: disposeRepository)
+  @LazySingleton(as: SourcesRepository, dispose: disposeSourceRepository)
   SourcesRepositoryImpl get sourcesRepository;
 
-  @LazySingleton(as: ArticlesRepository, dispose: disposeRepository)
+  @LazySingleton(as: ArticlesRepository, dispose: disposeArticlesRepository)
   ArticlesRepositoryImpl get articlesRepository;
 }
 
-FutureOr<void> disposeRepository(BaseSubscriptionMixin provider) {
+FutureOr<void> disposeSourceRepository(SourcesRepository provider) {
+  unawaited(provider.close());
+}
+
+FutureOr<void> disposeArticlesRepository(ArticlesRepository provider) {
   unawaited(provider.close());
 }

@@ -54,11 +54,10 @@ const IsarArticleDtoSchema = CollectionSchema(
       name: r'lang',
       type: IsarType.string,
     ),
-    r'source': PropertySchema(
+    r'sourceId': PropertySchema(
       id: 7,
-      name: r'source',
-      type: IsarType.object,
-      target: r'IsarArticleSourceDto',
+      name: r'sourceId',
+      type: IsarType.long,
     ),
     r'title': PropertySchema(
       id: 8,
@@ -84,7 +83,6 @@ const IsarArticleDtoSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {
-    r'IsarArticleSourceDto': IsarArticleSourceDtoSchema,
     r'IsarConceptsDto': IsarConceptsDtoSchema,
     r'IsarCategoryDto': IsarCategoryDtoSchema
   },
@@ -131,14 +129,6 @@ int _isarArticleDtoEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  {
-    final value = object.source;
-    if (value != null) {
-      bytesCount += 3 +
-          IsarArticleSourceDtoSchema.estimateSize(
-              value, allOffsets[IsarArticleSourceDto]!, allOffsets);
-    }
-  }
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.url.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
@@ -168,12 +158,7 @@ void _isarArticleDtoSerialize(
   writer.writeString(offsets[4], object.image);
   writer.writeBool(offsets[5], object.isDuplicate);
   writer.writeString(offsets[6], object.lang);
-  writer.writeObject<IsarArticleSourceDto>(
-    offsets[7],
-    allOffsets,
-    IsarArticleSourceDtoSchema.serialize,
-    object.source,
-  );
+  writer.writeLong(offsets[7], object.sourceId);
   writer.writeString(offsets[8], object.title);
   writer.writeString(offsets[9], object.url);
   writer.writeString(offsets[10], object.uuid);
@@ -206,11 +191,7 @@ IsarArticleDto _isarArticleDtoDeserialize(
     image: reader.readStringOrNull(offsets[4]),
     isDuplicate: reader.readBoolOrNull(offsets[5]) ?? false,
     lang: reader.readStringOrNull(offsets[6]),
-    source: reader.readObjectOrNull<IsarArticleSourceDto>(
-      offsets[7],
-      IsarArticleSourceDtoSchema.deserialize,
-      allOffsets,
-    ),
+    sourceId: reader.readLong(offsets[7]),
     title: reader.readString(offsets[8]),
     url: reader.readString(offsets[9]),
     uuid: reader.readString(offsets[10]),
@@ -252,11 +233,7 @@ P _isarArticleDtoDeserializeProp<P>(
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readObjectOrNull<IsarArticleSourceDto>(
-        offset,
-        IsarArticleSourceDtoSchema.deserialize,
-        allOffsets,
-      )) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
@@ -1124,19 +1101,57 @@ extension IsarArticleDtoQueryFilter
   }
 
   QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterFilterCondition>
-      sourceIsNull() {
+      sourceIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'source',
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sourceId',
+        value: value,
       ));
     });
   }
 
   QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterFilterCondition>
-      sourceIsNotNull() {
+      sourceIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'source',
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sourceId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterFilterCondition>
+      sourceIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sourceId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterFilterCondition>
+      sourceIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sourceId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1565,13 +1580,6 @@ extension IsarArticleDtoQueryObject
       return query.object(q, r'concepts');
     });
   }
-
-  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterFilterCondition> source(
-      FilterQuery<IsarArticleSourceDto> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'source');
-    });
-  }
 }
 
 extension IsarArticleDtoQueryLinks
@@ -1639,6 +1647,19 @@ extension IsarArticleDtoQuerySortBy
   QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy> sortByLangDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lang', Sort.desc);
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy> sortBySourceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sourceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy>
+      sortBySourceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sourceId', Sort.desc);
     });
   }
 
@@ -1756,6 +1777,19 @@ extension IsarArticleDtoQuerySortThenBy
     });
   }
 
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy> thenBySourceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sourceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy>
+      thenBySourceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sourceId', Sort.desc);
+    });
+  }
+
   QueryBuilder<IsarArticleDto, IsarArticleDto, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1826,6 +1860,12 @@ extension IsarArticleDtoQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lang', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<IsarArticleDto, IsarArticleDto, QDistinct> distinctBySourceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sourceId');
     });
   }
 
@@ -1903,10 +1943,9 @@ extension IsarArticleDtoQueryProperty
     });
   }
 
-  QueryBuilder<IsarArticleDto, IsarArticleSourceDto?, QQueryOperations>
-      sourceProperty() {
+  QueryBuilder<IsarArticleDto, int, QQueryOperations> sourceIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'source');
+      return query.addPropertyName(r'sourceId');
     });
   }
 
@@ -1932,579 +1971,6 @@ extension IsarArticleDtoQueryProperty
 // **************************************************************************
 // IsarEmbeddedGenerator
 // **************************************************************************
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
-
-const IsarArticleSourceDtoSchema = Schema(
-  name: r'IsarArticleSourceDto',
-  id: 2647798192792088928,
-  properties: {
-    r'dataType': PropertySchema(
-      id: 0,
-      name: r'dataType',
-      type: IsarType.string,
-    ),
-    r'title': PropertySchema(
-      id: 1,
-      name: r'title',
-      type: IsarType.string,
-    ),
-    r'uri': PropertySchema(
-      id: 2,
-      name: r'uri',
-      type: IsarType.string,
-    )
-  },
-  estimateSize: _isarArticleSourceDtoEstimateSize,
-  serialize: _isarArticleSourceDtoSerialize,
-  deserialize: _isarArticleSourceDtoDeserialize,
-  deserializeProp: _isarArticleSourceDtoDeserializeProp,
-);
-
-int _isarArticleSourceDtoEstimateSize(
-  IsarArticleSourceDto object,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  var bytesCount = offsets.last;
-  {
-    final value = object.dataType;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.title;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.uri;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  return bytesCount;
-}
-
-void _isarArticleSourceDtoSerialize(
-  IsarArticleSourceDto object,
-  IsarWriter writer,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  writer.writeString(offsets[0], object.dataType);
-  writer.writeString(offsets[1], object.title);
-  writer.writeString(offsets[2], object.uri);
-}
-
-IsarArticleSourceDto _isarArticleSourceDtoDeserialize(
-  Id id,
-  IsarReader reader,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  final object = IsarArticleSourceDto(
-    dataType: reader.readStringOrNull(offsets[0]),
-    title: reader.readStringOrNull(offsets[1]),
-    uri: reader.readStringOrNull(offsets[2]),
-  );
-  return object;
-}
-
-P _isarArticleSourceDtoDeserializeProp<P>(
-  IsarReader reader,
-  int propertyId,
-  int offset,
-  Map<Type, List<int>> allOffsets,
-) {
-  switch (propertyId) {
-    case 0:
-      return (reader.readStringOrNull(offset)) as P;
-    case 1:
-      return (reader.readStringOrNull(offset)) as P;
-    case 2:
-      return (reader.readStringOrNull(offset)) as P;
-    default:
-      throw IsarError('Unknown property with id $propertyId');
-  }
-}
-
-extension IsarArticleSourceDtoQueryFilter on QueryBuilder<IsarArticleSourceDto,
-    IsarArticleSourceDto, QFilterCondition> {
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'dataType',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'dataType',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'dataType',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      dataTypeContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'dataType',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      dataTypeMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'dataType',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dataType',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> dataTypeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'dataType',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'title',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'title',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'title',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      titleContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'title',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      titleMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'title',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'title',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> titleIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'title',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'uri',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'uri',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'uri',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      uriContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'uri',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-          QAfterFilterCondition>
-      uriMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'uri',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'uri',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<IsarArticleSourceDto, IsarArticleSourceDto,
-      QAfterFilterCondition> uriIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'uri',
-        value: '',
-      ));
-    });
-  }
-}
-
-extension IsarArticleSourceDtoQueryObject on QueryBuilder<IsarArticleSourceDto,
-    IsarArticleSourceDto, QFilterCondition> {}
 
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types

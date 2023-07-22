@@ -37,6 +37,7 @@ dependencies:
   projectile:
     path: ../../libs/projectile
   collection: ^1.17.1
+  intl: ^0.18.1
   
 
 dev_dependencies:

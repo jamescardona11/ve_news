@@ -1,9 +1,12 @@
-class ArticleModel {
+import 'package:equatable/equatable.dart';
+import 'package:ve_news/domain/source/source_model.dart';
+
+class ArticleModel extends Equatable {
   final String uuid;
   final String title;
   final String url;
   final String body;
-  final int sourceId;
+  final SourceModel source;
   final bool isDuplicate;
   final DateTime? dateTime;
   final String? lang;
@@ -16,7 +19,7 @@ class ArticleModel {
     required this.title,
     required this.url,
     required this.body,
-    required this.sourceId,
+    required this.source,
     this.isDuplicate = false,
     this.dateTime,
     this.lang,
@@ -24,21 +27,44 @@ class ArticleModel {
     this.concepts = const [],
     this.categories = const [],
   });
+
+  @override
+  List<Object?> get props {
+    return [
+      uuid,
+      title,
+      url,
+      body,
+      source,
+      isDuplicate,
+      dateTime,
+      lang,
+      image,
+      concepts,
+      categories,
+    ];
+  }
 }
 
-class Concepts {
-  String? uri;
-  String? type;
-  int? score;
-  String? label;
+class Concepts extends Equatable {
+  final String? uri;
+  final String? type;
+  final int? score;
+  final String? label;
 
-  Concepts({this.uri, this.type, this.score, this.label});
+  const Concepts({this.uri, this.type, this.score, this.label});
+
+  @override
+  List<Object?> get props => [uri, type, score, label];
 }
 
-class Category {
-  String? uri;
-  int? wgt;
-  String? label;
+class Category extends Equatable {
+  final String? uri;
+  final int? wgt;
+  final String? label;
 
-  Category({this.uri, this.wgt, this.label});
+  const Category({this.uri, this.wgt, this.label});
+
+  @override
+  List<Object?> get props => [uri, wgt, label];
 }

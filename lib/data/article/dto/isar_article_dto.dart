@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:ve_news/domain/article/article_model.dart';
+import 'package:ve_news/domain/source/source_model.dart';
 
 part 'isar_article_dto.g.dart';
 
@@ -34,7 +35,7 @@ class IsarArticleDto {
     this.categories = const [],
   });
 
-  ArticleModel toModel() => ArticleModel(
+  ArticleModel toModel(SourceModel source) => ArticleModel(
         uuid: uuid,
         title: title,
         url: url,
@@ -43,7 +44,7 @@ class IsarArticleDto {
         dateTime: dateTime,
         lang: lang,
         image: image,
-        sourceId: sourceId,
+        source: source,
         concepts: concepts.map((e) => e.toModel()).toList(),
         categories: categories.map((e) => e.toModel()).toList(),
       );

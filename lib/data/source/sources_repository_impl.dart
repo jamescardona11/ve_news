@@ -59,4 +59,7 @@ final class SourcesRepositoryImpl extends SourcesRepository {
       _sourcesController.add(sources.toList());
     }));
   }
+
+  @override
+  List<SourceModel> readAllEnabled() => _sourcesController.value;
 }

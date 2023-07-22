@@ -14,11 +14,11 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:isar/isar.dart' as _i6;
 import 'package:projectile/projectile.dart' as _i7;
 import 'package:shared_preferences/shared_preferences.dart' as _i8;
-import 'package:ve_news/config/di/di_core.dart' as _i18;
-import 'package:ve_news/config/di/di_data.dart' as _i19;
+import 'package:ve_news/config/di/di_core.dart' as _i19;
+import 'package:ve_news/config/di/di_data.dart' as _i12;
 import 'package:ve_news/config/di/di_external.dart' as _i4;
-import 'package:ve_news/config/di/di_presentation.dart' as _i16;
-import 'package:ve_news/config/di/di_use_cases.dart' as _i17;
+import 'package:ve_news/config/di/di_presentation.dart' as _i17;
+import 'package:ve_news/config/di/di_use_cases.dart' as _i18;
 import 'package:ve_news/core/data/app_shared_preferences.dart' as _i9;
 import 'package:ve_news/core/data/data.dart' as _i21;
 import 'package:ve_news/cross/data/connectivity_provider.dart' as _i3;
@@ -29,13 +29,13 @@ import 'package:ve_news/cross/domain/use_cases/use_cases.dart' as _i5;
 import 'package:ve_news/data/article/articles_repository_impl.dart' as _i23;
 import 'package:ve_news/data/source/sources_repository_impl.dart' as _i22;
 import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart'
-    as _i12;
-import 'package:ve_news/domain/article/repository/articles_repository.dart'
     as _i13;
+import 'package:ve_news/domain/article/repository/articles_repository.dart'
+    as _i14;
 import 'package:ve_news/domain/source/repository/sources_repository.dart'
     as _i11;
-import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i14;
-import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart' as _i15;
+import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i15;
+import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart' as _i16;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -80,30 +80,34 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i10.PreferencesRepository>(
         () => dataModule.settingsRepository);
     gh.lazySingleton<_i11.SourcesRepository>(
-        () => dataModule.sourcesRepository);
-    gh.singleton<_i12.AppSetupUseCase>(useCasesModule.appSetupUseCase);
-    gh.lazySingleton<_i13.ArticlesRepository>(
-        () => dataModule.articlesRepository);
-    gh.factory<_i14.FeedCubit>(() => presentationModule.feedCubit);
-    gh.factory<_i15.IntroCubit>(() => presentationModule.introCubit);
+      () => dataModule.sourcesRepository,
+      dispose: _i12.disposeSourceRepository,
+    );
+    gh.singleton<_i13.AppSetupUseCase>(useCasesModule.appSetupUseCase);
+    gh.lazySingleton<_i14.ArticlesRepository>(
+      () => dataModule.articlesRepository,
+      dispose: _i12.disposeArticlesRepository,
+    );
+    gh.factory<_i15.FeedCubit>(() => presentationModule.feedCubit);
+    gh.factory<_i16.IntroCubit>(() => presentationModule.introCubit);
     return this;
   }
 }
 
-class _$PresentationModule extends _i16.PresentationModule {
+class _$PresentationModule extends _i17.PresentationModule {
   _$PresentationModule(this._getIt);
 
   final _i1.GetIt _getIt;
 
   @override
-  _i15.IntroCubit get introCubit =>
-      _i15.IntroCubit(_getIt<_i12.AppSetupUseCase>());
+  _i16.IntroCubit get introCubit =>
+      _i16.IntroCubit(_getIt<_i13.AppSetupUseCase>());
   @override
-  _i14.FeedCubit get feedCubit =>
-      _i14.FeedCubit(_getIt<_i11.SourcesRepository>());
+  _i15.FeedCubit get feedCubit =>
+      _i15.FeedCubit(_getIt<_i11.SourcesRepository>());
 }
 
-class _$UseCasesModule extends _i17.UseCasesModule {
+class _$UseCasesModule extends _i18.UseCasesModule {
   _$UseCasesModule(this._getIt);
 
   final _i1.GetIt _getIt;
@@ -115,7 +119,7 @@ class _$UseCasesModule extends _i17.UseCasesModule {
   _i5.WatchInternetConnectionUseCase get watchInternetConnection =>
       _i5.WatchInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
   @override
-  _i12.AppSetupUseCase get appSetupUseCase => _i12.AppSetupUseCase(
+  _i13.AppSetupUseCase get appSetupUseCase => _i13.AppSetupUseCase(
         _getIt<_i10.PreferencesRepository>(),
         _getIt<_i11.SourcesRepository>(),
       );
@@ -123,9 +127,9 @@ class _$UseCasesModule extends _i17.UseCasesModule {
 
 class _$ExternalModule extends _i4.ExternalModule {}
 
-class _$CoreModule extends _i18.CoreModule {}
+class _$CoreModule extends _i19.CoreModule {}
 
-class _$DataModule extends _i19.DataModule {
+class _$DataModule extends _i12.DataModule {
   _$DataModule(this._getIt);
 
   final _i1.GetIt _getIt;
@@ -141,5 +145,6 @@ class _$DataModule extends _i19.DataModule {
       _i23.ArticlesRepositoryImpl(
         _getIt<_i6.Isar>(),
         _getIt<_i7.Projectile>(),
+        _getIt<_i11.SourcesRepository>(),
       );
 }
