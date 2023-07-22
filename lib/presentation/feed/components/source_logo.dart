@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/domain/channel/source_model.dart';
@@ -37,9 +36,8 @@ class SourceLogo extends StatelessWidget {
             child: Hero(
               tag: source.id,
               child: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  source.logo.value,
-                ),
+                backgroundColor: Colors.transparent,
+                child: Image.asset(source.logo.value),
               ),
             ),
           ),

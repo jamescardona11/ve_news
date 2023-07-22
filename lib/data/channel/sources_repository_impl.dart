@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/data/channel/dto/isar_source_dto.dart';
 import 'package:ve_news/domain/channel/repository/sources_repository.dart';
@@ -8,15 +9,18 @@ final class SourcesRepositoryImpl extends SourcesRepository {
   final Isar _isar;
 
   SourcesRepositoryImpl(this._isar) {
-    _isarStore = _isar.isarSourceDtos;
+    _sourceStore = _isar.isarSourceDtos;
   }
 
-  late IsarCollection<IsarSourceDto> _isarStore;
+  late IsarCollection<IsarSourceDto> _sourceStore;
 
   @override
   Stream<List<SourceModel>> watch() {
-    final filter = _isarStore.where().filter().isEnabledEqualTo(true).sortByIsFavorite().build();
-    return filter.watch().map((event) => event.map((e) => e.toModel()).toList());
+    final filter = _sourceStore.filter().isEnabledEqualTo(true).sortByIsFavorite().build();
+
+    return filter.watch(fireImmediately: true).map((event) => event.map((e) => e.toModel()).toList()).doOnData((event) {
+      print('msg');
+    });
   }
 
   @override
@@ -41,7 +45,7 @@ final class SourcesRepositoryImpl extends SourcesRepository {
     ];
 
     await _isar.writeTxn(() async {
-      await _isarStore.putAll(initialSources);
+      await _sourceStore.putAll(initialSources);
     });
   }
 }

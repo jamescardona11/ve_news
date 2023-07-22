@@ -10,7 +10,7 @@ final class AppSetupUseCase {
   Future<bool> call() async {
     final isFirstTime = _preferencesRepository.isFirstTime;
 
-    if (isFirstTime) {
+    if (!isFirstTime) {
       await _sourcesRepository.createDefaultSources();
       await _preferencesRepository.updateFirstTime();
     }

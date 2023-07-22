@@ -4,8 +4,8 @@ import 'package:ve_news/domain/channel/source_model.dart';
 
 import 'source_logo.dart';
 
-class SourcesRow extends StatelessWidget {
-  const SourcesRow({
+class SourcesList extends StatelessWidget {
+  const SourcesList({
     Key? key,
     required this.sources,
   }) : super(key: key);
@@ -15,6 +15,7 @@ class SourcesRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      scrollDirection: Axis.horizontal,
       itemBuilder: (_, index) {
         return SourceLogo(
           source: sources[index],

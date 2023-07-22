@@ -15,7 +15,7 @@ class IntroCubit extends Cubit<IntroState> {
 
     final isFirstTime = await _appSetupUseCase.call();
 
-    if (!isFirstTime) {
+    if (isFirstTime) {
       emit(IntroGoHome());
     }
   }
