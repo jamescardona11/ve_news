@@ -4,7 +4,7 @@ import 'package:ve_news/data/source/dto/isar_source_dto.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
-final class SourcesRepositoryImpl extends SourcesRepository {
+final class SourcesRepositoryImpl implements SourcesRepository {
   final Isar _isar;
 
   SourcesRepositoryImpl(this._isar) {
