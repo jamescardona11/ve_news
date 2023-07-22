@@ -30,7 +30,7 @@ abstract class ExternalModule {
       schemas,
       directory: dir.path,
       inspector: true,
-      name: 'u_voice_v5',
+      name: 've_news_v1',
     );
   }
 

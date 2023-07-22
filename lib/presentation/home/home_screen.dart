@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: PageView(
-            children: [
+            children: const [
               FeedScreen(),
               SizedBox(),
               SizedBox(),

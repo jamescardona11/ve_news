@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/channel/source_model.dart';
 
 class SourceLogo extends StatelessWidget {
@@ -14,36 +15,35 @@ class SourceLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = context.textTheme;
     return InkWell(
       onTap: onTap,
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.all(AppDimens.size16),
-            padding: const EdgeInsets.all(AppDimens.size8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 2,
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
+          Hero(
+            tag: source.id,
+            child: CircleAvatar(
+              radius: AppDimens.size30,
+              backgroundColor: AppColors.white,
+              child: Container(
+                margin: const EdgeInsets.all(AppDimens.size4),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: const [AppShadows.shadow200],
+                  image: DecorationImage(
+                    image: AssetImage(source.logo.value),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-              ],
-            ),
-            child: Hero(
-              tag: source.id,
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                child: Image.asset(source.logo.value),
               ),
             ),
           ),
+          const SizedBox(height: AppDimens.size4),
           Text(
-            source.name,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.secondaryTextColor),
+            source.formatName,
+            textAlign: TextAlign.center,
+            style: textTheme.bodySmall!.copyWith(fontSize: source.longName ? AppTextTheme.fontSize50 : AppTextTheme.fontSize100),
           ),
         ],
       ),

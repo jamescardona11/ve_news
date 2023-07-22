@@ -17,9 +17,12 @@ class SourcesList extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemBuilder: (_, index) {
-        return SourceLogo(
-          source: sources[index],
-          onTap: () {},
+        return Padding(
+          padding: EdgeInsets.only(left: index == 0 ? AppDimens.size20 : 0),
+          child: SourceLogo(
+            source: sources[index],
+            onTap: () {},
+          ),
         );
       },
       separatorBuilder: (_, index) => const Padding(padding: EdgeInsets.symmetric(horizontal: AppDimens.size10)),

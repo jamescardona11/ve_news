@@ -32,7 +32,7 @@ class AppTextTheme extends TextTheme {
           ),
           bodySmall: GoogleFonts.montserrat(
             fontSize: fontSize200,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w300,
             color: AppColors.black,
           ),
         );
@@ -44,7 +44,8 @@ class AppTextTheme extends TextTheme {
   static double get fontSize400 => 18;
   static double get fontSize300 => 16;
   static double get fontSize200 => 14;
-  static double get fontSize100 => 12;
+  static double get fontSize100 => 10;
+  static double get fontSize50 => 8;
 }
 
 // Alias

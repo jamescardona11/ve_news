@@ -18,6 +18,20 @@ final class SourceModel with EquatableMixin {
     this.isEnabled = true,
   });
 
+  bool get hasLogo => logo.isValid;
+  bool get longName => name.length > 10;
+
+  String get formatName {
+    final nameParts = name.split(' ');
+    if (nameParts.length > 2) {
+      return '${nameParts[0]} ${nameParts[1]}\n${nameParts[2]}';
+    } else if (nameParts.length == 2 && longName) {
+      return '${nameParts[0]}\n${nameParts[1]}';
+    } else {
+      return name;
+    }
+  }
+
   @override
   List<Object?> get props => [
         id,
