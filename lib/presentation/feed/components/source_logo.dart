@@ -24,11 +24,11 @@ class SourceLogo extends StatelessWidget {
             tag: source.id,
             child: CircleAvatar(
               radius: AppDimens.size30,
-              backgroundColor: AppColors.white,
+              backgroundColor: AppColors.lightGrey300,
               child: Container(
                 margin: const EdgeInsets.all(AppDimens.size4),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppColors.pureWhite,
                   shape: BoxShape.circle,
                   boxShadow: const [AppShadows.shadow200],
                   image: DecorationImage(

@@ -24,4 +24,6 @@ abstract class AppDimens {
   static const radius10 = Radius.circular(10);
   static const radius25 = Radius.circular(25);
   static const radius35 = Radius.circular(35);
+
+  static const defaultPadding = size16;
 }

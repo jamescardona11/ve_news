@@ -17,10 +17,10 @@ class AppTextTheme extends TextTheme {
           ),
           titleMedium: GoogleFonts.montserrat(
             fontSize: fontSize500,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w600,
             color: AppColors.black,
           ),
-          bodyLarge: GoogleFonts.permanentMarker(
+          displayLarge: GoogleFonts.permanentMarker(
             fontSize: fontSize600,
             fontWeight: FontWeight.w500,
             color: AppColors.black,

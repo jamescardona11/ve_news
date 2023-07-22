@@ -46,7 +46,7 @@ class IntroScreen extends StatelessWidget {
                 Positioned(
                   top: size.height / 2,
                   child: DefaultTextStyle(
-                    style: textTheme.bodyLarge!.copyWith(fontSize: AppTextTheme.fontSize700),
+                    style: textTheme.displayLarge!.copyWith(fontSize: AppTextTheme.fontSize700),
                     child: AnimatedTextKit(
                       pause: const Duration(milliseconds: 50),
                       totalRepeatCount: 1,
