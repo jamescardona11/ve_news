@@ -12,23 +12,30 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:isar/isar.dart' as _i6;
-import 'package:shared_preferences/shared_preferences.dart' as _i7;
-import 'package:ve_news/config/di/di_core.dart' as _i16;
-import 'package:ve_news/config/di/di_data.dart' as _i17;
+import 'package:projectile/projectile.dart' as _i7;
+import 'package:shared_preferences/shared_preferences.dart' as _i8;
+import 'package:ve_news/config/di/di_core.dart' as _i18;
+import 'package:ve_news/config/di/di_data.dart' as _i19;
 import 'package:ve_news/config/di/di_external.dart' as _i4;
-import 'package:ve_news/config/di/di_presentation.dart' as _i14;
-import 'package:ve_news/config/di/di_use_cases.dart' as _i15;
-import 'package:ve_news/core/data/app_shared_preferences.dart' as _i8;
-import 'package:ve_news/core/data/data.dart' as _i19;
+import 'package:ve_news/config/di/di_presentation.dart' as _i16;
+import 'package:ve_news/config/di/di_use_cases.dart' as _i17;
+import 'package:ve_news/core/data/app_shared_preferences.dart' as _i9;
+import 'package:ve_news/core/data/data.dart' as _i21;
 import 'package:ve_news/cross/data/connectivity_provider.dart' as _i3;
-import 'package:ve_news/cross/data/preferences_repository_impl.dart' as _i18;
-import 'package:ve_news/cross/domain/repository/preferences_repository.dart' as _i9;
+import 'package:ve_news/cross/data/preferences_repository_impl.dart' as _i20;
+import 'package:ve_news/cross/domain/repository/preferences_repository.dart'
+    as _i10;
 import 'package:ve_news/cross/domain/use_cases/use_cases.dart' as _i5;
-import 'package:ve_news/data/source/sources_repository_impl.dart' as _i20;
-import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart' as _i11;
-import 'package:ve_news/domain/source/repository/sources_repository.dart' as _i10;
-import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i12;
-import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart' as _i13;
+import 'package:ve_news/data/article/articles_repository_impl.dart' as _i23;
+import 'package:ve_news/data/source/sources_repository_impl.dart' as _i22;
+import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart'
+    as _i12;
+import 'package:ve_news/domain/article/repository/articles_repository.dart'
+    as _i13;
+import 'package:ve_news/domain/source/repository/sources_repository.dart'
+    as _i11;
+import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i14;
+import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart' as _i15;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -50,68 +57,89 @@ extension GetItInjectableX on _i1.GetIt {
       externalModule.connectivityProvider,
       dispose: _i4.disposeProvider,
     );
-    gh.singleton<_i5.HasInternetConnectionUseCase>(useCasesModule.hasInternetConnection);
+    gh.singleton<_i5.HasInternetConnectionUseCase>(
+        useCasesModule.hasInternetConnection);
     gh.factory<List<_i6.CollectionSchema<dynamic>>>(
       () => externalModule.isarSchemas,
       instanceName: 'IsarSchemas',
     );
-    await gh.singletonAsync<_i7.SharedPreferences>(
+    gh.singleton<_i7.Projectile>(externalModule.projectile());
+    await gh.singletonAsync<_i8.SharedPreferences>(
       () => externalModule.sharedPreferences,
       preResolve: true,
     );
-    gh.singleton<_i5.WatchInternetConnectionUseCase>(useCasesModule.watchInternetConnection);
-    gh.singleton<_i8.AppSharedPreferences>(coreModule.prefs(gh<_i7.SharedPreferences>()));
+    gh.singleton<_i5.WatchInternetConnectionUseCase>(
+        useCasesModule.watchInternetConnection);
+    gh.singleton<_i9.AppSharedPreferences>(
+        coreModule.prefs(gh<_i8.SharedPreferences>()));
     await gh.singletonAsync<_i6.Isar>(
-      () => externalModule.startIsar(gh<List<_i6.CollectionSchema<dynamic>>>(instanceName: 'IsarSchemas')),
+      () => externalModule.startIsar(
+          gh<List<_i6.CollectionSchema<dynamic>>>(instanceName: 'IsarSchemas')),
       preResolve: true,
     );
-    gh.lazySingleton<_i9.PreferencesRepository>(() => dataModule.settingsRepository);
-    gh.lazySingleton<_i10.SourcesRepository>(() => dataModule.sourcesRepository);
-    gh.singleton<_i11.AppSetupUseCase>(useCasesModule.appSetupUseCase);
-    gh.factory<_i12.FeedCubit>(() => presentationModule.feedCubit);
-    gh.factory<_i13.IntroCubit>(() => presentationModule.introCubit);
+    gh.lazySingleton<_i10.PreferencesRepository>(
+        () => dataModule.settingsRepository);
+    gh.lazySingleton<_i11.SourcesRepository>(
+        () => dataModule.sourcesRepository);
+    gh.singleton<_i12.AppSetupUseCase>(useCasesModule.appSetupUseCase);
+    gh.lazySingleton<_i13.ArticlesRepository>(
+        () => dataModule.articlesRepository);
+    gh.factory<_i14.FeedCubit>(() => presentationModule.feedCubit);
+    gh.factory<_i15.IntroCubit>(() => presentationModule.introCubit);
     return this;
   }
 }
 
-class _$PresentationModule extends _i14.PresentationModule {
+class _$PresentationModule extends _i16.PresentationModule {
   _$PresentationModule(this._getIt);
 
   final _i1.GetIt _getIt;
 
   @override
-  _i13.IntroCubit get introCubit => _i13.IntroCubit(_getIt<_i11.AppSetupUseCase>());
+  _i15.IntroCubit get introCubit =>
+      _i15.IntroCubit(_getIt<_i12.AppSetupUseCase>());
   @override
-  _i12.FeedCubit get feedCubit => _i12.FeedCubit(_getIt<_i10.SourcesRepository>());
+  _i14.FeedCubit get feedCubit =>
+      _i14.FeedCubit(_getIt<_i11.SourcesRepository>());
 }
 
-class _$UseCasesModule extends _i15.UseCasesModule {
+class _$UseCasesModule extends _i17.UseCasesModule {
   _$UseCasesModule(this._getIt);
 
   final _i1.GetIt _getIt;
 
   @override
-  _i5.HasInternetConnectionUseCase get hasInternetConnection => _i5.HasInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
+  _i5.HasInternetConnectionUseCase get hasInternetConnection =>
+      _i5.HasInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
   @override
-  _i5.WatchInternetConnectionUseCase get watchInternetConnection => _i5.WatchInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
+  _i5.WatchInternetConnectionUseCase get watchInternetConnection =>
+      _i5.WatchInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
   @override
-  _i11.AppSetupUseCase get appSetupUseCase => _i11.AppSetupUseCase(
-        _getIt<_i9.PreferencesRepository>(),
-        _getIt<_i10.SourcesRepository>(),
+  _i12.AppSetupUseCase get appSetupUseCase => _i12.AppSetupUseCase(
+        _getIt<_i10.PreferencesRepository>(),
+        _getIt<_i11.SourcesRepository>(),
       );
 }
 
 class _$ExternalModule extends _i4.ExternalModule {}
 
-class _$CoreModule extends _i16.CoreModule {}
+class _$CoreModule extends _i18.CoreModule {}
 
-class _$DataModule extends _i17.DataModule {
+class _$DataModule extends _i19.DataModule {
   _$DataModule(this._getIt);
 
   final _i1.GetIt _getIt;
 
   @override
-  _i18.PreferencesRepositoryImpl get settingsRepository => _i18.PreferencesRepositoryImpl(_getIt<_i19.AppSharedPreferences>());
+  _i20.PreferencesRepositoryImpl get settingsRepository =>
+      _i20.PreferencesRepositoryImpl(_getIt<_i21.AppSharedPreferences>());
   @override
-  _i20.SourcesRepositoryImpl get sourcesRepository => _i20.SourcesRepositoryImpl(_getIt<_i6.Isar>());
+  _i22.SourcesRepositoryImpl get sourcesRepository =>
+      _i22.SourcesRepositoryImpl(_getIt<_i6.Isar>());
+  @override
+  _i23.ArticlesRepositoryImpl get articlesRepository =>
+      _i23.ArticlesRepositoryImpl(
+        _getIt<_i6.Isar>(),
+        _getIt<_i7.Projectile>(),
+      );
 }

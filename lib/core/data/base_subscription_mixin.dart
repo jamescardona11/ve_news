@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-base mixin BaseRepository {
+mixin BaseSubscriptionMixin {
   final List<StreamSubscription> _subscriptions = [];
 
   void safeSubscribe(StreamSubscription subscription) {

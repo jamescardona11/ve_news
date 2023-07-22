@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:projectile/projectile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ve_news/cross/data/connectivity_provider.dart';
+import 'package:ve_news/data/article/dto/isar_article_dto.dart';
 import 'package:ve_news/data/source/dto/isar_source_dto.dart';
 
 @module
@@ -20,6 +21,7 @@ abstract class ExternalModule {
   @Named('IsarSchemas')
   List<CollectionSchema> get isarSchemas => [
         IsarSourceDtoSchema,
+        IsarArticleDtoSchema,
       ];
 
   @singleton
