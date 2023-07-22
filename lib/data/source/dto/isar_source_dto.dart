@@ -39,7 +39,7 @@ final class IsarSourceDto {
       );
 
   SourceModel toModel() => SourceModel(
-        id: id.toString(),
+        id: id,
         name: name,
         url: url,
         logo: ImageValueObject.create(logo),

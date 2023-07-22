@@ -16,20 +16,20 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   late final IsarCollection<IsarArticleDto> _articleStore;
 
   @override
-  Future<void> readNewArticles() {
-    // TODO: implement readNewArticles
-    throw UnimplementedError();
+  Future<void> fetchNewArticles() async {
+    await _projectile
+        .create(
+          target: '/articles',
+          method: Method.POST,
+        )
+        .fire();
   }
 
   @override
-  Future<void> removeAllArticles() {
-    // TODO: implement removeAllArticles
-    throw UnimplementedError();
-  }
+  Future<void> removeAllArticles() => _articleStore.clear();
 
   @override
   Stream<List<ArticleModel>> watch() {
-    // TODO: implement watch
-    throw UnimplementedError();
+    return _articleStore.where().sortByDateTime().watch(fireImmediately: true).map((event) => event.map((e) => e.toModel()).toList());
   }
 }

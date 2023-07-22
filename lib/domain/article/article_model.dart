@@ -3,11 +3,11 @@ class ArticleModel {
   final String title;
   final String url;
   final String body;
+  final int sourceId;
   final bool isDuplicate;
   final DateTime? dateTime;
   final String? lang;
   final String? image;
-  final Source? source;
   final List<Concepts> concepts;
   final List<Category> categories;
 
@@ -16,22 +16,14 @@ class ArticleModel {
     required this.title,
     required this.url,
     required this.body,
+    required this.sourceId,
     this.isDuplicate = false,
     this.dateTime,
     this.lang,
     this.image,
-    this.source,
     this.concepts = const [],
     this.categories = const [],
   });
-}
-
-class Source {
-  String? uri;
-  String? dataType;
-  String? title;
-
-  Source({this.uri, this.dataType, this.title});
 }
 
 class Concepts {

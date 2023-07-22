@@ -7,7 +7,7 @@ import 'package:ve_news/data/source/dto/isar_source_dto.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
-final class SourcesRepositoryImpl implements SourcesRepository {
+final class SourcesRepositoryImpl extends SourcesRepository {
   final Isar _isar;
 
   SourcesRepositoryImpl(this._isar) {
@@ -16,14 +16,10 @@ final class SourcesRepositoryImpl implements SourcesRepository {
   }
 
   late IsarCollection<IsarSourceDto> _sourceStore;
-  late final StreamSubscription _subscription;
   final _sourcesController = BehaviorSubject<List<SourceModel>>.seeded([]);
 
   @override
-  Stream<List<SourceModel>> watch() {
-    final filter = _sourceStore.filter().isEnabledEqualTo(true).sortByIsFavorite().build();
-    return filter.watch(fireImmediately: true).map((event) => event.map((e) => e.toModel()).toList());
-  }
+  Stream<List<SourceModel>> watch() => _sourcesController.stream;
 
   @override
   Future<void> createDefaultSources() async {
@@ -52,9 +48,15 @@ final class SourcesRepositoryImpl implements SourcesRepository {
   }
 
   void _initStream() {
-    final filter = _sourceStore.filter().isEnabledEqualTo(true).sortByIsFavorite().build();
-    _subscription = filter.watch(fireImmediately: true).map((event) => event.map((e) => e.toModel())).listen((sources) {
+    safeSubscribe(_sourceStore
+        .filter()
+        .isEnabledEqualTo(true)
+        .sortByIsFavorite()
+        .build()
+        .watch(fireImmediately: true)
+        .map((event) => event.map((e) => e.toModel()))
+        .listen((sources) {
       _sourcesController.add(sources.toList());
-    });
+    }));
   }
 }
