@@ -9,6 +9,7 @@ class ArticleModel {
   final String? image;
   final Source? source;
   final List<Concepts> concepts;
+  final List<Category> categories;
 
   const ArticleModel({
     required this.uuid,
@@ -20,7 +21,8 @@ class ArticleModel {
     this.lang,
     this.image,
     this.source,
-    required this.concepts,
+    this.concepts = const [],
+    this.categories = const [],
   });
 }
 
@@ -39,4 +41,12 @@ class Concepts {
   String? label;
 
   Concepts({this.uri, this.type, this.score, this.label});
+}
+
+class Category {
+  String? uri;
+  int? wgt;
+  String? label;
+
+  Category({this.uri, this.wgt, this.label});
 }

@@ -1,8 +1,8 @@
 import 'package:isar/isar.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/data/channel/dto/isar_source_dto.dart';
-import 'package:ve_news/domain/channel/repository/sources_repository.dart';
-import 'package:ve_news/domain/channel/source_model.dart';
+import 'package:ve_news/data/source/dto/isar_source_dto.dart';
+import 'package:ve_news/domain/source/repository/sources_repository.dart';
+import 'package:ve_news/domain/source/source_model.dart';
 
 final class SourcesRepositoryImpl extends SourcesRepository {
   final Isar _isar;

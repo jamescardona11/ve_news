@@ -1,5 +1,5 @@
 import 'package:ve_news/cross/domain/repository/preferences_repository.dart';
-import 'package:ve_news/domain/channel/repository/sources_repository.dart';
+import 'package:ve_news/domain/source/repository/sources_repository.dart';
 
 final class AppSetupUseCase {
   final PreferencesRepository _preferencesRepository;

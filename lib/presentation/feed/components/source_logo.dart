@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
-import 'package:ve_news/domain/channel/source_model.dart';
+import 'package:ve_news/domain/source/source_model.dart';
 
 class SourceLogo extends StatelessWidget {
   const SourceLogo({

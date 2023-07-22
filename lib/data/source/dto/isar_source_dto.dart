@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:ve_news/cross/domain/models/image_value_object.dart';
-import 'package:ve_news/domain/channel/source_model.dart';
+import 'package:ve_news/domain/source/source_model.dart';
 
 part 'isar_source_dto.g.dart';
 

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ve_news/domain/channel/repository/sources_repository.dart';
-import 'package:ve_news/domain/channel/source_model.dart';
+import 'package:ve_news/domain/source/repository/sources_repository.dart';
+import 'package:ve_news/domain/source/source_model.dart';
 
 part 'feed_state.dart';
 
