@@ -29,12 +29,12 @@ import 'package:ve_news/cross/domain/use_cases/use_cases.dart' as _i5;
 import 'package:ve_news/data/article/articles_repository_impl.dart' as _i23;
 import 'package:ve_news/data/source/sources_repository_impl.dart' as _i22;
 import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart'
-    as _i13;
+    as _i15;
 import 'package:ve_news/domain/article/repository/articles_repository.dart'
-    as _i14;
+    as _i13;
 import 'package:ve_news/domain/source/repository/sources_repository.dart'
     as _i11;
-import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i15;
+import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart' as _i14;
 import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart' as _i16;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -83,12 +83,12 @@ extension GetItInjectableX on _i1.GetIt {
       () => dataModule.sourcesRepository,
       dispose: _i12.disposeSourceRepository,
     );
-    gh.singleton<_i13.AppSetupUseCase>(useCasesModule.appSetupUseCase);
-    gh.lazySingleton<_i14.ArticlesRepository>(
+    gh.lazySingleton<_i13.ArticlesRepository>(
       () => dataModule.articlesRepository,
       dispose: _i12.disposeArticlesRepository,
     );
-    gh.factory<_i15.FeedCubit>(() => presentationModule.feedCubit);
+    gh.factory<_i14.FeedCubit>(() => presentationModule.feedCubit);
+    gh.singleton<_i15.AppSetupUseCase>(useCasesModule.appSetupUseCase);
     gh.factory<_i16.IntroCubit>(() => presentationModule.introCubit);
     return this;
   }
@@ -101,10 +101,10 @@ class _$PresentationModule extends _i17.PresentationModule {
 
   @override
   _i16.IntroCubit get introCubit =>
-      _i16.IntroCubit(_getIt<_i13.AppSetupUseCase>());
+      _i16.IntroCubit(_getIt<_i15.AppSetupUseCase>());
   @override
-  _i15.FeedCubit get feedCubit =>
-      _i15.FeedCubit(_getIt<_i11.SourcesRepository>());
+  _i14.FeedCubit get feedCubit =>
+      _i14.FeedCubit(_getIt<_i11.SourcesRepository>());
 }
 
 class _$UseCasesModule extends _i18.UseCasesModule {
@@ -119,9 +119,10 @@ class _$UseCasesModule extends _i18.UseCasesModule {
   _i5.WatchInternetConnectionUseCase get watchInternetConnection =>
       _i5.WatchInternetConnectionUseCase(_getIt<_i3.ConnectivityProvider>());
   @override
-  _i13.AppSetupUseCase get appSetupUseCase => _i13.AppSetupUseCase(
+  _i15.AppSetupUseCase get appSetupUseCase => _i15.AppSetupUseCase(
         _getIt<_i10.PreferencesRepository>(),
         _getIt<_i11.SourcesRepository>(),
+        _getIt<_i13.ArticlesRepository>(),
       );
 }
 

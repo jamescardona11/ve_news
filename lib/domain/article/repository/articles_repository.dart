@@ -8,5 +8,5 @@ abstract base class ArticlesRepository with BaseSubscriptionMixin {
 
   Stream<List<ArticleModel>> watch();
 
-  Future<void> removeAllArticles();
+  Future<void> removeOldArticles();
 }

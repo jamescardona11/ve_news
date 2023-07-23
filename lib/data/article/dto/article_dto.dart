@@ -1,4 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'article_dto.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class ArticleDto {
+  @JsonKey(name: 'uri')
   final String uuid;
   final String title;
   final String url;
@@ -7,7 +13,9 @@ class ArticleDto {
   final DateTime? dateTime;
   final String? lang;
   final String? image;
-  final SourceDto? source;
+
+  @JsonKey(name: 'source', fromJson: _sourceFromJson)
+  final String? sourceUri;
   final List<ConceptsDto> concepts;
   final List<CategoryDto> categories;
 
@@ -20,33 +28,51 @@ class ArticleDto {
     this.dateTime,
     this.lang,
     this.image,
-    this.source,
+    this.sourceUri,
     this.concepts = const [],
     this.categories = const [],
   });
+
+  factory ArticleDto.fromJson(Map<String, dynamic> json) => _$ArticleDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ArticleDtoToJson(this);
+
+  static String? _sourceFromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    return json['uri'];
+  }
 }
 
-class SourceDto {
-  String? uri;
-  String? dataType;
-  String? title;
-
-  SourceDto({this.uri, this.dataType, this.title});
-}
-
+@JsonSerializable(explicitToJson: true)
 class ConceptsDto {
-  String? uri;
-  String? type;
-  int? score;
-  String? label;
+  final String? uri;
+  final String? type;
+  final int? score;
 
-  ConceptsDto({this.uri, this.type, this.score, this.label});
+  @JsonKey(fromJson: _labelFromJson)
+  final String? label;
+
+  const ConceptsDto({this.uri, this.type, this.score, this.label});
+
+  factory ConceptsDto.fromJson(Map<String, dynamic> json) => _$ConceptsDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ConceptsDtoToJson(this);
+
+  static String? _labelFromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    return json['eng'];
+  }
 }
 
+@JsonSerializable(explicitToJson: true)
 class CategoryDto {
-  String? uri;
-  int? wgt;
-  String? label;
+  final String? uri;
+  final int? wgt;
+  final String? label;
 
-  CategoryDto({this.uri, this.wgt, this.label});
+  const CategoryDto({this.uri, this.wgt, this.label});
+
+  factory CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CategoryDtoToJson(this);
 }

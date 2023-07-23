@@ -16,7 +16,7 @@ abstract class ExternalModule {
   Future<SharedPreferences> get sharedPreferences => SharedPreferences.getInstance();
 
   @singleton
-  Projectile projectile() => Projectile(client: HttpClient(config: const BaseConfig(enableLog: true)));
+  Projectile projectile() => Projectile(client: HttpClient(config: const BaseConfig(enableLog: false)));
 
   @Named('IsarSchemas')
   List<CollectionSchema> get isarSchemas => [
@@ -33,7 +33,7 @@ abstract class ExternalModule {
       schemas,
       directory: dir.path,
       inspector: true,
-      name: 've_news_v1',
+      name: 've_news_v2',
     );
   }
 

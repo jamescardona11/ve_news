@@ -61,5 +61,8 @@ final class SourcesRepositoryImpl extends SourcesRepository {
   }
 
   @override
-  List<SourceModel> readAllEnabled() => _sourcesController.value;
+  Future<List<SourceModel>> readAllEnabled() async {
+    final result = await _sourceStore.filter().isEnabledEqualTo(true).build().findAll();
+    return result.map((e) => e.toModel()).toList();
+  }
 }

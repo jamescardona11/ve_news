@@ -2,12 +2,16 @@ import 'package:isar/isar.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
+import 'article_dto.dart';
+
 part 'isar_article_dto.g.dart';
 
 @collection
 @Name('Article')
 class IsarArticleDto {
   final Id id;
+
+  @Index(unique: true, replace: true)
   final String uuid;
   final String title;
   final String url;
@@ -34,6 +38,33 @@ class IsarArticleDto {
     this.concepts = const [],
     this.categories = const [],
   });
+
+  factory IsarArticleDto.fromDto(ArticleDto dto, int sourceId) => IsarArticleDto(
+        uuid: dto.uuid,
+        title: dto.title,
+        url: dto.url,
+        body: dto.body,
+        sourceId: sourceId,
+        isDuplicate: dto.isDuplicate,
+        dateTime: dto.dateTime,
+        lang: dto.lang,
+        image: dto.image,
+        concepts: dto.concepts
+            .map((e) => IsarConceptsDto(
+                  uri: e.uri,
+                  type: e.type,
+                  score: e.score,
+                  label: e.label,
+                ))
+            .toList(),
+        categories: dto.categories
+            .map((e) => IsarCategoryDto(
+                  uri: e.uri,
+                  wgt: e.wgt,
+                  label: e.label,
+                ))
+            .toList(),
+      );
 
   ArticleModel toModel(SourceModel source) => ArticleModel(
         uuid: uuid,

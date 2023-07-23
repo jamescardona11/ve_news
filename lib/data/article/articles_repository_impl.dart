@@ -10,6 +10,7 @@ import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
+import 'dto/article_dto.dart';
 import 'dto/isar_article_dto.dart';
 
 final class ArticlesRepositoryImpl extends ArticlesRepository {
@@ -28,15 +29,16 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   Future<void> fetchTodayArticles() async {
     _page = 0;
     await fetchNewArticles();
-    await removeAllArticles();
+    await removeOldArticles();
   }
 
-  // TODO (james):
+  // TODO (james): Improve this
   // change the now and yesterday to be local variables
   // reason: if a person is looking cache and go to the end we are fetch new article from today
   @override
   Future<void> fetchNewArticles() async {
-    final sourcesMap = _sourcesRepository.readAllEnabled().map((e) => {'sourceUri': e.url}).toList();
+    final sources = await _sourcesRepository.readAllEnabled();
+    final sourcesMap = sources.map((e) => {'sourceUri': e.url}).toList();
 
     final now = DateUtils.nowStringFormat();
     final yesterday = DateUtils.yesterdayStringFormat();
@@ -44,6 +46,9 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
     final result = await _projectile.create(
       target: UrlRoutes.getArticles,
       method: Method.POST,
+      headers: {
+        HeadersKeys.contentType: ContentType.json,
+      },
       body: {
         'query': {
           '\$query': {
@@ -59,7 +64,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
         },
         'resultType': 'articles',
         'articlesPage': ++_page,
-        'articlesCount': 100,
+        'articlesCount': 200,
         'articlesSortBy': 'date',
         'includeArticleConcepts': true,
         'includeArticleCategories': true,
@@ -70,12 +75,31 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
       },
     ).fire();
 
-    if (result.isSuccess) {}
+    if (result.isSuccess) {
+      final articlesMap = result.data![_articlesKey] as Map<String, dynamic>;
+      final resultsListMap = articlesMap[_resultsKey] as List<dynamic>;
+      final articlesDtoList = resultsListMap.map((e) => ArticleDto.fromJson(e as Map<String, dynamic>)).toList();
+      final isarElements = articlesDtoList
+          .map((e) {
+            final source = sources.firstWhereOrNull((source) => source.url == e.sourceUri);
+            if (source == null) return null;
+
+            return IsarArticleDto.fromDto(e, source.id);
+          })
+          .whereNotNull()
+          .toList();
+
+      await _isar.writeTxn(() async {
+        await _articleStore.putAll(isarElements);
+      });
+    }
   }
 
   @override
-  Future<void> removeAllArticles() =>
-      _articleStore.filter().dateTimeLessThan(DateTime.now().subtract(const Duration(hours: 24))).deleteAll();
+  Future<void> removeOldArticles() {
+    final articles = _articleStore.filter().dateTimeLessThan(DateTime.now().subtract(const Duration(hours: 24)));
+    return articles.deleteAll();
+  }
 
   @override
   Stream<List<ArticleModel>> watch() {
@@ -92,4 +116,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
           .toList(),
     );
   }
+
+  static const _articlesKey = 'articles';
+  static const _resultsKey = 'results';
 }
