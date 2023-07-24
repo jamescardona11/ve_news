@@ -28,6 +28,19 @@ class ArticleModel extends Equatable {
     this.categories = const [],
   });
 
+  String get category {
+    if (categories.isEmpty) return 'News';
+
+    for (var c in categories) {
+      final s = c.label!.split('/').last;
+      if (s.split(' ').length <= 2) {
+        return s;
+      }
+    }
+
+    return categories.first.label!.split('/').last;
+  }
+
   @override
   List<Object?> get props {
     return [

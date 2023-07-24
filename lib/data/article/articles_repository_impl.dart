@@ -40,8 +40,8 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
     final sources = await _sourcesRepository.readAllEnabled();
     final sourcesMap = sources.map((e) => {'sourceUri': e.url}).toList();
 
-    final now = DateUtils.nowStringFormat();
-    final yesterday = DateUtils.yesterdayStringFormat();
+    final now = AppDateUtils.nowStringFormat();
+    final yesterday = AppDateUtils.yesterdayStringFormat();
 
     final result = await _projectile.create(
       target: UrlRoutes.getArticles,

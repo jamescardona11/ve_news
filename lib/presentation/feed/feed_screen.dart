@@ -11,18 +11,16 @@ class FeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FeedCubit, FeedState>(
-      builder: (context, state) => SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-              child: SourcesList(sources: state.sources),
-            ),
-            const SizedBox(height: 10),
-            const Divider(),
-            ArticlesList(),
-          ],
-        ),
+      builder: (context, state) => Column(
+        children: [
+          SizedBox(
+            height: 100,
+            child: SourcesList(sources: state.sources),
+          ),
+          const SizedBox(height: 10),
+          const Divider(),
+          Expanded(child: ArticlesList(articles: state.articles)),
+        ],
       ),
     );
   }

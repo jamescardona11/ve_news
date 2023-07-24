@@ -44,13 +44,20 @@ class AppTextTheme extends TextTheme {
   static double get fontSize400 => 18;
   static double get fontSize300 => 16;
   static double get fontSize200 => 14;
-  static double get fontSize100 => 10;
+  static double get fontSize100 => 12;
   static double get fontSize50 => 8;
 }
 
 // Alias
 extension AliasAppThemeX on TextTheme {
   TextStyle? get mainTitle => headlineMedium;
+  TextStyle? get category => bodySmall!.copyWith(
+        fontSize: AppTextTheme.fontSize100,
+        color: AppColors.primary,
+        fontWeight: FontWeight.bold,
+      );
+
+  TextStyle? get timeAgo => bodySmall!.copyWith(fontSize: AppTextTheme.fontSize100);
 }
 
 extension ThemeContext on BuildContext {

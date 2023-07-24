@@ -103,8 +103,10 @@ class _$PresentationModule extends _i17.PresentationModule {
   _i16.IntroCubit get introCubit =>
       _i16.IntroCubit(_getIt<_i15.AppSetupUseCase>());
   @override
-  _i14.FeedCubit get feedCubit =>
-      _i14.FeedCubit(_getIt<_i11.SourcesRepository>());
+  _i14.FeedCubit get feedCubit => _i14.FeedCubit(
+        _getIt<_i11.SourcesRepository>(),
+        _getIt<_i13.ArticlesRepository>(),
+      );
 }
 
 class _$UseCasesModule extends _i18.UseCasesModule {
