@@ -2,8 +2,9 @@ definitions:
   environment:
     groups:
       - ios
-      - android
+      - Android
       - firebase
+      - general
   scripts:
     - &ios_initialize_keychain
       name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
@@ -49,7 +50,14 @@ definitions:
       name: Build apk for distribution
       script: |
         flutter pub get
+        flutter pub run build_runner build -d
         flutter build apk --release --target=lib/main.dart
+    - &flutter_build_environment_variables
+      name: Set environment variables
+      script: | 
+        echo 'OPEN_AI_KEY=$OPEN_AI_KEY\n' >> $ENV_PATH
+        echo 'AUDIO_API=$AUDIO_API\n' >> $ENV_PATH
+        echo 'NEWS_API=$NEWS_API' >> $ENV_PATH
   publishing:
     - &firebase_app_distribution_ios
       firebase:
@@ -57,14 +65,14 @@ definitions:
         ios:
           app_id: $FIREBASE_IOS_APP_ID
           groups: 
-            - iOS
+            - firebase
     - &firebase_app_distribution_android
       firebase:
         firebase_token: $FIREBASE_TOKEN
         android:
           app_id: $FIREBASE_ANDROID_APP_ID
           groups:
-            - android
+            - firebase
   artifacts:
     - &ipa ios/build/ios/ipa/*.ipa
     - &dsym $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
@@ -83,8 +91,7 @@ workflows:
         includes:
           # Only run the CI when a file in one of the following directories
           # changed.
-          - "apps/**"
-          - "packages/**"
+          - "lib/**"
           - "codemagic.yaml"
         excludes:
           # Don't run the CI when only .md files changed.
@@ -101,7 +108,7 @@ workflows:
 
       - name: Run Tests
         script: |
-          flutter run test
+          flutter test
           
           # Upload results of failed golden tests if test command failed.
           if [ $? -ne 0 ]; then
@@ -147,14 +154,14 @@ workflows:
     artifacts:
       - *ipa
       - *dsym
-    #publishing: *firebase_app_distribution_ios
+    publishing: *firebase_app_distribution_ios
   android-build-firebase:
     name: android-build-firebase
     max_build_duration: 60
     environment:
       groups:
         - firebase
-        - android
+        - Android
       flutter: stable
     cache:
       cache_paths:
@@ -170,7 +177,9 @@ workflows:
     scripts:
       - *android_set_key_properties
       - *android_set_local_properties
+      - *flutter_build_environment_variables
       - *android_flutter_build_dev
     artifacts:
       - *apk
       - *aab
+    publishing: *firebase_app_distribution_android

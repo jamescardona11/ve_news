@@ -779,9 +779,11 @@ packages:
   projectile:
     dependency: "direct main"
     description:
-      path: "../../libs/projectile"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "04c3354ace08eb205a0714058d8b2b4b5c6b8319"
+      url: "https://github.com/jamescardona11/projectile.git"
+    source: git
     version: "0.0.1"
   provider:
     dependency: transitive

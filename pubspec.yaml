@@ -35,7 +35,9 @@ dependencies:
   flutter_bloc: ^8.1.3
   go_router: ^9.0.3
   projectile:
-    path: ../../libs/projectile
+    git:
+      url: https://github.com/jamescardona11/projectile.git
+      ref: main
   collection: ^1.17.1
   intl: ^0.18.1
   

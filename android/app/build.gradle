@@ -48,7 +48,7 @@ android {
         applicationId "com.tkmonkey.venewsapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -61,12 +61,7 @@ android {
                   storePassword System.getenv()["FCI_KEYSTORE_PASSWORD"]
                   keyAlias System.getenv()["FCI_KEY_ALIAS"]
                   keyPassword System.getenv()["FCI_KEY_PASSWORD"]
-              } else {
-                  keyAlias keystoreProperties['keyAlias']
-                  keyPassword keystoreProperties['keyPassword']
-                  storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-                  storePassword keystoreProperties['storePassword']
-              }
+              } 
           }
       }
 
@@ -74,7 +69,6 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
         }
     }
