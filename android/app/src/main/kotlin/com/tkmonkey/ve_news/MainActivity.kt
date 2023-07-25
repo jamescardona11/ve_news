@@ -1,4 +1,4 @@
-package com.tkmonkey.ve_news
+package com.tkmonkey.venewsapp
 
 import io.flutter.embedding.android.FlutterActivity
 
