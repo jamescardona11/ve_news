@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:ve_news/config/navigation/app_router.dart';
+import 'package:ve_news/config/theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'config/di/di.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final AppRouter router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
+      theme: AppTheme.appTheme(),
+      routerConfig: router.config,
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
     super.key,
   });
 

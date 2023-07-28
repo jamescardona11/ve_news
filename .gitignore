@@ -62,6 +62,9 @@ assets/cfg/_dev_app_settings.json
 
 
 # DART
+di.config.dart
+**.g.dart
+
 env.g.dart
 .env
 .env.dev
