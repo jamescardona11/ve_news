@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ve_news/main.dart';
+import 'package:ve_news/presentation/home/home_screen.dart';
 import 'package:ve_news/presentation/intro/intro_screen.dart';
 
 final class AppRouter {

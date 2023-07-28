@@ -25,21 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('AppBar Text'),
-      ),
-      body: Container(
-        child: Text('HomePage'),
-      ),
-    );
-  }
-}
