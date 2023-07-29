@@ -9,14 +9,14 @@ import 'package:ve_news/domain/source/source_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
-part 'feed_state.dart';
+part 'articles_state.dart';
 
-class FeedCubit extends Cubit<FeedState> {
+class ArticlesCubit extends Cubit<ArticlesState> {
   final SourcesRepository _sourcesRepository;
   final ArticlesRepository _articlesRepository;
   final SummaryRepository _summaryRepository;
 
-  FeedCubit(this._sourcesRepository, this._articlesRepository, this._summaryRepository) : super(const FeedState()) {
+  ArticlesCubit(this._sourcesRepository, this._articlesRepository, this._summaryRepository) : super(const ArticlesState()) {
     _init();
   }
 
@@ -38,7 +38,7 @@ class FeedCubit extends Cubit<FeedState> {
   }
 
   void _updateSummary(Set<String> articles) {
-    // final summary = state.summary?.copyWith(articles: articles.to) ?? SummaryArticles(articles: articles);
+    // final summary = state.summary?.copyWith(articles: articles) ?? SummaryArticles(articles: articles);
     // emit(state.copyWith(summary: summary));
     // _summaryRepository.update(summary);
   }

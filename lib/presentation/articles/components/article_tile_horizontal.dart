@@ -6,7 +6,7 @@ import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/cross/presentation/presentation.dart';
 import 'package:ve_news/cross/utils/date_utils.dart';
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart';
+import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 
 class ArticleTileHorizontal extends StatelessWidget {
   const ArticleTileHorizontal({
@@ -43,12 +43,12 @@ class ArticleTileHorizontal extends StatelessWidget {
       child: Row(
         children: [
           if (article.image != null)
-            BlocSelector<FeedCubit, FeedState, bool>(
+            BlocSelector<ArticlesCubit, ArticlesState, bool>(
               selector: (state) {
-                return state.summary?.articles.contains(article.uuid) ?? false;
+                return state.summary?.articles.any((element) => element.uuid == article.uuid) ?? false;
               },
               builder: (context, wasAdded) {
-                final cubit = context.read<FeedCubit>();
+                final cubit = context.read<ArticlesCubit>();
                 return Expanded(
                   child: Column(
                     children: [

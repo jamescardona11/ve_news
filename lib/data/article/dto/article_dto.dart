@@ -19,6 +19,7 @@ class ArticleDto {
   final String url;
   final String body;
   final bool isDuplicate;
+  final bool bookmark;
   final DateTime? dateTime;
   final String? lang;
   final String? image;
@@ -40,6 +41,7 @@ class ArticleDto {
     required this.body,
     this.sourceId,
     this.isDuplicate = false,
+    this.bookmark = false,
     this.dateTime,
     this.lang,
     this.image,
@@ -55,6 +57,7 @@ class ArticleDto {
         url: url,
         body: body,
         isDuplicate: isDuplicate,
+        bookmark: bookmark,
         dateTime: dateTime,
         lang: lang,
         image: image,
@@ -79,6 +82,7 @@ class ArticleDto {
     String? url,
     String? body,
     bool? isDuplicate,
+    bool? bookmark,
     DateTime? dateTime,
     String? lang,
     String? image,
@@ -94,6 +98,7 @@ class ArticleDto {
       url: url ?? this.url,
       body: body ?? this.body,
       isDuplicate: isDuplicate ?? this.isDuplicate,
+      bookmark: bookmark ?? this.bookmark,
       dateTime: dateTime ?? this.dateTime,
       lang: lang ?? this.lang,
       image: image ?? this.image,

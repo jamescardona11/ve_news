@@ -133,6 +133,22 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
     );
   }
 
+  @override
+  Stream<List<ArticleModel>> watchBookmarks() {
+    return CombineLatestStream.combine2(
+      _articleStore.where().sortByDateTime().watch(fireImmediately: true),
+      _sourcesRepository.watch(),
+      (List<ArticleDto> articles, List<SourceModel> sources) => articles
+          .map((article) {
+            final source = sources.firstWhereOrNull((source) => source.id == article.sourceId);
+            if (source == null) return null;
+            return article.toModel(source);
+          })
+          .whereNotNull()
+          .toList(),
+    );
+  }
+
   static const _articlesKey = 'articles';
   static const _resultsKey = 'results';
 }

@@ -9,6 +9,7 @@ class ArticleModel extends Equatable {
   final String body;
   final SourceModel source;
   final bool isDuplicate;
+  final bool bookmark;
   final DateTime? dateTime;
   final String? lang;
   final String? image;
@@ -23,6 +24,7 @@ class ArticleModel extends Equatable {
     required this.body,
     required this.source,
     this.isDuplicate = false,
+    this.bookmark = false,
     this.dateTime,
     this.lang,
     this.image,
@@ -53,6 +55,7 @@ class ArticleModel extends Equatable {
       body,
       source,
       isDuplicate,
+      bookmark,
       dateTime,
       lang,
       image,

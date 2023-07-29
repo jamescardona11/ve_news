@@ -5,8 +5,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/cross/presentation/widgets/app_bar.dart';
-import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart';
-import 'package:ve_news/presentation/feed/feed_screen.dart';
+import 'package:ve_news/presentation/articles/bookmarks/bookmarks_screen.dart';
+import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
+import 'package:ve_news/presentation/articles/feed/feed_screen.dart';
 import 'package:ve_news/presentation/summary/cubit/summary_cubit.dart';
 import 'package:ve_news/presentation/summary/summary_screen.dart';
 
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FeedCubit>(create: (_) => getIt<FeedCubit>()),
+        BlocProvider<ArticlesCubit>(create: (_) => getIt<ArticlesCubit>()),
         BlocProvider<SummaryCubit>(create: (_) => getIt<SummaryCubit>()),
       ],
       child: Scaffold(
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: const [
                   FeedScreen(),
                   SizedBox(),
+                  BookmarkScreen(),
                   SummaryScreen(),
                   SizedBox(),
                 ],
@@ -100,6 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   GButton(
                     icon: FontAwesomeIcons.solidBookmark,
                     text: 'Bookmarks',
+                  ),
+                  GButton(
+                    icon: FontAwesomeIcons.solidNewspaper,
+                    text: 'Summary',
                   ),
                   GButton(
                     icon: FontAwesomeIcons.userAstronaut,

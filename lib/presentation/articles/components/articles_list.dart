@@ -20,7 +20,7 @@ class ArticlesList extends StatelessWidget {
         itemBuilder: (context, index) => ArticleTileHorizontal(
           article: articles[index],
         ),
-        separatorBuilder: (context, index) => const SizedBox(height: AppDimens.size10),
+        separatorBuilder: (context, index) => const SizedBox(height: AppDimens.size16),
         padding: EdgeInsets.zero,
         itemCount: articles.length,
       ),

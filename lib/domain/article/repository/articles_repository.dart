@@ -8,6 +8,8 @@ abstract base class ArticlesRepository with BaseSubscriptionMixin {
 
   Stream<List<ArticleModel>> watch();
 
+  Stream<List<ArticleModel>> watchBookmarks();
+
   Future<List<ArticleModel>> readByIds(List<String> ids);
 
   Future<void> removeOldArticles();

@@ -1,11 +1,11 @@
-part of 'feed_cubit.dart';
+part of 'articles_cubit.dart';
 
-class FeedState extends Equatable {
+class ArticlesState extends Equatable {
   final List<SourceModel> sources;
   final List<ArticleModel> articles;
   final SummaryArticles? summary;
 
-  const FeedState({
+  const ArticlesState({
     this.sources = const [],
     this.articles = const [],
     this.summary,
@@ -18,12 +18,12 @@ class FeedState extends Equatable {
         summary,
       ];
 
-  FeedState copyWith({
+  ArticlesState copyWith({
     List<SourceModel>? sources,
     List<ArticleModel>? articles,
     SummaryArticles? summary,
   }) {
-    return FeedState(
+    return ArticlesState(
       sources: sources ?? this.sources,
       articles: articles ?? this.articles,
       summary: summary ?? this.summary,
