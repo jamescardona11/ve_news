@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/cross/presentation/presentation.dart';
 import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart';
 import 'package:ve_news/presentation/feed/feed_screen.dart';
 import 'package:ve_news/presentation/summary/cubit/summary_cubit.dart';
@@ -41,11 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text('VeNews'),
           actions: [
-            InkWell(
-              onTap: () {},
-              child: const Padding(
-                padding: EdgeInsets.only(top: AppDimens.size12, right: AppDimens.size30),
-                child: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            Padding(
+              padding: const EdgeInsets.only(right: AppDimens.size30),
+              child: SizedBox(
+                width: 45,
+                height: AppDimens.size24,
+                child: CircularIconButton(
+                  size: AppDimens.size50,
+                  onPressed: () {},
+                  icon: FontAwesomeIcons.magnifyingGlass,
+                ),
               ),
             ),
           ],
