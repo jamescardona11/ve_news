@@ -28,7 +28,6 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   Future<void> fetchTodayArticles() async {
     _page = 0;
     await fetchNewArticles();
-    await removeOldArticles();
   }
 
   @override
@@ -86,6 +85,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
         'includeArticleCategories': true,
         'includeArticleImage': true,
         'includeArticleLinks': true,
+        'articlesArticleBodyLen': -1, // full body
         'dataType': 'news',
         'apiKey': Env.newsKEY,
       },
@@ -97,7 +97,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
       final articlesDtoList = resultsListMap.map((e) => ArticleDto.fromJson(e as Map<String, dynamic>)).toList();
       final isarElements = articlesDtoList
           .map((e) {
-            final source = sources.firstWhereOrNull((source) => source.id == e.sourceId);
+            final source = sources.firstWhereOrNull((source) => source.url == e.sourceUri);
             if (source == null || source.id == null) return null;
 
             return e.copyWith(sourceId: source.id);

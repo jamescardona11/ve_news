@@ -7,10 +7,14 @@ class SourceLogo extends StatelessWidget {
   const SourceLogo({
     Key? key,
     required this.source,
+    this.radius = AppDimens.size30,
+    this.showName = true,
     this.onTap,
   }) : super(key: key);
 
   final SourceModel source;
+  final double radius;
+  final bool showName;
   final void Function()? onTap;
 
   @override
@@ -23,7 +27,7 @@ class SourceLogo extends StatelessWidget {
           Hero(
             tag: source.name,
             child: CircleAvatar(
-              radius: AppDimens.size30,
+              radius: radius,
               backgroundColor: AppColors.lightGrey300,
               child: Container(
                 margin: const EdgeInsets.all(AppDimens.size4),
@@ -39,12 +43,14 @@ class SourceLogo extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppDimens.size4),
-          Text(
-            source.formatName,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall!.copyWith(fontSize: source.longName ? AppTextTheme.fontSize50 : AppTextTheme.fontSize100),
-          ),
+          if (showName) ...[
+            const SizedBox(height: AppDimens.size4),
+            Text(
+              source.formatName,
+              textAlign: TextAlign.center,
+              style: textTheme.bodySmall!.copyWith(fontSize: source.longName ? AppTextTheme.fontSize50 : AppTextTheme.fontSize100),
+            ),
+          ]
         ],
       ),
     );
