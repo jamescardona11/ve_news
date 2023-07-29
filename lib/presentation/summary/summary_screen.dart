@@ -33,7 +33,7 @@ class SummaryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // _HeaderWidget(articles: summary.articles),
+                      _HeaderWidget(articles: summary.articles),
                       CategoriesList(categories: state.categories),
                     ],
                   ),
@@ -57,12 +57,12 @@ class _HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final sources = articles.take(5).map((e) => e.source).toList();
     return SizedBox(
-      width: sources.length * AppDimens.size24,
       height: AppDimens.size50,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Flexible(
+          SizedBox(
+            width: sources.length * AppDimens.size24,
             child: Stack(
               alignment: Alignment.topLeft,
               fit: StackFit.loose,

@@ -21,6 +21,23 @@ class SummaryCubit extends Cubit<SummaryState> {
                     title: 'title',
                     url: 'url',
                     body: 'body',
+                    categories: [
+                      Category(
+                        label: 'label',
+                        wgt: 1,
+                        uri: 'uri',
+                      ),
+                      Category(
+                        label: 'label2',
+                        wgt: 1,
+                        uri: 'uri',
+                      ),
+                      Category(
+                        label: 'label3',
+                        wgt: 1,
+                        uri: 'uri',
+                      ),
+                    ],
                     source: SourceModel(name: 'name', url: 'url', logo: ImageValueObject.create(AppAssets.theGuardianImg)),
                   ),
                   ArticleModel(
