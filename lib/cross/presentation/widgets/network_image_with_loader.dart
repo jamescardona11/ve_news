@@ -33,7 +33,11 @@ class NetworkImageWithLoader extends StatelessWidget {
           ),
         ),
         placeholder: (context, url) => const Skeleton(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+        errorWidget: (context, url, error) {
+          return Center(
+            child: Image.asset(AppAssets.noPhotoImg, width: 45, height: 45),
+          );
+        },
       ),
     );
   }

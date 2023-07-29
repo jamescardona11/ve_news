@@ -56,4 +56,5 @@ flutter:
   assets:
     - assets/
     - assets/sources/
+    - assets/res/
 
