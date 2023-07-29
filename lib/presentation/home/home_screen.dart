@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
+import 'package:ve_news/cross/presentation/widgets/app_bar.dart';
 import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart';
 import 'package:ve_news/presentation/feed/feed_screen.dart';
 import 'package:ve_news/presentation/summary/cubit/summary_cubit.dart';
@@ -39,34 +39,25 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider<SummaryCubit>(create: (_) => getIt<SummaryCubit>()),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('VeNews'),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: AppDimens.size30),
-              child: SizedBox(
-                width: 45,
-                height: AppDimens.size24,
-                child: CircularIconButton(
-                  size: AppDimens.size50,
-                  onPressed: () {},
-                  icon: FontAwesomeIcons.magnifyingGlass,
-                ),
+        body: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: AppDimens.size10),
+              child: VeNewsAppBar(title: 'VeNews'),
+            ),
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [
+                  FeedScreen(),
+                  SizedBox(),
+                  SummaryScreen(),
+                  SizedBox(),
+                ],
               ),
             ),
           ],
-        ),
-        body: SafeArea(
-          child: PageView(
-            controller: pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              FeedScreen(),
-              SizedBox(),
-              SummaryScreen(),
-              SizedBox(),
-            ],
-          ),
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(
           valueListenable: selectedIndex,

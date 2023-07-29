@@ -71,7 +71,7 @@ class SummaryScreen extends StatelessWidget {
                                 size: 18,
                               ),
                               const SizedBox(width: AppDimens.size8),
-                              Text('Review Articles: '),
+                              Text('Review Articles'),
                             ],
                           ),
                         ),
