@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:projectile/projectile.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:ve_news/data/summary/dto/isar_summary_dto.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
@@ -10,28 +11,18 @@ final class SummaryRepositoryImpl extends SummaryRepository {
 
   SummaryRepositoryImpl(this._isar, this._projectile) {
     _summaryStore = _isar.isarSummaryArticlesDtos;
+    _readUncompletedSummary();
   }
 
   late final IsarCollection<IsarSummaryArticlesDto> _summaryStore;
+  final _lastSummaryController = BehaviorSubject<SummaryArticles>();
 
   @override
   Stream<List<SummaryArticles>> watch() =>
       _summaryStore.where().sortByDateTime().watch(fireImmediately: true).map((event) => event.map((e) => e.toModel()).toList());
 
   @override
-  Future<SummaryArticles> readLastUncompletedOrNew() async {
-    final summary = await _summaryStore.where().filter().isCompletedEqualTo(false).findFirst();
-    if (summary != null) {
-      return summary.toModel();
-    } else {
-      final dto = IsarSummaryArticlesDto();
-      final id = await _isar.writeTxn(() {
-        return _summaryStore.put(dto);
-      });
-
-      return dto.toModel(id);
-    }
-  }
+  Stream<SummaryArticles> watchLastUncompleted() => _lastSummaryController;
 
   @override
   Future<void> update(SummaryArticles summary) async {
@@ -47,5 +38,19 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   @override
   Future<void> deleteAll() async {
     await _isar.writeTxn(() => _summaryStore.where().build().deleteAll());
+  }
+
+  Future<void> _readUncompletedSummary() async {
+    final summary = await _summaryStore.where().filter().isCompletedEqualTo(false).findFirst();
+    if (summary != null) {
+      _lastSummaryController.add(summary.toModel());
+    } else {
+      final dto = IsarSummaryArticlesDto();
+      final id = await _isar.writeTxn(() {
+        return _summaryStore.put(dto);
+      });
+
+      _lastSummaryController.add(dto.toModel(id));
+    }
   }
 }

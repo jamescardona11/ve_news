@@ -6,6 +6,7 @@ import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
+import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
 part 'feed_state.dart';
@@ -13,8 +14,9 @@ part 'feed_state.dart';
 class FeedCubit extends Cubit<FeedState> {
   final SourcesRepository _sourcesRepository;
   final ArticlesRepository _articlesRepository;
+  final SummaryRepository _summaryRepository;
 
-  FeedCubit(this._sourcesRepository, this._articlesRepository) : super(const FeedState()) {
+  FeedCubit(this._sourcesRepository, this._articlesRepository, this._summaryRepository) : super(const FeedState()) {
     _init();
   }
 
@@ -25,14 +27,20 @@ class FeedCubit extends Cubit<FeedState> {
     final articles = Set<String>.from(state.summary?.articles ?? <String>{});
     articles.add(article.uuid);
 
-    emit(state.copyWith(summary: SummaryArticles(articles: articles)));
+    _updateSummary(articles);
   }
 
   void removeArticleToSummary(ArticleModel article) {
     final articles = Set<String>.from(state.summary?.articles ?? <String>{});
     articles.remove(article.uuid);
 
-    emit(state.copyWith(summary: SummaryArticles(articles: articles)));
+    _updateSummary(articles);
+  }
+
+  void _updateSummary(Set<String> articles) {
+    final summary = state.summary?.copyWith(articles: articles) ?? SummaryArticles(articles: articles);
+    emit(state.copyWith(summary: summary));
+    _summaryRepository.update(summary);
   }
 
   @override
@@ -43,6 +51,10 @@ class FeedCubit extends Cubit<FeedState> {
   }
 
   void _init() {
+    _summaryRepository.watchLastUncompleted().listen((summary) {
+      emit(state.copyWith(summary: summary));
+    });
+
     _sourcesSubscription = _sourcesRepository.watch().listen((sources) {
       emit(state.copyWith(sources: sources));
     });

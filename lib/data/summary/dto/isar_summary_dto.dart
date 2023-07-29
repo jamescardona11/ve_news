@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:ve_news/config/constants.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
 part 'isar_summary_dto.g.dart';
@@ -22,7 +23,7 @@ final class IsarSummaryArticlesDto {
   }) : dateTime = DateTime.now().millisecondsSinceEpoch;
 
   factory IsarSummaryArticlesDto.fromModel(SummaryArticles model) => IsarSummaryArticlesDto(
-        id: model.id,
+        id: model.id != Constants.fakeId ? model.id : Isar.autoIncrement,
         articles: model.articles.toList(),
         isCompleted: model.isCompleted,
         isCreatingVoiceSummary: model.isCreatingVoiceSummary,

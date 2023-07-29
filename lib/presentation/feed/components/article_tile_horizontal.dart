@@ -26,9 +26,10 @@ class ArticleTileHorizontal extends StatelessWidget {
         if (article.image != null)
           BlocSelector<FeedCubit, FeedState, bool>(
             selector: (state) {
-              return state.summary?.articles.contains(article.id) ?? false;
+              return state.summary?.articles.contains(article.uuid) ?? false;
             },
             builder: (context, wasAdded) {
+              final cubit = context.read<FeedCubit>();
               return Expanded(
                 child: Column(
                   children: [
@@ -40,9 +41,9 @@ class ArticleTileHorizontal extends StatelessWidget {
                     BounceWrapper(
                       onPressed: () {
                         if (wasAdded) {
-                          context.read<FeedCubit>().removeArticleToSummary(article);
+                          cubit.removeArticleToSummary(article);
                         } else {
-                          context.read<FeedCubit>().addArticleToSummary(article);
+                          cubit.addArticleToSummary(article);
                         }
                       },
                       child: RoundContainer(

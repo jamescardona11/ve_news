@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:ve_news/config/constants.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
 class ArticleModel extends Equatable {
@@ -16,7 +17,7 @@ class ArticleModel extends Equatable {
   final List<Category> categories;
 
   const ArticleModel({
-    this.id = -1,
+    this.id = Constants.fakeId,
     required this.uuid,
     required this.title,
     required this.url,

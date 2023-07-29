@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/presentation/feed/cubit/feed_cubit.dart';
 
+import 'components/articles_list.dart';
 import 'components/sources_list.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -13,9 +14,12 @@ class FeedScreen extends StatelessWidget {
       builder: (context, state) => Column(
         children: [
           SizedBox(
-            height: 85,
+            height: 80,
             child: SourcesList(sources: state.sources),
           ),
+          const SizedBox(height: 10),
+          const Divider(),
+          Expanded(child: ArticlesList(articles: state.articles)),
         ],
       ),
     );
