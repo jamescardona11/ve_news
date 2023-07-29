@@ -17,9 +17,8 @@ class CategoriesList extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     return SizedBox(
       width: size.width,
-      height: 50,
+      height: 35,
       child: ListView.builder(
-        padding: const EdgeInsets.all(AppDimens.size8),
         itemCount: categories.take(4).length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -49,11 +48,12 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RippleEffectWrapper(
+    return BounceWrapper(
       onPressed: onPressed,
+      scale: 0.1,
       child: Container(
-        padding: const EdgeInsets.all(AppDimens.size8),
-        margin: const EdgeInsets.only(right: AppDimens.size8),
+        padding: const EdgeInsets.symmetric(horizontal: AppDimens.size12, vertical: AppDimens.size2),
+        margin: const EdgeInsets.only(right: AppDimens.size4),
         decoration: const BoxDecoration(
           color: AppColors.black,
           borderRadius: BorderRadius.all(AppDimens.radius25),

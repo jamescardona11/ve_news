@@ -19,6 +19,8 @@ abstract class AppColors {
   static const Color black = Color(0xFF142129);
   static const Color creamColor = Color(0xFFfcf4e7);
 
+  static const Color purple = Color(0xFFE8E8FD);
+
   static const Color pureWhite = Color(0xFFffffff);
 
   static const Color scaffoldBackground = white;
