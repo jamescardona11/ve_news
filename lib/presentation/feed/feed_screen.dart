@@ -14,11 +14,9 @@ class FeedScreen extends StatelessWidget {
       builder: (context, state) => Column(
         children: [
           SizedBox(
-            height: 80,
+            height: 85,
             child: SourcesList(sources: state.sources),
           ),
-          const SizedBox(height: 10),
-          const Divider(),
           Expanded(child: ArticlesList(articles: state.articles)),
         ],
       ),

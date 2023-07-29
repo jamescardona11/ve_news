@@ -14,12 +14,16 @@ class ArticlesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => ArticleTileHorizontal(
-        article: articles[index],
-      ),
+    return Padding(
       padding: const EdgeInsets.all(AppDimens.defaultPadding),
-      itemCount: articles.length,
+      child: ListView.separated(
+        itemBuilder: (context, index) => ArticleTileHorizontal(
+          article: articles[index],
+        ),
+        separatorBuilder: (context, index) => const SizedBox(height: AppDimens.size10),
+        padding: EdgeInsets.zero,
+        itemCount: articles.length,
+      ),
     );
   }
 }

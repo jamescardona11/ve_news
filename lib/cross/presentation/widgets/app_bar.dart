@@ -41,10 +41,23 @@ class VeNewsAppBar extends StatelessWidget {
           children: [
             Positioned(
               left: 0,
-              child: CircularIconButton(
-                size: AppDimens.size50,
-                onPressed: onLeftTap,
-                icon: iconLeft,
+              child: Stack(
+                children: [
+                  CircularIconButton(
+                    size: AppDimens.size50,
+                    onPressed: onLeftTap,
+                    icon: iconLeft,
+                  ),
+                  const Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Icon(
+                      FontAwesomeIcons.solidCircle,
+                      size: AppDimens.size12,
+                      color: AppColors.primary,
+                    ),
+                  )
+                ],
               ),
             ),
             if (iconRight != null)

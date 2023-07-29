@@ -98,18 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Actions',
                   ),
                   GButton(
-                    icon: FontAwesomeIcons.inbox,
-                    text: 'Summary',
-                    leading: Stack(
-                      children: [
-                        Icon(FontAwesomeIcons.inbox, color: AppColors.black),
-                        Icon(
-                          FontAwesomeIcons.solidCircle,
-                          size: AppDimens.size12,
-                          color: AppColors.primary,
-                        ),
-                      ],
-                    ),
+                    icon: FontAwesomeIcons.solidBookmark,
+                    text: 'Bookmarks',
                   ),
                   GButton(
                     icon: FontAwesomeIcons.userAstronaut,
