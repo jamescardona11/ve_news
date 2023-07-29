@@ -15,12 +15,10 @@ class ArticlesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.all(AppDimens.defaultPadding),
-        child: ArticleTileHorizontal(
-          article: articles[index],
-        ),
+      itemBuilder: (context, index) => ArticleTileHorizontal(
+        article: articles[index],
       ),
+      padding: const EdgeInsets.all(AppDimens.defaultPadding),
       itemCount: articles.length,
     );
   }

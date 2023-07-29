@@ -24,23 +24,23 @@ class FeedCubit extends Cubit<FeedState> {
   StreamSubscription<List<ArticleModel>>? _articlesSubscription;
 
   void addArticleToSummary(ArticleModel article) {
-    final articles = Set<String>.from(state.summary?.articles ?? <String>{});
+    final articles = Set<String>.from(state.summary?.articles ?? <String>[]);
     articles.add(article.uuid);
 
     _updateSummary(articles);
   }
 
   void removeArticleToSummary(ArticleModel article) {
-    final articles = Set<String>.from(state.summary?.articles ?? <String>{});
+    final articles = Set<String>.from(state.summary?.articles ?? <String>[]);
     articles.remove(article.uuid);
 
     _updateSummary(articles);
   }
 
   void _updateSummary(Set<String> articles) {
-    final summary = state.summary?.copyWith(articles: articles) ?? SummaryArticles(articles: articles);
-    emit(state.copyWith(summary: summary));
-    _summaryRepository.update(summary);
+    // final summary = state.summary?.copyWith(articles: articles.to) ?? SummaryArticles(articles: articles);
+    // emit(state.copyWith(summary: summary));
+    // _summaryRepository.update(summary);
   }
 
   @override

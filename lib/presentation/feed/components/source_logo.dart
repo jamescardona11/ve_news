@@ -21,7 +21,7 @@ class SourceLogo extends StatelessWidget {
       child: Column(
         children: [
           Hero(
-            tag: source.id,
+            tag: source.name,
             child: CircleAvatar(
               radius: AppDimens.size30,
               backgroundColor: AppColors.lightGrey300,

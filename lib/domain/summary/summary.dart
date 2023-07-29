@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
-import 'package:ve_news/config/constants.dart';
+import 'package:ve_news/domain/article/article_model.dart';
 
 class SummaryArticles extends Equatable {
-  final int id;
-  final Set<String> articles;
+  final int? id;
+  final List<ArticleModel> articles;
   final bool isCompleted;
   final bool isCreatingVoiceSummary;
   final String? voiceSummaryPath;
 
   const SummaryArticles({
-    this.id = Constants.fakeId,
-    this.articles = const {},
+    this.id,
+    this.articles = const [],
     this.isCompleted = false,
     this.isCreatingVoiceSummary = false,
     this.voiceSummaryPath,
@@ -18,7 +18,7 @@ class SummaryArticles extends Equatable {
 
   SummaryArticles copyWith({
     int? id,
-    Set<String>? articles,
+    List<ArticleModel>? articles,
     bool? isCompleted,
     bool? isCreatingVoiceSummary,
     String? voiceSummaryPath,
