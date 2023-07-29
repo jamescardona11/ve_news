@@ -2,11 +2,11 @@ import 'package:isar/isar.dart';
 import 'package:ve_news/cross/domain/models/image_value_object.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
-part 'isar_source_dto.g.dart';
+part 'source_dto.g.dart';
 
 @collection
 @Name('Channel')
-final class IsarSourceDto {
+final class SourceDto {
   final Id id;
   final String name;
   final String url;
@@ -14,7 +14,7 @@ final class IsarSourceDto {
   final bool isFavorite;
   final bool isEnabled;
 
-  const IsarSourceDto({
+  const SourceDto({
     this.id = Isar.autoIncrement,
     required this.name,
     required this.url,
@@ -23,14 +23,14 @@ final class IsarSourceDto {
     this.isEnabled = true,
   });
 
-  factory IsarSourceDto.create({
+  factory SourceDto.create({
     required String name,
     required String url,
     String logo = '',
     bool isFavorite = false,
     bool isEnabled = true,
   }) =>
-      IsarSourceDto(
+      SourceDto(
         name: name,
         url: url,
         logo: logo,

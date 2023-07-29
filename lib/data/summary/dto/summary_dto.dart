@@ -1,12 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:isar/isar.dart';
-import 'package:ve_news/config/constants.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
-part 'isar_summary_dto.g.dart';
+part 'summary_dto.g.dart';
 
 @collection
 @Name('Summary')
-final class IsarSummaryArticlesDto {
+class SummaryArticlesDto {
   final Id id;
   final List<String> articles;
   final bool isCompleted;
@@ -14,7 +14,7 @@ final class IsarSummaryArticlesDto {
   final String? voiceSummaryPath;
   final int dateTime;
 
-  IsarSummaryArticlesDto({
+  SummaryArticlesDto({
     this.id = Isar.autoIncrement,
     this.articles = const [],
     this.isCompleted = false,
@@ -22,9 +22,9 @@ final class IsarSummaryArticlesDto {
     this.voiceSummaryPath,
   }) : dateTime = DateTime.now().millisecondsSinceEpoch;
 
-  factory IsarSummaryArticlesDto.fromModel(SummaryArticles model) => IsarSummaryArticlesDto(
-        id: model.id != Constants.fakeId ? model.id : Isar.autoIncrement,
-        articles: model.articles.toList(),
+  factory SummaryArticlesDto.fromModel(SummaryArticles model) => SummaryArticlesDto(
+        id: model.id ?? Isar.autoIncrement,
+        articles: model.articles.map((e) => e.uuid).toList(),
         isCompleted: model.isCompleted,
         isCreatingVoiceSummary: model.isCreatingVoiceSummary,
         voiceSummaryPath: model.voiceSummaryPath,
@@ -32,9 +32,25 @@ final class IsarSummaryArticlesDto {
 
   SummaryArticles toModel([int? id]) => SummaryArticles(
         id: id ?? this.id,
-        articles: Set.from(articles),
         isCompleted: isCompleted,
         isCreatingVoiceSummary: isCreatingVoiceSummary,
         voiceSummaryPath: voiceSummaryPath,
       );
+
+  SummaryArticlesDto copyWith({
+    Id? id,
+    List<String>? articles,
+    bool? isCompleted,
+    bool? isCreatingVoiceSummary,
+    String? voiceSummaryPath,
+    int? dateTime,
+  }) {
+    return SummaryArticlesDto(
+      id: id ?? this.id,
+      articles: articles ?? this.articles,
+      isCompleted: isCompleted ?? this.isCompleted,
+      isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
+      voiceSummaryPath: voiceSummaryPath ?? this.voiceSummaryPath,
+    );
+  }
 }

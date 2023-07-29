@@ -11,7 +11,6 @@ import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
 import 'dto/article_dto.dart';
-import 'dto/isar_article_dto.dart';
 
 final class ArticlesRepositoryImpl extends ArticlesRepository {
   final Isar _isar;
@@ -19,17 +18,34 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   final SourcesRepository _sourcesRepository;
 
   ArticlesRepositoryImpl(this._isar, this._projectile, this._sourcesRepository) {
-    _articleStore = _isar.isarArticleDtos;
+    _articleStore = _isar.articleDtos;
   }
 
   int _page = 0;
-  late final IsarCollection<IsarArticleDto> _articleStore;
+  late final IsarCollection<ArticleDto> _articleStore;
 
   @override
   Future<void> fetchTodayArticles() async {
     _page = 0;
     await fetchNewArticles();
     await removeOldArticles();
+  }
+
+  @override
+  Future<List<ArticleModel>> readByIds(List<String> ids) async {
+    final articles = await _articleStore.filter().anyOf(ids, (dto, id) => dto.uuidEqualTo(id)).findAll();
+    final sources = await _sourcesRepository.readAllEnabled();
+
+    return articles
+        .where((element) => ids.contains(element.id))
+        .map((article) {
+          final source = sources.firstWhereOrNull((source) => source.id == article.sourceId);
+          if (source == null || source.id == null) return null;
+
+          return article.toModel(source);
+        })
+        .whereNotNull()
+        .toList();
   }
 
   // TODO (james): Improve this
@@ -81,10 +97,10 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
       final articlesDtoList = resultsListMap.map((e) => ArticleDto.fromJson(e as Map<String, dynamic>)).toList();
       final isarElements = articlesDtoList
           .map((e) {
-            final source = sources.firstWhereOrNull((source) => source.url == e.sourceUri);
-            if (source == null) return null;
+            final source = sources.firstWhereOrNull((source) => source.id == e.sourceId);
+            if (source == null || source.id == null) return null;
 
-            return IsarArticleDto.fromDto(e, source.id);
+            return e.copyWith(sourceId: source.id);
           })
           .whereNotNull()
           .toList();
@@ -106,7 +122,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
     return CombineLatestStream.combine2(
       _articleStore.where().sortByDateTime().watch(fireImmediately: true),
       _sourcesRepository.watch(),
-      (List<IsarArticleDto> articles, List<SourceModel> sources) => articles
+      (List<ArticleDto> articles, List<SourceModel> sources) => articles
           .map((article) {
             final source = sources.firstWhereOrNull((source) => source.id == article.sourceId);
             if (source == null) return null;

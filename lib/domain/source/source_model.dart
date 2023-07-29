@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:ve_news/cross/domain/models/image_value_object.dart';
 
 final class SourceModel with EquatableMixin {
-  final int id;
+  final int? id;
   final String name;
   final String url;
   final ImageValueObject logo;
@@ -10,7 +10,7 @@ final class SourceModel with EquatableMixin {
   final bool isEnabled;
 
   const SourceModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.url,
     required this.logo,
