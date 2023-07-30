@@ -5,6 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/cross/presentation/widgets/app_bar.dart';
+import 'package:ve_news/presentation/account/account_screen.dart';
 import 'package:ve_news/presentation/articles/bookmarks/bookmarks_screen.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 import 'package:ve_news/presentation/articles/feed/feed_screen.dart';
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(),
                   BookmarkScreen(),
                   SummaryScreen(),
-                  SizedBox(),
+                  AccountScreen(),
                 ],
               ),
             ),
