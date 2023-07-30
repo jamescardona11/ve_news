@@ -16,8 +16,13 @@ class ArticlesCubit extends Cubit<ArticlesState> {
   final ArticlesRepository _articlesRepository;
   final SummaryRepository _summaryRepository;
 
-  ArticlesCubit(this._sourcesRepository, this._articlesRepository, this._summaryRepository) : super(const ArticlesState()) {
-    _init();
+  ArticlesCubit(
+    this._sourcesRepository,
+    this._articlesRepository,
+    this._summaryRepository, {
+    SourceModel? sourceFilter,
+  }) : super(const ArticlesState()) {
+    _init(sourceFilter);
   }
 
   StreamSubscription<List<SourceModel>>? _sourcesSubscription;
@@ -52,7 +57,7 @@ class ArticlesCubit extends Cubit<ArticlesState> {
     return super.close();
   }
 
-  void _init() {
+  void _init(SourceModel? sourceFilter) {
     _summaryRepository.watchLastUncompleted().listen((summary) {
       emit(state.copyWith(summary: summary));
     });
@@ -66,7 +71,13 @@ class ArticlesCubit extends Cubit<ArticlesState> {
     });
 
     _articlesSubscription = _articlesRepository.watch().listen((articles) {
-      emit(state.copyWith(articles: articles));
+      if (sourceFilter == null) {
+        emit(state.copyWith(articles: articles));
+        return;
+      }
+
+      final filteredArticles = articles.where((article) => article.source.id == sourceFilter.id).toList();
+      emit(state.copyWith(articles: filteredArticles));
     });
   }
 }
