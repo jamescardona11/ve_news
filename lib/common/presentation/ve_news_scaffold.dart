@@ -13,6 +13,8 @@ class VeNewsScaffold extends StatelessWidget {
     this.iconLeft,
     this.iconRight,
     this.showLeftNotification = false,
+    this.extendBodyBehindAppBar = false,
+    this.backgroundColor,
     required this.body,
   }) : super(key: key);
 
@@ -22,6 +24,8 @@ class VeNewsScaffold extends StatelessWidget {
   final IconData? iconLeft;
   final IconData? iconRight;
   final bool showLeftNotification;
+  final bool extendBodyBehindAppBar;
+  final Color? backgroundColor;
   final Widget body;
 
   @override
@@ -29,62 +33,66 @@ class VeNewsScaffold extends StatelessWidget {
     final textTheme = context.textTheme;
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
+      extendBodyBehindAppBar: extendBodyBehindAppBar,
       appBar: title.isNotEmpty
           ? PreferredSize(
               preferredSize: const Size.fromHeight(100.0),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: AppDimens.size20,
-                  right: AppDimens.size20,
-                  top: AppDimens.size50,
-                ),
-                child: SizedBox(
-                  width: size.width,
-                  height: AppDimens.size60,
-                  child: Stack(
-                    children: [
-                      if (iconLeft != null)
-                        Positioned(
-                          left: 0,
-                          child: Stack(
-                            children: [
-                              CircularIconButton(
-                                color: AppColors.pureWhite,
-                                size: AppDimens.size50,
-                                onPressed: onLeftTap,
-                                icon: iconLeft!,
-                              ),
-                              if (showLeftNotification)
-                                const Positioned(
-                                  top: 10,
-                                  right: 10,
-                                  child: Icon(
-                                    FontAwesomeIcons.solidCircle,
-                                    size: AppDimens.size12,
-                                    color: AppColors.primary,
-                                  ),
-                                )
-                            ],
+              child: ColoredBox(
+                color: backgroundColor ?? AppColors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: AppDimens.size20,
+                    right: AppDimens.size20,
+                    top: AppDimens.size50,
+                  ),
+                  child: SizedBox(
+                    width: size.width,
+                    height: AppDimens.size60,
+                    child: Stack(
+                      children: [
+                        if (iconLeft != null)
+                          Positioned(
+                            left: 0,
+                            child: Stack(
+                              children: [
+                                CircularIconButton(
+                                  color: AppColors.pureWhite,
+                                  size: AppDimens.size50,
+                                  onPressed: onLeftTap,
+                                  icon: iconLeft!,
+                                ),
+                                if (showLeftNotification)
+                                  const Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      size: AppDimens.size12,
+                                      color: AppColors.primary,
+                                    ),
+                                  )
+                              ],
+                            ),
                           ),
-                        ),
-                      if (iconRight != null)
-                        Positioned(
-                          right: 0,
-                          child: CircularIconButton(
-                            color: AppColors.pureWhite,
-                            size: AppDimens.size50,
-                            onPressed: onRightTap,
-                            icon: iconRight!,
+                        if (iconRight != null)
+                          Positioned(
+                            right: 0,
+                            child: CircularIconButton(
+                              color: AppColors.pureWhite,
+                              size: AppDimens.size50,
+                              onPressed: onRightTap,
+                              icon: iconRight!,
+                            ),
                           ),
-                        ),
-                      if (title.isNotEmpty)
-                        Align(
-                          child: Text(
-                            title,
-                            style: textTheme.titleLarge,
+                        if (title.isNotEmpty)
+                          Align(
+                            child: Text(
+                              title,
+                              style: textTheme.titleLarge,
+                            ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ))
