@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
@@ -35,4 +36,6 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       emit(state.copyWith(summary: summary));
     });
   }
+
+  Future<void> removeArticle(ArticleModel article) async {}
 }

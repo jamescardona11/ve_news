@@ -22,6 +22,7 @@ abstract class AppColors {
   static const Color blue = Color(0xFF2967FF);
   static const Color purple = Color(0xFFE8E8FD);
   static const Color pureWhite = Color(0xFFffffff);
+  static const Color red = Color.fromARGB(226, 230, 41, 41);
 
   static const Color scaffoldBackground = white;
 }
