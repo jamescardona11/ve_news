@@ -68,15 +68,22 @@ class SummaryCardItem extends StatelessWidget {
                                 icon: FontAwesomeIcons.newspaper,
                                 label: 'Articles length: ${summary.bodyLength}',
                               ),
-                              _IconText(
-                                icon: FontAwesomeIcons.book,
-                                label: 'Summary length: ${summary.bodyLength}',
-                                showEdit: !summary.isCompleted,
-                              ),
-                              _IconText(
-                                icon: FontAwesomeIcons.solidClock,
-                                label: 'Summary ~time: ${summary.bodyLength}',
-                                showEdit: !summary.isCompleted,
+                              Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      _IconText(
+                                        icon: FontAwesomeIcons.book,
+                                        label: 'Summary length: ${summary.bodyLength}',
+                                      ),
+                                      _IconText(
+                                        icon: FontAwesomeIcons.solidClock,
+                                        label: 'Summary ~time: ${summary.bodyLength}',
+                                      ),
+                                    ],
+                                  ),
+                                  if (!summary.isCompleted) const _EditDropDownWidget()
+                                ],
                               ),
                             ],
                           ),
@@ -137,19 +144,64 @@ class SummaryCardItem extends StatelessWidget {
           : 160;
 }
 
+class _EditDropDownWidget extends StatelessWidget {
+  const _EditDropDownWidget({
+    Key? key,
+  }) : super(key: key);
+
+  static const List<int> possiblePercentages = [90, 80, 70, 60, 50];
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        customButton: SizedBox(
+          width: 80,
+          height: 22,
+          child: RoundContainer(
+            color: AppColors.primary,
+            child: Center(child: Text('Edit', style: context.textTheme.bodyMedium?.copyWith(color: AppColors.white))),
+          ),
+        ),
+        items: possiblePercentages
+            .map(
+              (item) => DropdownMenuItem<int>(
+                value: item,
+                child: Text(
+                  'Max $item% ',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {},
+        dropdownStyleData: DropdownStyleData(
+          width: 160,
+          padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppDimens.size4),
+            color: AppColors.pureWhite,
+          ),
+          offset: const Offset(0, 8),
+        ),
+        menuItemStyleData: MenuItemStyleData(
+          customHeights: List<double>.filled(possiblePercentages.length, 35),
+          padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
+        ),
+      ),
+    );
+  }
+}
+
 class _IconText extends StatelessWidget {
   const _IconText({
     Key? key,
     required this.icon,
     required this.label,
-    this.showEdit = false,
   }) : super(key: key);
 
   final IconData icon;
   final String label;
-  final bool showEdit;
-
-  static const List<int> possiblePercentages = [90, 80, 70, 60, 50];
 
   @override
   Widget build(BuildContext context) {
@@ -165,44 +217,6 @@ class _IconText extends StatelessWidget {
           const SizedBox(width: AppDimens.size8),
           Text(label, style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black)),
           const SizedBox(width: AppDimens.size8),
-          if (showEdit)
-            DropdownButtonHideUnderline(
-              child: DropdownButton2(
-                customButton: SizedBox(
-                  width: 80,
-                  height: 22,
-                  child: RoundContainer(
-                    color: AppColors.primary,
-                    child: Center(child: Text('Edit', style: context.textTheme.bodyMedium?.copyWith(color: AppColors.white))),
-                  ),
-                ),
-                items: possiblePercentages
-                    .map(
-                      (item) => DropdownMenuItem<int>(
-                        value: item,
-                        child: Text(
-                          'Max $item% ',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {},
-                dropdownStyleData: DropdownStyleData(
-                  width: 160,
-                  padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppDimens.size4),
-                    color: AppColors.pureWhite,
-                  ),
-                  offset: const Offset(0, 8),
-                ),
-                menuItemStyleData: MenuItemStyleData(
-                  customHeights: List<double>.filled(possiblePercentages.length, 35),
-                  padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
-                ),
-              ),
-            ),
         ],
       ),
     );
