@@ -39,10 +39,10 @@ class ArticlesCubit extends Cubit<ArticlesState> {
     _updateSummary(articles);
   }
 
-  void _updateSummary(List<ArticleModel> articles) {
+  Future<void> _updateSummary(List<ArticleModel> articles) async {
     final summary = state.summary?.copyWith(articles: articles.toList()) ?? SummaryArticles(articles: articles);
     emit(state.copyWith(summary: summary));
-    _summaryRepository.update(summary);
+    await _summaryRepository.update(summary);
   }
 
   @override

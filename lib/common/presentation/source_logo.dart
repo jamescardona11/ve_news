@@ -23,31 +23,28 @@ class SourceLogo extends StatelessWidget {
     final textTheme = context.textTheme;
     return Column(
       children: [
-        Hero(
-          tag: source.name,
-          child: BounceWrapper(
-            onPressed: onPressed,
-            child: Container(
-              width: size,
-              height: size,
-              decoration: const BoxDecoration(
-                color: AppColors.pureWhite,
-                shape: BoxShape.circle,
-                border: Border.fromBorderSide(
-                  BorderSide(
-                    color: AppColors.grey,
-                    width: 1,
-                  ),
+        BounceWrapper(
+          onPressed: onPressed,
+          child: Container(
+            width: size,
+            height: size,
+            decoration: const BoxDecoration(
+              color: AppColors.pureWhite,
+              shape: BoxShape.circle,
+              border: Border.fromBorderSide(
+                BorderSide(
+                  color: AppColors.grey,
+                  width: 1,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(AppDimens.size4),
-                child: ClipOval(
-                  clipBehavior: Clip.hardEdge,
-                  child: Image.asset(
-                    source.logo.value,
-                    width: 40,
-                  ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(AppDimens.size4),
+              child: ClipOval(
+                clipBehavior: Clip.hardEdge,
+                child: Image.asset(
+                  source.logo.value,
+                  width: 40,
                 ),
               ),
             ),

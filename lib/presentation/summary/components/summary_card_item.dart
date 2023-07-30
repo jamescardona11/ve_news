@@ -11,9 +11,11 @@ class SummaryCardItem extends StatelessWidget {
   const SummaryCardItem({
     Key? key,
     required this.summary,
+    this.onEditPressed,
   }) : super(key: key);
 
   final SummaryArticles summary;
+  final ValueChanged<int>? onEditPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,7 @@ class SummaryCardItem extends StatelessWidget {
                                     ],
                                   ),
                                   Text('(${summary.summaryPercentage}%)'),
-                                  if (!summary.isCompleted) const _EditDropDownWidget()
+                                  if (!summary.isCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
                                 ],
                               ),
                             ],
@@ -94,7 +96,7 @@ class SummaryCardItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppDimens.size10),
-                  if (!summary.isEmpty)
+                  if (summary.isNotEmpty)
                     Expanded(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -141,7 +143,7 @@ class SummaryCardItem extends StatelessWidget {
 
   double get height => summary.isCompleted
       ? 280
-      : !summary.isEmpty
+      : summary.isNotEmpty
           ? 280
           : 160;
 }
@@ -149,7 +151,10 @@ class SummaryCardItem extends StatelessWidget {
 class _EditDropDownWidget extends StatelessWidget {
   const _EditDropDownWidget({
     Key? key,
+    this.onEditPressed,
   }) : super(key: key);
+
+  final ValueChanged<int>? onEditPressed;
 
   static const List<int> possiblePercentages = [90, 80, 70, 60, 50];
 
@@ -178,7 +183,9 @@ class _EditDropDownWidget extends StatelessWidget {
                 ),
               )
               .toList(),
-          onChanged: (value) {},
+          onChanged: (value) {
+            onEditPressed?.call(value ?? 70);
+          },
           dropdownStyleData: DropdownStyleData(
             width: 160,
             padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),

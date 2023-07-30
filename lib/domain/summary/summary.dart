@@ -20,6 +20,7 @@ class SummaryArticles extends Equatable {
   });
 
   bool get isEmpty => articles.isEmpty;
+  bool get isNotEmpty => articles.isNotEmpty;
   List<Category> get categories => articles.map((e) => e.categories.isNotEmpty ? e.categories.first : null).whereNotNull().toSet().toList();
 
   int get length => articles.length;

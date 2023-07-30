@@ -17,12 +17,8 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
 
   StreamSubscription<SummaryArticles>? _summarySubscription;
 
-  void onChangeLengthPercentage(int value) {
-    emit(state.copyWith(summaryPercentage: value));
-  }
-
-  void onChangeTimePercentage(int value) {
-    emit(state.copyWith(summaryPercentage: value));
+  void onChangeSummaryPercentage(int value) {
+    emit(state.copyWith(summary: state.summary?.copyWith(summaryPercentage: value)));
   }
 
   @override
@@ -37,5 +33,12 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     });
   }
 
-  Future<void> removeArticle(ArticleModel article) async {}
+  Future<void> removeArticle(ArticleModel article) async {
+    final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
+    articles.remove(article);
+
+    final summary = state.summary?.copyWith(articles: articles.toList()) ?? SummaryArticles(articles: articles);
+    emit(state.copyWith(summary: summary));
+    await _summaryRepository.update(summary);
+  }
 }

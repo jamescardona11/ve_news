@@ -18,6 +18,7 @@ class FeedScreen extends StatelessWidget {
         title: 'VeNews',
         iconLeft: FontAwesomeIcons.inbox,
         iconRight: FontAwesomeIcons.magnifyingGlass,
+        showLeftNotification: state.summary?.isNotEmpty ?? false,
         onRightTap: () {},
         onLeftTap: () {
           context.push(AppRouter.newSummary);

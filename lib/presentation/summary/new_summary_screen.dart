@@ -49,7 +49,10 @@ class _NewSummaryView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
           child: Column(
             children: [
-              SummaryCardItem(summary: state.summary!),
+              SummaryCardItem(
+                summary: state.summary!,
+                onEditPressed: (value) => cubit.onChangeSummaryPercentage(value),
+              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: state.summary!.length,
