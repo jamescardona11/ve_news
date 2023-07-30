@@ -21,65 +21,86 @@ class SummaryScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final summary = state.summaries[index];
           return SizedBox(
-              width: size.width,
-              height: 270,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.pureWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.black),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: AppDimens.defaultPadding,
-                        left: AppDimens.defaultPadding,
-                        right: AppDimens.defaultPadding,
-                      ),
-                      child: Column(
-                        children: [
-                          _HeaderWidget(articles: summary.articles),
-                          const SizedBox(height: AppDimens.size10),
-                          CategoriesList(categories: state.categories),
-                          const SizedBox(height: AppDimens.size10),
-                          _IconText(icon: FontAwesomeIcons.newspaper, label: 'Articles length: ${summary.bodyLength}'),
-                          _IconText(icon: FontAwesomeIcons.book, label: 'Summary length: ${summary.bodyLength}'),
-                          _IconText(icon: FontAwesomeIcons.solidClock, label: 'Summary ~time: ${summary.bodyLength}'),
-                        ],
-                      ),
+            width: size.width,
+            height: 270,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  bottom: AppDimens.size24,
+                  left: 0,
+                  right: 0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.grey,
+                      border: Border.all(color: AppColors.black, width: AppDimens.size1),
+                      borderRadius: const BorderRadius.all(AppDimens.radius10),
                     ),
-                    const SizedBox(height: AppDimens.size10),
-                    Expanded(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: AppColors.purple,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(AppDimens.size10),
-                            bottomRight: Radius.circular(AppDimens.size10),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.pureWhite,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.black),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: AppDimens.defaultPadding,
+                            left: AppDimens.defaultPadding,
+                            right: AppDimens.defaultPadding,
                           ),
-                          border: Border.all(color: AppColors.black),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(AppDimens.defaultPadding),
-                          child: Row(
+                          child: Column(
                             children: [
-                              FaIcon(
-                                FontAwesomeIcons.solidEye,
-                                color: AppColors.black,
-                                size: 18,
-                              ),
-                              const SizedBox(width: AppDimens.size8),
-                              Text('Review Articles'),
+                              _HeaderWidget(articles: summary.articles),
+                              const SizedBox(height: AppDimens.size10),
+                              CategoriesList(categories: state.categories),
+                              const SizedBox(height: AppDimens.size10),
+                              _IconText(icon: FontAwesomeIcons.newspaper, label: 'Articles length: ${summary.bodyLength}'),
+                              _IconText(icon: FontAwesomeIcons.book, label: 'Summary length: ${summary.bodyLength}'),
+                              _IconText(icon: FontAwesomeIcons.solidClock, label: 'Summary ~time: ${summary.bodyLength}'),
                             ],
                           ),
                         ),
-                      ),
+                        const SizedBox(height: AppDimens.size10),
+                        Expanded(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AppColors.purple,
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(AppDimens.size10),
+                                bottomRight: Radius.circular(AppDimens.size10),
+                              ),
+                              border: Border.all(color: AppColors.black),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(AppDimens.defaultPadding),
+                              child: Row(
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.solidEye,
+                                    color: AppColors.black,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: AppDimens.size8),
+                                  Text('Review Articles'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ));
+              ],
+            ),
+          );
         },
       ),
     );
