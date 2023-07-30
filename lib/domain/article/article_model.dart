@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
@@ -43,6 +44,38 @@ class ArticleModel extends Equatable {
     }
 
     return categories.first.label!.split('/').last;
+  }
+
+  ArticleModel copyWith({
+    int? id,
+    String? uuid,
+    String? title,
+    String? url,
+    String? body,
+    SourceModel? source,
+    bool? isDuplicate,
+    bool? bookmark,
+    DateTime? dateTime,
+    String? lang,
+    String? image,
+    List<Concepts>? concepts,
+    List<Category>? categories,
+  }) {
+    return ArticleModel(
+      id: id ?? this.id,
+      uuid: uuid ?? this.uuid,
+      title: title ?? this.title,
+      url: url ?? this.url,
+      body: body ?? this.body,
+      source: source ?? this.source,
+      isDuplicate: isDuplicate ?? this.isDuplicate,
+      bookmark: bookmark ?? this.bookmark,
+      dateTime: dateTime ?? this.dateTime,
+      lang: lang ?? this.lang,
+      image: image ?? this.image,
+      concepts: concepts ?? this.concepts,
+      categories: categories ?? this.categories,
+    );
   }
 
   @override

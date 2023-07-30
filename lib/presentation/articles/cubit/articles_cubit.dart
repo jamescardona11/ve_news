@@ -23,7 +23,7 @@ class ArticlesCubit extends Cubit<ArticlesState> {
   StreamSubscription<List<SourceModel>>? _sourcesSubscription;
   StreamSubscription<List<ArticleModel>>? _articlesSubscription;
 
-  Future<void> saveToBookMarks(ArticleModel article) => _articlesRepository.update(article);
+  Future<void> saveToBookMarks(ArticleModel article) => _articlesRepository.update(article.copyWith(bookmark: true));
 
   void addArticleToSummary(ArticleModel article) {
     final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
@@ -62,7 +62,7 @@ class ArticlesCubit extends Cubit<ArticlesState> {
     });
 
     _articlesSubscription = _articlesRepository.watchBookmarks().listen((articles) {
-      emit(state.copyWith(articles: articles));
+      emit(state.copyWith(bookmarks: articles));
     });
 
     _articlesSubscription = _articlesRepository.watch().listen((articles) {

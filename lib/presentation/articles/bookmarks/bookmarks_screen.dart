@@ -17,24 +17,24 @@ class BookmarksScreen extends StatelessWidget {
       builder: (context, state) => VeNewsScaffold(
         title: 'Bookmarks',
         onRightTap: () {},
-        body: state.articles.isEmpty
+        body: state.bookmarks.isEmpty
             ? const EmptyWidget(label: 'bookmarks')
             : Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
                     child: RoundContainer(
                       // height: 100,
                       width: double.maxFinite,
                       showDefaultShadow: true,
                       color: AppColors.white,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(child: Text('#Bookmarks: 20')),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: Text('#Bookmarks: ${state.bookmarks.length}')),
                       ),
                     ),
                   ),
-                  Expanded(child: ArticlesList(articles: state.articles)),
+                  Expanded(child: ArticlesList(articles: state.bookmarks)),
                 ],
               ),
       ),

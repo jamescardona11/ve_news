@@ -115,13 +115,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   Future<void> update(ArticleModel article) async {
     if (article.id == null) return;
 
-    final dto = ArticleDto(
-      id: article.id!,
-      uuid: article.uuid,
-      title: article.title,
-      body: article.body,
-      url: article.url,
-    );
+    final dto = ArticleDto.fromModel(article);
 
     await _isar.writeTxn(() => _articleStore.put(dto));
   }

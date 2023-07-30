@@ -35,8 +35,8 @@ class ArticleTileHorizontal extends StatelessWidget {
                 onPressed: (_) {
                   cubit.saveToBookMarks(article);
                 },
-                backgroundColor: AppColors.blue,
-                foregroundColor: Colors.white,
+                backgroundColor: !article.bookmark ? AppColors.pureWhite : AppColors.blue,
+                foregroundColor: article.bookmark ? AppColors.pureWhite : AppColors.blue,
                 icon: FontAwesomeIcons.bookmark,
               ),
               SlidableAction(
