@@ -27,7 +27,7 @@ class FeedScreen extends StatelessWidget {
           children: [
             SizedBox(
               height: 85,
-              child: SourcesList(sources: state.sources),
+              child: SourcesList(sources: state.sourcesWithResults),
             ),
             Expanded(child: ArticlesList(articles: state.articles)),
           ],

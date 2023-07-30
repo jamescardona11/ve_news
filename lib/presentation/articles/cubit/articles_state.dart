@@ -13,6 +13,8 @@ class ArticlesState extends Equatable {
     this.summary,
   });
 
+  List<SourceModel> get sourcesWithResults => sources.where((source) => articles.any((article) => article.source.id == source.id)).toList();
+
   @override
   List<Object?> get props => [
         sources,
