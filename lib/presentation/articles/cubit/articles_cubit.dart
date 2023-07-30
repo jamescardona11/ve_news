@@ -36,23 +36,23 @@ class ArticlesCubit extends Cubit<ArticlesState> {
   }
 
   void addArticleToSummary(ArticleModel article) {
-    final articles = Set<String>.from(state.summary?.articles ?? <String>[]);
-    articles.add(article.uuid);
+    final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
+    articles.add(article);
 
     _updateSummary(articles);
   }
 
   void removeArticleToSummary(ArticleModel article) {
-    final articles = Set<String>.from(state.summary?.articles ?? <String>[]);
-    articles.remove(article.uuid);
+    final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
+    articles.remove(article);
 
     _updateSummary(articles);
   }
 
-  void _updateSummary(Set<String> articles) {
-    // final summary = state.summary?.copyWith(articles: articles) ?? SummaryArticles(articles: articles);
-    // emit(state.copyWith(summary: summary));
-    // _summaryRepository.update(summary);
+  void _updateSummary(List<ArticleModel> articles) {
+    final summary = state.summary?.copyWith(articles: articles.toList()) ?? SummaryArticles(articles: articles);
+    emit(state.copyWith(summary: summary));
+    _summaryRepository.update(summary);
   }
 
   @override

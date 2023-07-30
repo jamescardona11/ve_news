@@ -18,6 +18,8 @@ class SummaryArticles extends Equatable {
 
   bool get isEmpty => articles.isEmpty;
   List<Category> get categories => articles.map((e) => e.categories).expand((element) => element).toSet().toList();
+
+  int get length => articles.length;
   int get bodyLength => articles.map((e) => e.body.length).fold(0, (previousValue, element) => previousValue + element);
 
   SummaryArticles copyWith({

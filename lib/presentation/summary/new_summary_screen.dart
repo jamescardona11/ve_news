@@ -46,6 +46,12 @@ class _NewSummaryView extends StatelessWidget {
           child: Column(
             children: [
               SummaryCardItem(summary: state.summary!),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.summary!.length,
+                  itemBuilder: (context, index) => const Text('--'),
+                ),
+              ),
             ],
           ),
         );
