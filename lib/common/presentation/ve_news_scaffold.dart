@@ -88,7 +88,7 @@ class VeNewsScaffold extends StatelessWidget {
               ))
           : null,
       body: Padding(
-        padding: const EdgeInsets.only(top: AppDimens.size20),
+        padding: const EdgeInsets.only(top: AppDimens.size10),
         child: body,
       ),
     );

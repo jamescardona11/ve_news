@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ve_news/common/presentation/source_logo.dart';
-import 'package:ve_news/common/presentation/widgets/categories_list_chip.dart';
+import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
@@ -18,7 +18,7 @@ class SummaryCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
-      height: 270,
+      height: height,
       child: Stack(
         children: [
           Positioned(
@@ -54,8 +54,10 @@ class SummaryCardItem extends StatelessWidget {
                     child: Column(
                       children: [
                         _HeaderWidget(articles: summary.articles),
-                        const SizedBox(height: AppDimens.size10),
-                        CategoriesList(categories: summary.categories),
+                        if (!summary.isEmpty) ...[
+                          const SizedBox(height: AppDimens.size10),
+                          CategoriesList(categories: summary.categories),
+                        ],
                         const SizedBox(height: AppDimens.size10),
                         _IconText(icon: FontAwesomeIcons.newspaper, label: 'Articles length: ${summary.bodyLength}'),
                         _IconText(icon: FontAwesomeIcons.book, label: 'Summary length: ${summary.bodyLength}'),
@@ -64,32 +66,40 @@ class SummaryCardItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppDimens.size10),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: AppColors.purple,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(AppDimens.size10),
-                          bottomRight: Radius.circular(AppDimens.size10),
+                  if (!summary.isEmpty)
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: AppColors.purple,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(AppDimens.size10),
+                            bottomRight: Radius.circular(AppDimens.size10),
+                          ),
+                          border: Border.all(color: AppColors.black),
                         ),
-                        border: Border.all(color: AppColors.black),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppDimens.defaultPadding),
-                        child: Row(
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.solidEye,
-                              color: AppColors.black,
-                              size: 18,
+                        child: RippleEffectWrapper(
+                          splashColor: AppColors.primaryLight,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(AppDimens.defaultPadding),
+                            child: Row(
+                              children: [
+                                const FaIcon(
+                                  FontAwesomeIcons.solidEye,
+                                  color: AppColors.black,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: AppDimens.size8),
+                                Text(
+                                  'View Articles',
+                                  style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: AppDimens.size8),
-                            Text('Review Articles'),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -98,6 +108,12 @@ class SummaryCardItem extends StatelessWidget {
       ),
     );
   }
+
+  double get height => summary.isCompleted
+      ? 270
+      : !summary.isEmpty
+          ? 270
+          : 160;
 }
 
 class _IconText extends StatelessWidget {
@@ -139,7 +155,21 @@ class _HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = context.textTheme;
     final sources = articles.take(5).map((e) => e.source).toList();
+
+    if (sources.isEmpty) {
+      return Row(
+        children: [
+          Text(
+            'No Articles yet',
+            textAlign: TextAlign.start,
+            style: textTheme.titleMedium,
+          ),
+        ],
+      );
+    }
+
     return SizedBox(
       height: AppDimens.size50,
       child: Row(
@@ -169,6 +199,7 @@ class _HeaderWidget extends StatelessWidget {
           const SizedBox(width: AppDimens.size10),
           Text(
             '${articles.length} articles',
+            style: textTheme.titleMedium,
           ),
           const Spacer()
         ],

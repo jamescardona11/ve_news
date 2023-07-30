@@ -15,7 +15,7 @@ class SummaryScreen extends StatelessWidget {
       builder: (context, state) => VeNewsScaffold(
         title: 'Summary',
         body: ListView.builder(
-          padding: const EdgeInsets.all(AppDimens.defaultPadding),
+          padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
           itemCount: 1,
           itemBuilder: (context, index) => SummaryCardItem(summary: state.summaries[index]),
         ),
