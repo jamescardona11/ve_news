@@ -20,7 +20,7 @@ class SourcesList extends StatelessWidget {
           padding: EdgeInsets.only(left: index == 0 ? AppDimens.size20 : 0),
           child: SourceLogo(
             source: sources[index],
-            onTap: () {},
+            onPressed: () {},
           ),
         );
       },

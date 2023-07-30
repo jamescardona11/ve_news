@@ -165,7 +165,7 @@ class _HeaderWidget extends StatelessWidget {
                     left: index * AppDimens.size8,
                     child: SourceLogo(
                       source: source,
-                      radius: AppDimens.size24,
+                      size: AppDimens.size40,
                       showName: false,
                     ),
                   );

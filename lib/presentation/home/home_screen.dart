@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final selectedIndex = ValueNotifier<int>(2);
+  late final selectedIndex = ValueNotifier<int>(0);
   late final pageController = PageController(
     initialPage: selectedIndex.value,
   );
