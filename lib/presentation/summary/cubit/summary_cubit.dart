@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/domain/models/image_value_object.dart';
+import 'package:ve_news/common/domain/models/image_value_object.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 import 'package:ve_news/domain/summary/summary.dart';

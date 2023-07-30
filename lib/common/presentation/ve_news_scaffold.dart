@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
 
 class VeNewsScaffold extends StatelessWidget {
   const VeNewsScaffold({

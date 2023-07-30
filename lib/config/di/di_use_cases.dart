@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:ve_news/cross/domain/use_cases/use_cases.dart';
+import 'package:ve_news/common/domain/use_cases/use_cases.dart';
 import 'package:ve_news/domain/app_setup/use_case/app_setup_use_case.dart';
 
 @module

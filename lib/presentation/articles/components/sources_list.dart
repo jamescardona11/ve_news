@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
 class SourcesList extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ve_news/common/presentation/widgets/categories_list_chip.dart';
+import 'package:ve_news/common/presentation/widgets/source_logo.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/presentation/widgets/categories_list_chip.dart';
-import 'package:ve_news/cross/presentation/widgets/source_logo.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 
 import 'cubit/summary_cubit.dart';

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:ve_news/cross/data/preferences_repository_impl.dart';
-import 'package:ve_news/cross/domain/repository/preferences_repository.dart';
+import 'package:ve_news/common/data/preferences_repository_impl.dart';
+import 'package:ve_news/common/domain/repository/preferences_repository.dart';
 import 'package:ve_news/data/article/articles_repository_impl.dart';
 import 'package:ve_news/data/source/sources_repository_impl.dart';
 import 'package:ve_news/data/summary/summary_repository_impl.dart';

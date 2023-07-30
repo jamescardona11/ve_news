@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
 
 class ArticleSquareWidget extends StatelessWidget {
   const ArticleSquareWidget({Key? key, required this.title, required this.imageSrc, this.category, this.time, this.width})

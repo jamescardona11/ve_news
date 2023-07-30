@@ -1,4 +1,4 @@
-import 'package:ve_news/cross/data/connectivity_provider.dart';
+import 'package:ve_news/common/data/connectivity_provider.dart';
 
 class WatchInternetConnectionUseCase {
   final ConnectivityProvider connectivityProvider;

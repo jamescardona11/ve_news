@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:ve_news/cross/domain/models/image_value_object.dart';
+import 'package:ve_news/common/domain/models/image_value_object.dart';
 
 final class SourceModel with EquatableMixin {
   final int? id;

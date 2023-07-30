@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:ve_news/cross/domain/models/image_value_object.dart';
+import 'package:ve_news/common/domain/models/image_value_object.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 
 part 'source_dto.g.dart';

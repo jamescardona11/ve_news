@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:ve_news/common/presentation/presentation.dart';
+import 'package:ve_news/common/utils/date_utils.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
-import 'package:ve_news/cross/utils/date_utils.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 

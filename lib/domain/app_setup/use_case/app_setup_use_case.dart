@@ -1,4 +1,4 @@
-import 'package:ve_news/cross/domain/repository/preferences_repository.dart';
+import 'package:ve_news/common/domain/repository/preferences_repository.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 

@@ -1,6 +1,6 @@
+import 'package:ve_news/common/domain/repository/preferences_repository.dart';
 import 'package:ve_news/config/constants.dart';
 import 'package:ve_news/core/data/data.dart';
-import 'package:ve_news/cross/domain/repository/preferences_repository.dart';
 
 class PreferencesRepositoryImpl implements PreferencesRepository {
   final AppSharedPreferences _appSharedPreferences;
