@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/config/theme/text_theme.dart';
 
 class UserInfo extends StatelessWidget {
   const UserInfo({
@@ -19,11 +20,11 @@ class UserInfo extends StatelessWidget {
             children: [
               Text(
                 'Account',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const Text('Premium - 12 Days'),
+              const Text('Free - 12 Days Left'),
             ],
           ),
           // User Picture

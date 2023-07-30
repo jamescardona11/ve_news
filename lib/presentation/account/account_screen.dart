@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'components/account_settings_tile.dart';
 import 'components/choose_plan.dart';
@@ -9,98 +10,67 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// User Info
-          const UserInfo(),
-
-          const Divider(height: 30),
-
-          /// Plan Choose
-          const ChoosePlanSection(),
-
-          const Seperator(),
-
-          /// User Details
-          Column(
-            children: const [
-              AccountSettingsTile(
-                leadingText: 'Full Name',
-                trailingText: 'Gabriel Matusov',
+    return const Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UserInfo(),
+              Divider(height: 30),
+              ChoosePlanSection(),
+              Separator(),
+              Column(
+                children: [
+                  AccountSettingsTile(
+                    leadingText: 'Email',
+                    trailingText: 'No connected yet',
+                  ),
+                  AccountSettingsTile(
+                    leadingText: 'Country',
+                    trailingText: 'U.S',
+                    trailingIcon: FontAwesomeIcons.chevronRight,
+                  ),
+                  AccountSettingsTile(
+                    leadingText: 'Preferred Language',
+                    trailingText: 'English',
+                    trailingIcon: FontAwesomeIcons.chevronRight,
+                  ),
+                ],
               ),
+              Separator(),
               AccountSettingsTile(
-                leadingText: 'Email',
-                trailingText: 'gabmatus@gmail.com',
-              ),
-              AccountSettingsTile(
-                leadingText: 'Country',
-                trailingText: 'Finland',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-              ),
-              AccountSettingsTile(
-                leadingText: 'City',
-                trailingText: 'Helsinki',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-              ),
-            ],
-          ),
-
-          const Seperator(),
-
-          /// Others
-          Column(
-            children: const [
-              AccountSettingsTile(
-                leadingText: 'Favourite Channels',
+                leadingText: 'Favorite Topics',
                 trailingText: '17',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+                trailingIcon: FontAwesomeIcons.chevronRight,
+              ),
+              AccountSettingsTile(
+                leadingText: 'Favorite Categories',
+                trailingText: '3',
+                trailingIcon: FontAwesomeIcons.chevronRight,
               ),
               AccountSettingsTile(
                 leadingText: 'Bookmarks',
                 trailingText: '386',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+                trailingIcon: FontAwesomeIcons.chevronRight,
               ),
-            ],
-          ),
-
-          const Seperator(),
-
-          /// Others
-          Column(
-            children: const [
-              AccountSettingsTile(
-                leadingText: 'Newsletters',
-                trailingText: '',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-              ),
+              Separator(),
               AccountSettingsTile(
                 leadingText: 'Settings',
                 trailingText: '0',
-                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+                trailingIcon: FontAwesomeIcons.chevronRight,
               ),
+              Separator(),
             ],
           ),
-
-          const Seperator(),
-
-          /// Log out
-          const AccountSettingsTile(
-            leadingText: 'Logout',
-            trailingText: '',
-            trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-          ),
-
-          const Seperator(),
-        ],
+        ),
       ),
     );
   }
 }
 
-class Seperator extends StatelessWidget {
-  const Seperator({
+class Separator extends StatelessWidget {
+  const Separator({
     Key? key,
   }) : super(key: key);
 
