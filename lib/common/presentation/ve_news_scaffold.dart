@@ -49,6 +49,7 @@ class VeNewsScaffold extends StatelessWidget {
                           child: Stack(
                             children: [
                               CircularIconButton(
+                                color: AppColors.pureWhite,
                                 size: AppDimens.size50,
                                 onPressed: onLeftTap,
                                 icon: iconLeft!,
@@ -70,6 +71,7 @@ class VeNewsScaffold extends StatelessWidget {
                         Positioned(
                           right: 0,
                           child: CircularIconButton(
+                            color: AppColors.pureWhite,
                             size: AppDimens.size50,
                             onPressed: onRightTap,
                             icon: iconRight!,

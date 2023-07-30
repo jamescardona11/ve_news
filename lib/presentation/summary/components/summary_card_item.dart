@@ -35,7 +35,7 @@ class SummaryCardItem extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(AppDimens.size8),
             child: DecoratedBox(
               decoration: BoxDecoration(
                 color: AppColors.pureWhite,
@@ -46,22 +46,40 @@ class SummaryCardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: AppDimens.defaultPadding,
-                      left: AppDimens.defaultPadding,
-                      right: AppDimens.defaultPadding,
-                    ),
+                    padding: const EdgeInsets.only(top: AppDimens.defaultPadding),
                     child: Column(
                       children: [
-                        _HeaderWidget(articles: summary.articles),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
+                          child: _HeaderWidget(articles: summary.articles),
+                        ),
                         if (!summary.isEmpty) ...[
                           const SizedBox(height: AppDimens.size10),
                           CategoriesList(categories: summary.categories),
                         ],
                         const SizedBox(height: AppDimens.size10),
-                        _IconText(icon: FontAwesomeIcons.newspaper, label: 'Articles length: ${summary.bodyLength}'),
-                        _IconText(icon: FontAwesomeIcons.book, label: 'Summary length: ${summary.bodyLength}'),
-                        _IconText(icon: FontAwesomeIcons.solidClock, label: 'Summary ~time: ${summary.bodyLength}'),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _IconText(
+                                icon: FontAwesomeIcons.newspaper,
+                                label: 'Articles length: ${summary.bodyLength}',
+                              ),
+                              _IconText(
+                                icon: FontAwesomeIcons.book,
+                                label: 'Summary length: ${summary.bodyLength}',
+                                showEdit: !summary.isCompleted,
+                              ),
+                              _IconText(
+                                icon: FontAwesomeIcons.solidClock,
+                                label: 'Summary ~time: ${summary.bodyLength}',
+                                showEdit: !summary.isCompleted,
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -77,24 +95,26 @@ class SummaryCardItem extends StatelessWidget {
                           ),
                           border: Border.all(color: AppColors.black),
                         ),
-                        child: RippleEffectWrapper(
-                          splashColor: AppColors.primaryLight,
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(AppDimens.defaultPadding),
-                            child: Row(
-                              children: [
-                                const FaIcon(
-                                  FontAwesomeIcons.solidEye,
-                                  color: AppColors.black,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: AppDimens.size8),
-                                Text(
-                                  'View Articles',
-                                  style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black),
-                                ),
-                              ],
+                        child: ClipRRect(
+                          child: RippleEffectWrapper(
+                            splashColor: AppColors.primaryLight,
+                            onPressed: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.all(AppDimens.defaultPadding),
+                              child: Row(
+                                children: [
+                                  const FaIcon(
+                                    FontAwesomeIcons.solidEye,
+                                    color: AppColors.black,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: AppDimens.size8),
+                                  Text(
+                                    'View Articles',
+                                    style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -121,15 +141,17 @@ class _IconText extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.label,
+    this.showEdit = false,
   }) : super(key: key);
 
   final IconData icon;
   final String label;
+  final bool showEdit;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimens.size2),
+      padding: const EdgeInsets.symmetric(vertical: AppDimens.size4),
       child: Row(
         children: [
           FaIcon(
@@ -138,7 +160,17 @@ class _IconText extends StatelessWidget {
             size: 18,
           ),
           const SizedBox(width: AppDimens.size8),
-          Text(label),
+          Text(label, style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black)),
+          const SizedBox(width: AppDimens.size8),
+          if (showEdit)
+            SizedBox(
+              width: 80,
+              height: 20,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Edit'),
+              ),
+            ),
         ],
       ),
     );
@@ -171,12 +203,12 @@ class _HeaderWidget extends StatelessWidget {
     }
 
     return SizedBox(
-      height: AppDimens.size50,
+      height: AppDimens.size40,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: sources.length * AppDimens.size24,
+            width: sources.length == 1 ? 40 : sources.length * AppDimens.size24,
             child: Stack(
               alignment: Alignment.topLeft,
               fit: StackFit.loose,

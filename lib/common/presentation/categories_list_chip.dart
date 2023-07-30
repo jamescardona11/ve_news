@@ -3,7 +3,7 @@ import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 
-import 'bounce_wrapper.dart';
+import 'widgets/bounce_wrapper.dart';
 
 class CategoriesList extends StatelessWidget {
   const CategoriesList({
@@ -24,12 +24,15 @@ class CategoriesList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final category = categories[index];
+          if (category.singleLabel.isEmpty) return const SizedBox.shrink();
+
           return CategoryChip(
-            label: category.label!,
+            label: category.singleLabel,
             isActive: true,
             onPressed: null,
           );
         },
+        padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
       ),
     );
   }

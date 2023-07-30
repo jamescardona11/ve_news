@@ -37,7 +37,7 @@ class ArticleModel extends Equatable {
     if (categories.isEmpty) return 'News';
 
     for (var c in categories) {
-      final s = c.label!.split('/').last;
+      final s = c.singleLabel;
       if (s.split(' ').length <= 2) {
         return s;
       }
@@ -116,6 +116,12 @@ class Category extends Equatable {
   final String? label;
 
   const Category({this.uri, this.wgt, this.label});
+
+  String get singleLabel {
+    if (label?.isEmpty == true) return '';
+
+    return label!.split('/').last;
+  }
 
   @override
   List<Object?> get props => [uri, wgt, label];

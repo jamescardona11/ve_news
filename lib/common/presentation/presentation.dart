@@ -1,7 +1,7 @@
+export 'categories_list_chip.dart';
 export 'source_logo.dart';
 export 've_news_scaffold.dart';
 export 'widgets/bounce_wrapper.dart';
-export 'widgets/categories_list_chip.dart';
 export 'widgets/circular_container.dart';
 export 'widgets/circular_icon_button.dart';
 export 'widgets/network_image_with_loader.dart';
