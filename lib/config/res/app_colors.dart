@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' show Color, Colors;
 // https://coolors.co/palette/22577a-38a3a5-57cc99-80ed99-c7f9cc
 
 abstract class AppColors {
-  static const Color primary = Color(0xFF2967FF);
+  static const Color primary = Color(0xFF3c33a6);
   static const Color secondary = Color(0xFFF6F6F6);
   static const Color textColor = Color(0xFF2D2D2F);
   static const Color secondaryTextColor = Color(0xFF8D8D8E);
@@ -17,10 +17,8 @@ abstract class AppColors {
 
   static const Color white = Color(0xfff7f4f4);
   static const Color black = Color(0xFF142129);
-  static const Color creamColor = Color(0xFFfcf4e7);
 
   static const Color purple = Color(0xFFE8E8FD);
-
   static const Color pureWhite = Color(0xFFffffff);
 
   static const Color scaffoldBackground = white;

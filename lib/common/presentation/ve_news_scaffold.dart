@@ -12,6 +12,7 @@ class VeNewsScaffold extends StatelessWidget {
     this.onRightTap,
     this.iconLeft,
     this.iconRight,
+    this.showLeftNotification = false,
     required this.body,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class VeNewsScaffold extends StatelessWidget {
   final VoidCallback? onRightTap;
   final IconData? iconLeft;
   final IconData? iconRight;
+  final bool showLeftNotification;
   final Widget body;
 
   @override
@@ -51,15 +53,16 @@ class VeNewsScaffold extends StatelessWidget {
                                 onPressed: onLeftTap,
                                 icon: iconLeft!,
                               ),
-                              const Positioned(
-                                top: 10,
-                                right: 10,
-                                child: Icon(
-                                  FontAwesomeIcons.solidCircle,
-                                  size: AppDimens.size12,
-                                  color: AppColors.primary,
-                                ),
-                              )
+                              if (showLeftNotification)
+                                const Positioned(
+                                  top: 10,
+                                  right: 10,
+                                  child: Icon(
+                                    FontAwesomeIcons.solidCircle,
+                                    size: AppDimens.size12,
+                                    color: AppColors.primary,
+                                  ),
+                                )
                             ],
                           ),
                         ),

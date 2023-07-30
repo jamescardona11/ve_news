@@ -7,9 +7,6 @@ class SummaryState extends Equatable {
     this.summaries = const [],
   });
 
-  List<Category> get categories =>
-      summaries.map((e) => e.articles.map((e) => e.categories).expand((element) => element).toList()).expand((element) => element).toList();
-
   @override
   List<Object> get props => [summaries];
 

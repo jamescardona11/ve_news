@@ -16,6 +16,7 @@ class SummaryArticles extends Equatable {
     this.voiceSummaryPath,
   });
 
+  List<Category> get categories => articles.map((e) => e.categories).expand((element) => element).toSet().toList();
   int get bodyLength => articles.map((e) => e.body.length).fold(0, (previousValue, element) => previousValue + element);
 
   SummaryArticles copyWith({
