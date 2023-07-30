@@ -37,6 +37,25 @@ class AppTheme {
         enabledBorder: _defaultOutlineInputBorder,
         focusedBorder: _defaultOutlineInputBorder,
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        hintStyle: textTheme.titleLarge?.copyWith(color: AppColors.grey50),
+      ),
+
+      searchBarTheme: SearchBarThemeData(
+        backgroundColor: MaterialStateProperty.resolveWith((states) => Colors.red),
+        textStyle: MaterialStateProperty.resolveWith((states) => textTheme.bodySmall?.copyWith(color: AppColors.black)),
+        hintStyle: MaterialStateProperty.resolveWith((states) => textTheme.bodySmall?.copyWith(color: AppColors.black)),
+
+        // inputStyle: TextStyle(color: Colors.black),
+        // hintStyle: TextStyle(color: Colors.grey),
+        // iconColor: Colors.blue,
+        // closeIconColor: Colors.red,
+        // clearIconColor: Colors.green,
+        // searchIcon: Icon(Icons.search),
+        // closeIcon: Icon(Icons.close),
+        // clearIcon: Icon(Icons.clear),
+        // elevation: 4,
+        // borderRadius: BorderRadius.circular(8),
+        // padding: EdgeInsets.symmetric(horizontal: 16),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

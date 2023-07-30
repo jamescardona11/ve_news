@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
-import 'package:ve_news/cross/presentation/presentation.dart';
 import 'package:ve_news/domain/article/article_model.dart';
+
+import 'bounce_wrapper.dart';
 
 class CategoriesList extends StatelessWidget {
   const CategoriesList({

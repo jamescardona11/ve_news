@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/cross/presentation/widgets/app_bar.dart';
 import 'package:ve_news/presentation/account/account_screen.dart';
 import 'package:ve_news/presentation/articles/bookmarks/bookmarks_screen.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
@@ -41,25 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider<SummaryCubit>(create: (_) => getIt<SummaryCubit>()),
       ],
       child: Scaffold(
-        body: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: AppDimens.size10),
-              child: VeNewsAppBar(title: 'VeNews'),
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  FeedScreen(),
-                  SizedBox(),
-                  BookmarkScreen(),
-                  SummaryScreen(),
-                  AccountScreen(),
-                ],
-              ),
-            ),
+        body: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
+            FeedScreen(),
+            SizedBox(),
+            BookmarkScreen(),
+            SummaryScreen(),
+            AccountScreen(),
           ],
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(

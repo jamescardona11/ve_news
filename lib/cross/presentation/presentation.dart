@@ -1,3 +1,4 @@
+export 've_news_scaffold.dart';
 export 'widgets/bounce_wrapper.dart';
 export 'widgets/categories_list_chip.dart';
 export 'widgets/circular_container.dart';
