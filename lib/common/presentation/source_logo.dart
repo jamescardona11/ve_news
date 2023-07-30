@@ -33,7 +33,12 @@ class SourceLogo extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: AppColors.pureWhite,
                 shape: BoxShape.circle,
-                boxShadow: [AppShadows.shadow200],
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: AppColors.grey,
+                    width: 1,
+                  ),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(AppDimens.size4),

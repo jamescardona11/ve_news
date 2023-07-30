@@ -15,7 +15,7 @@ class SummaryArticles extends Equatable {
     this.articles = const [],
     this.isCompleted = false,
     this.isCreatingVoiceSummary = false,
-    this.summaryPercentage = 90,
+    this.summaryPercentage = 70,
     this.voiceSummaryPath,
   });
 
@@ -24,6 +24,11 @@ class SummaryArticles extends Equatable {
 
   int get length => articles.length;
   int get bodyLength => articles.map((e) => e.body.length).fold(0, (previousValue, element) => previousValue + element);
+
+  String get summaryStr => '${(bodyLength * summaryPercentage) ~/ 100}';
+  String get summaryTimeStr => '~${(bodyLength / _time).toStringAsFixed(0)} min';
+
+  static const int _time = 833;
 
   SummaryArticles copyWith({
     int? id,

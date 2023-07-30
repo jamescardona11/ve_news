@@ -71,17 +71,19 @@ class SummaryCardItem extends StatelessWidget {
                               Row(
                                 children: [
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       _IconText(
                                         icon: FontAwesomeIcons.book,
-                                        label: 'Summary length: ${summary.bodyLength}',
+                                        label: 'Length: ${summary.summaryStr}',
                                       ),
                                       _IconText(
                                         icon: FontAwesomeIcons.solidClock,
-                                        label: 'Summary ~time: ${summary.bodyLength}',
+                                        label: 'Time: ${summary.summaryTimeStr}',
                                       ),
                                     ],
                                   ),
+                                  Text('(${summary.summaryPercentage}%)'),
                                   if (!summary.isCompleted) const _EditDropDownWidget()
                                 ],
                               ),
@@ -153,40 +155,43 @@ class _EditDropDownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-        customButton: SizedBox(
-          width: 80,
-          height: 22,
-          child: RoundContainer(
-            color: AppColors.primary,
-            child: Center(child: Text('Edit', style: context.textTheme.bodyMedium?.copyWith(color: AppColors.white))),
+    return Padding(
+      padding: const EdgeInsets.only(left: AppDimens.size4),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          customButton: SizedBox(
+            width: 80,
+            height: 22,
+            child: RoundContainer(
+              color: AppColors.primary,
+              child: Center(child: Text('Edit', style: context.textTheme.bodyMedium?.copyWith(color: AppColors.white))),
+            ),
           ),
-        ),
-        items: possiblePercentages
-            .map(
-              (item) => DropdownMenuItem<int>(
-                value: item,
-                child: Text(
-                  'Max $item% ',
-                  style: const TextStyle(fontSize: 14),
+          items: possiblePercentages
+              .map(
+                (item) => DropdownMenuItem<int>(
+                  value: item,
+                  child: Text(
+                    'Max $item% ',
+                    style: const TextStyle(fontSize: 14),
+                  ),
                 ),
-              ),
-            )
-            .toList(),
-        onChanged: (value) {},
-        dropdownStyleData: DropdownStyleData(
-          width: 160,
-          padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppDimens.size4),
-            color: AppColors.pureWhite,
+              )
+              .toList(),
+          onChanged: (value) {},
+          dropdownStyleData: DropdownStyleData(
+            width: 160,
+            padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppDimens.size4),
+              color: AppColors.pureWhite,
+            ),
+            offset: const Offset(0, 8),
           ),
-          offset: const Offset(0, 8),
-        ),
-        menuItemStyleData: MenuItemStyleData(
-          customHeights: List<double>.filled(possiblePercentages.length, 35),
-          padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
+          menuItemStyleData: MenuItemStyleData(
+            customHeights: List<double>.filled(possiblePercentages.length, 35),
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
+          ),
         ),
       ),
     );
@@ -263,7 +268,7 @@ class _HeaderWidget extends StatelessWidget {
                   final index = sources.indexOf(source);
                   return Positioned(
                     top: 0,
-                    left: index * AppDimens.size8,
+                    left: index * AppDimens.size12,
                     child: SourceLogo(
                       source: source,
                       size: AppDimens.size40,

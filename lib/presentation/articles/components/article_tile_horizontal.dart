@@ -35,14 +35,14 @@ class ArticleTileHorizontal extends StatelessWidget {
                 onPressed: (_) {
                   cubit.saveToBookMarks(article);
                 },
-                backgroundColor: !article.bookmark ? AppColors.pureWhite : AppColors.blue,
-                foregroundColor: article.bookmark ? AppColors.pureWhite : AppColors.blue,
+                backgroundColor: !article.bookmark ? AppColors.pureWhite : AppColors.primary,
+                foregroundColor: article.bookmark ? AppColors.pureWhite : AppColors.primary,
                 icon: FontAwesomeIcons.bookmark,
               ),
               SlidableAction(
                 onPressed: (_) => _summaryActions(cubit, wasAdded),
-                backgroundColor: !wasAdded ? AppColors.pureWhite : AppColors.primary,
-                foregroundColor: wasAdded ? AppColors.pureWhite : AppColors.primary,
+                backgroundColor: !wasAdded ? AppColors.pureWhite : AppColors.red,
+                foregroundColor: wasAdded ? AppColors.pureWhite : AppColors.red,
                 icon: FontAwesomeIcons.inbox,
               ),
             ],
@@ -64,7 +64,7 @@ class ArticleTileHorizontal extends StatelessWidget {
                           width: double.maxFinite,
                           height: AppDimens.size24,
                           border: AppDimens.size10,
-                          color: wasAdded ? AppColors.primary : AppColors.white,
+                          color: wasAdded ? AppColors.red : AppColors.white,
                           child: Center(
                             child: Text(
                               !wasAdded ? 'Add' : 'Remove',

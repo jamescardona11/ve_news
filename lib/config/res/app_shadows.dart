@@ -13,4 +13,10 @@ abstract class AppShadows {
     blurRadius: 10,
     spreadRadius: -4,
   );
+
+  static const shadow300 = BoxShadow(
+    color: Colors.black26,
+    blurRadius: 2,
+    spreadRadius: -2,
+  );
 }

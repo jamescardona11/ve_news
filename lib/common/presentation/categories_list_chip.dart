@@ -18,7 +18,7 @@ class CategoriesList extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     return SizedBox(
       width: size.width,
-      height: 35,
+      height: AppDimens.size24,
       child: ListView.builder(
         itemCount: categories.take(4).length,
         scrollDirection: Axis.horizontal,
