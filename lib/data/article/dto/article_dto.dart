@@ -66,6 +66,23 @@ class ArticleDto {
         categories: categories.map((e) => e.toModel()).toList(),
       );
 
+  factory ArticleDto.fromModel(ArticleModel model) => ArticleDto(
+        id: model.id ?? Isar.autoIncrement,
+        uuid: model.uuid,
+        title: model.title,
+        url: model.url,
+        body: model.body,
+        sourceId: model.source.id,
+        isDuplicate: model.isDuplicate,
+        bookmark: model.bookmark,
+        dateTime: model.dateTime,
+        lang: model.lang,
+        image: model.image,
+        sourceUri: model.source.url,
+        concepts: model.concepts.map((e) => ConceptsDto.fromModel(e)).toList(),
+        categories: model.categories.map((e) => CategoryDto.fromModel(e)).toList(),
+      );
+
   factory ArticleDto.fromJson(Map<String, dynamic> json) => _$ArticleDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArticleDtoToJson(this);
@@ -131,6 +148,13 @@ class ConceptsDto {
 
   factory ConceptsDto.fromJson(Map<String, dynamic> json) => _$ConceptsDtoFromJson(json);
 
+  factory ConceptsDto.fromModel(Concepts model) => ConceptsDto(
+        uri: model.uri,
+        type: model.type,
+        score: model.score,
+        label: model.label,
+      );
+
   Map<String, dynamic> toJson() => _$ConceptsDtoToJson(this);
 
   static String? _labelFromJson(Map<String, dynamic>? json) {
@@ -155,6 +179,12 @@ class CategoryDto {
       );
 
   factory CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);
+
+  factory CategoryDto.fromModel(Category model) => CategoryDto(
+        uri: model.uri,
+        wgt: model.wgt,
+        label: model.label,
+      );
 
   Map<String, dynamic> toJson() => _$CategoryDtoToJson(this);
 }

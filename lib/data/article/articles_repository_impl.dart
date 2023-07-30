@@ -112,6 +112,21 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
   }
 
   @override
+  Future<void> update(ArticleModel article) async {
+    if (article.id == null) return;
+
+    final dto = ArticleDto(
+      id: article.id!,
+      uuid: article.uuid,
+      title: article.title,
+      body: article.body,
+      url: article.url,
+    );
+
+    await _isar.writeTxn(() => _articleStore.put(dto));
+  }
+
+  @override
   Future<void> removeOldArticles() {
     final articles = _articleStore.filter().dateTimeLessThan(DateTime.now().subtract(const Duration(hours: 48)));
     return _isar.writeTxn(() => articles.deleteAll());

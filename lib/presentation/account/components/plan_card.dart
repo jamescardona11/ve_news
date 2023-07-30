@@ -38,14 +38,14 @@ class PlanCard extends StatelessWidget {
             ),
             Text(
               pricing,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
               maxLines: 2,
             ),
             const SizedBox(height: 10),
             Text(
               details,
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.bodySmall,
               maxLines: 1,
             ),
           ],
