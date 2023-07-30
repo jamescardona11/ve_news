@@ -9,95 +9,91 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// User Info
+          const UserInfo(),
 
-            /// User Info
-            const UserInfo(),
+          const Divider(height: 30),
 
-            const Divider(height: 30),
+          /// Plan Choose
+          const ChoosePlanSection(),
 
-            /// Plan Choose
-            const ChoosePlanSection(),
+          const Seperator(),
 
-            const Seperator(),
+          /// User Details
+          Column(
+            children: const [
+              AccountSettingsTile(
+                leadingText: 'Full Name',
+                trailingText: 'Gabriel Matusov',
+              ),
+              AccountSettingsTile(
+                leadingText: 'Email',
+                trailingText: 'gabmatus@gmail.com',
+              ),
+              AccountSettingsTile(
+                leadingText: 'Country',
+                trailingText: 'Finland',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+              AccountSettingsTile(
+                leadingText: 'City',
+                trailingText: 'Helsinki',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+            ],
+          ),
 
-            /// User Details
-            Column(
-              children: const [
-                AccountSettingsTile(
-                  leadingText: 'Full Name',
-                  trailingText: 'Gabriel Matusov',
-                ),
-                AccountSettingsTile(
-                  leadingText: 'Email',
-                  trailingText: 'gabmatus@gmail.com',
-                ),
-                AccountSettingsTile(
-                  leadingText: 'Country',
-                  trailingText: 'Finland',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-                AccountSettingsTile(
-                  leadingText: 'City',
-                  trailingText: 'Helsinki',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-              ],
-            ),
+          const Seperator(),
 
-            const Seperator(),
+          /// Others
+          Column(
+            children: const [
+              AccountSettingsTile(
+                leadingText: 'Favourite Channels',
+                trailingText: '17',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+              AccountSettingsTile(
+                leadingText: 'Bookmarks',
+                trailingText: '386',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+            ],
+          ),
 
-            /// Others
-            Column(
-              children: const [
-                AccountSettingsTile(
-                  leadingText: 'Favourite Channels',
-                  trailingText: '17',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-                AccountSettingsTile(
-                  leadingText: 'Bookmarks',
-                  trailingText: '386',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-              ],
-            ),
+          const Seperator(),
 
-            const Seperator(),
+          /// Others
+          Column(
+            children: const [
+              AccountSettingsTile(
+                leadingText: 'Newsletters',
+                trailingText: '',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+              AccountSettingsTile(
+                leadingText: 'Settings',
+                trailingText: '0',
+                trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+              ),
+            ],
+          ),
 
-            /// Others
-            Column(
-              children: const [
-                AccountSettingsTile(
-                  leadingText: 'Newsletters',
-                  trailingText: '',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-                AccountSettingsTile(
-                  leadingText: 'Settings',
-                  trailingText: '0',
-                  trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-                ),
-              ],
-            ),
+          const Seperator(),
 
-            const Seperator(),
+          /// Log out
+          const AccountSettingsTile(
+            leadingText: 'Logout',
+            trailingText: '',
+            trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
+          ),
 
-            /// Log out
-            const AccountSettingsTile(
-              leadingText: 'Logout',
-              trailingText: '',
-              trailingIcon: Icon(Icons.arrow_forward_ios_rounded, size: 16),
-            ),
-
-            const Seperator(),
-          ],
-        ),
+          const Seperator(),
+        ],
       ),
     );
   }
