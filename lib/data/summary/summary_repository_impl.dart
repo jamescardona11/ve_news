@@ -49,6 +49,8 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   Future<void> update(SummaryArticles summary) async {
     final dto = SummaryArticlesDto.fromModel(summary);
     await _isar.writeTxn(() => _summaryStore.put(dto));
+
+    _lastSummaryController.add(summary);
   }
 
   @override
@@ -64,7 +66,8 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   Future<void> _readUncompletedSummary() async {
     final summary = await _summaryStore.where().filter().isCompletedEqualTo(false).findFirst();
     if (summary != null) {
-      _lastSummaryController.add(summary.toModel());
+      final articles = await _articlesRepository.readByIds(summary.articles);
+      _lastSummaryController.add(summary.toModel().copyWith(articles: articles));
     } else {
       final dto = SummaryArticlesDto();
       final id = await _isar.writeTxn(() {

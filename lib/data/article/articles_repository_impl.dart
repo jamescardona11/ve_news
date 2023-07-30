@@ -36,7 +36,7 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
     final sources = await _sourcesRepository.readAllEnabled();
 
     return articles
-        .where((element) => ids.contains(element.id))
+        .where((element) => ids.contains(element.uuid))
         .map((article) {
           final source = sources.firstWhereOrNull((source) => source.id == article.sourceId);
           if (source == null || source.id == null) return null;
