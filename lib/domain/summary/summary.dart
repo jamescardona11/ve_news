@@ -7,6 +7,7 @@ class SummaryArticles extends Equatable {
   final List<ArticleModel> articles;
   final bool isCompleted;
   final bool isCreatingVoiceSummary;
+  final int summaryPercentage;
   final String? voiceSummaryPath;
 
   const SummaryArticles({
@@ -14,6 +15,7 @@ class SummaryArticles extends Equatable {
     this.articles = const [],
     this.isCompleted = false,
     this.isCreatingVoiceSummary = false,
+    this.summaryPercentage = 90,
     this.voiceSummaryPath,
   });
 
@@ -28,19 +30,26 @@ class SummaryArticles extends Equatable {
     List<ArticleModel>? articles,
     bool? isCompleted,
     bool? isCreatingVoiceSummary,
+    int? summaryPercentage,
     String? voiceSummaryPath,
-  }) =>
-      SummaryArticles(
-        id: id ?? this.id,
-        articles: articles ?? this.articles,
-        isCompleted: isCompleted ?? this.isCompleted,
-        isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
-        voiceSummaryPath: voiceSummaryPath ?? this.voiceSummaryPath,
-      );
+  }) {
+    return SummaryArticles(
+      id: id ?? this.id,
+      articles: articles ?? this.articles,
+      isCompleted: isCompleted ?? this.isCompleted,
+      isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
+      summaryPercentage: summaryPercentage ?? this.summaryPercentage,
+      voiceSummaryPath: voiceSummaryPath ?? this.voiceSummaryPath,
+    );
+  }
 
   @override
   List<Object?> get props => [
         id,
         articles,
+        isCompleted,
+        isCreatingVoiceSummary,
+        summaryPercentage,
+        voiceSummaryPath,
       ];
 }

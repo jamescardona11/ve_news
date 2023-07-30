@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
@@ -79,7 +80,7 @@ class SummaryCardItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -130,9 +131,9 @@ class SummaryCardItem extends StatelessWidget {
   }
 
   double get height => summary.isCompleted
-      ? 270
+      ? 280
       : !summary.isEmpty
-          ? 270
+          ? 280
           : 160;
 }
 
@@ -147,6 +148,8 @@ class _IconText extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool showEdit;
+
+  static const List<int> possiblePercentages = [90, 80, 70, 60, 50];
 
   @override
   Widget build(BuildContext context) {
@@ -163,12 +166,41 @@ class _IconText extends StatelessWidget {
           Text(label, style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black)),
           const SizedBox(width: AppDimens.size8),
           if (showEdit)
-            SizedBox(
-              width: 80,
-              height: 20,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Edit'),
+            DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                customButton: SizedBox(
+                  width: 80,
+                  height: 22,
+                  child: RoundContainer(
+                    color: AppColors.primary,
+                    child: Center(child: Text('Edit', style: context.textTheme.bodyMedium?.copyWith(color: AppColors.white))),
+                  ),
+                ),
+                items: possiblePercentages
+                    .map(
+                      (item) => DropdownMenuItem<int>(
+                        value: item,
+                        child: Text(
+                          'Max $item% ',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {},
+                dropdownStyleData: DropdownStyleData(
+                  width: 160,
+                  padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppDimens.size4),
+                    color: AppColors.pureWhite,
+                  ),
+                  offset: const Offset(0, 8),
+                ),
+                menuItemStyleData: MenuItemStyleData(
+                  customHeights: List<double>.filled(possiblePercentages.length, 35),
+                  padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
+                ),
               ),
             ),
         ],

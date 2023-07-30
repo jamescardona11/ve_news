@@ -16,6 +16,14 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
 
   StreamSubscription<SummaryArticles>? _summarySubscription;
 
+  void onChangeLengthPercentage(int value) {
+    emit(state.copyWith(summaryPercentage: value));
+  }
+
+  void onChangeTimePercentage(int value) {
+    emit(state.copyWith(summaryPercentage: value));
+  }
+
   @override
   Future<void> close() {
     _summarySubscription?.cancel();
