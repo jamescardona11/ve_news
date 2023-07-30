@@ -1,10 +1,20 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 import 'package:projectile/projectile.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:ve_news/config/environment/env.dart';
+import 'package:ve_news/config/environment/url_routes.dart';
+import 'package:ve_news/core/errors/app_error.dart';
+import 'package:ve_news/core/logger/logger.dart';
+import 'package:ve_news/data/summary/dto/chat_gpt_response_dto.dart';
 import 'package:ve_news/data/summary/dto/summary_dto.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
+import 'package:ve_news/domain/summary/chat_gpt_request.dart';
+import 'package:ve_news/domain/summary/chat_gpt_response.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
+
+import 'dto/chat_gpt_request_dto.dart';
 
 final class SummaryRepositoryImpl extends SummaryRepository {
   final Isar _isar;
@@ -22,6 +32,32 @@ final class SummaryRepositoryImpl extends SummaryRepository {
 
   late final IsarCollection<SummaryArticlesDto> _summaryStore;
   final _lastSummaryController = BehaviorSubject<SummaryArticles>();
+
+  @override
+  Future<Either<AppError, ChatGptResponse>> sendQuestion(ChatGptRequest request) async {
+    final dto = ChatGptRequestDto.fromDomain(request);
+
+    final response = await _projectile
+        .request(
+          ProjectileRequest(
+            method: Method.POST,
+            target: UrlRoutes.gptCompletions,
+            headers: {
+              HeadersKeys.authorization: 'Bearer ${Env.openAIKey}',
+              HeadersKeys.contentType: ContentType.json,
+            },
+            body: dto.toJson(),
+          ),
+        )
+        .fire();
+
+    if (response.isFailure) {
+      logger.e('SendQuestion error', error: response.error);
+      return left(HttpResponseError(source: response.errorString, err: response.error));
+    }
+
+    return right(ChatGptResponseDto.fromJson(response.data).toDomain());
+  }
 
   @override
   Stream<List<SummaryArticles>> watch() =>

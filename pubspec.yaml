@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.4.0
-  fpdart: ^0.6.0
+  fpdart: ^1.0.0
   get_it: ^7.6.0
   google_fonts: ^5.0.0
   injectable: ^2.1.2
