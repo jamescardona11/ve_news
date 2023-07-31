@@ -380,7 +380,7 @@ class _HeaderWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: sources.length == 1 ? 40 : sources.length * AppDimens.size24,
+            width: sources.length == 1 ? 40 : sources.length * AppDimens.size20,
             child: Stack(
               alignment: Alignment.topLeft,
               fit: StackFit.loose,
@@ -400,15 +400,18 @@ class _HeaderWidget extends StatelessWidget {
               ).toList(),
             ),
           ),
-          const SizedBox(width: AppDimens.size10),
-          if (name != null)
-            Text(
-              name!,
-              style: textTheme.titleMedium,
+          const SizedBox(width: AppDimens.size2),
+          if (name != null && name!.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(right: 4),
+              child: Text(
+                '$name - ',
+                style: textTheme.titleMedium,
+              ),
             ),
           Text(
             '${articles.length} articles',
-            style: name == null ? textTheme.titleMedium : textTheme.bodyMedium,
+            style: name == null || name!.isEmpty ? textTheme.titleMedium : textTheme.bodySmall,
           ),
           const Spacer(),
         ],
