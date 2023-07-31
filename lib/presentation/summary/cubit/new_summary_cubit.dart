@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/domain/article/article_model.dart';
+import 'package:ve_news/domain/summary/article_resume_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 import 'package:ve_news/domain/summary/use_cases/request_summary_use_case.dart';
@@ -24,7 +25,45 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
   }
 
   Future<void> onStartSummary() async {
-    await _requestSummaryUseCase.call(state.summary!);
+    if (state.summary == null) return;
+
+    await _onCreateGPTResume();
+
+    emit(state.copyWith(isLoading: false, loadingMessage: ''));
+  }
+
+  Future<void> _onCreateGPTResume() async {
+    final uncompletedArticles = state.summary!.uncompletedArticles;
+    final language = state.summary!.language.value;
+    final summaryPercentage = state.summary!.summaryPercentage;
+    final total = state.summary!.articles.length;
+    int completed = (total - uncompletedArticles.length);
+
+    _changeLoadingState(completed, total);
+
+    for (var article in uncompletedArticles) {
+      final response = await _requestSummaryUseCase.call(article, language, summaryPercentage);
+      if (response == null) {
+        _changeLoadingState(++completed, total);
+        continue;
+      }
+
+      final resumeArticles = List<ArticleResumeModel>.from(state.summary!.resumeArticles);
+      resumeArticles.add(response);
+
+      final summary = state.summary!.copyWith(resumeArticles: resumeArticles);
+      await _summaryRepository.update(summary);
+
+      _changeLoadingState(++completed, total, summary: summary);
+    }
+  }
+
+  void _changeLoadingState(int completed, int total, {SummaryArticles? summary}) {
+    emit(state.copyWith(
+      isLoading: true,
+      loadingMessage: 'Creating text summary\n $completed/$total completed news',
+      summary: summary,
+    ));
   }
 
   @override
@@ -39,12 +78,5 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     });
   }
 
-  Future<void> removeArticle(ArticleModel article) async {
-    final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
-    articles.remove(article);
-
-    final summary = state.summary?.copyWith(articles: articles.toList()) ?? SummaryArticles(articles: articles);
-    emit(state.copyWith(summary: summary));
-    await _summaryRepository.update(summary);
-  }
+  Future<void> removeArticle(ArticleModel article) async {}
 }

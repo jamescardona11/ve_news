@@ -24,7 +24,6 @@ class SummaryArticles extends Equatable {
     this.language = LanguageEnum.en,
   });
 
-  bool get isEmpty => articles.isEmpty;
   bool get isNotEmpty => articles.isNotEmpty;
   List<Category> get categories => articles.map((e) => e.categories.isNotEmpty ? e.categories.first : null).whereNotNull().toSet().toList();
 
@@ -34,11 +33,15 @@ class SummaryArticles extends Equatable {
   String get summaryStr => '${(bodyLength * summaryPercentage) ~/ 100}';
   String get summaryTimeStr => '~${(bodyLength / _time).toStringAsFixed(0)} min';
 
+  List<ArticleModel> get uncompletedArticles =>
+      articles.where((article) => resumeArticles.where((resume) => resume.articleId == article.uuid).isEmpty).toList();
+
   static const int _time = 833;
 
   SummaryArticles copyWith({
     int? id,
     List<ArticleModel>? articles,
+    List<ArticleResumeModel>? resumeArticles,
     bool? isCompleted,
     bool? isCreatingVoiceSummary,
     int? summaryPercentage,
@@ -47,6 +50,7 @@ class SummaryArticles extends Equatable {
     return SummaryArticles(
       id: id ?? this.id,
       articles: articles ?? this.articles,
+      resumeArticles: resumeArticles ?? this.resumeArticles,
       isCompleted: isCompleted ?? this.isCompleted,
       isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
       summaryPercentage: summaryPercentage ?? this.summaryPercentage,

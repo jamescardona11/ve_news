@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ve_news/common/presentation/empty_widget.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
@@ -45,29 +44,66 @@ class _NewSummaryView extends StatelessWidget {
 
         final cubit = context.read<NewSummaryCubit>();
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
-          child: Column(
-            children: [
-              SummaryCardItem(
-                summary: state.summary!,
-                onEditPressed: (value) => cubit.onChangeSummaryPercentage(value),
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
+              child: Column(
+                children: [
+                  SummaryCardItem(
+                    summary: state.summary!,
+                    onEditPressed: (value) => cubit.onChangeSummaryPercentage(value),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.summary!.length,
+                      itemBuilder: (context, index) {
+                        return _SmallArticleTile(
+                          article: state.summary!.articles[index],
+                          onPressed: () => cubit.removeArticle(state.summary!.articles[index]),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.summary!.length,
-                  itemBuilder: (context, index) {
-                    return _SmallArticleTile(
-                      article: state.summary!.articles[index],
-                      onPressed: () => cubit.removeArticle(state.summary!.articles[index]),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+            if (state.isLoading) _LoadingScreen(label: state.loadingMessage),
+          ],
         );
       },
+    );
+  }
+}
+
+class _LoadingScreen extends StatelessWidget {
+  const _LoadingScreen({
+    Key? key,
+    required this.label,
+  }) : super(key: key);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white.withOpacity(0.8),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(
+              color: AppColors.primary,
+            ),
+            const SizedBox(height: AppDimens.size10),
+            Text(
+              label,
+              style: context.textTheme.bodyMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

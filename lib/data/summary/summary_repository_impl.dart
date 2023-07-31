@@ -82,6 +82,16 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   Stream<SummaryArticles> watchLastUncompleted() => _lastSummaryController;
 
   @override
+  Future<void> complete(SummaryArticles summary) async {
+    final dto = SummaryArticlesDto.fromModel(summary);
+    await _isar.writeTxn(() => _summaryStore.put(dto));
+
+    _lastSummaryController.add(summary);
+
+    await _readUncompletedSummary();
+  }
+
+  @override
   Future<void> update(SummaryArticles summary) async {
     final dto = SummaryArticlesDto.fromModel(summary);
     await _isar.writeTxn(() => _summaryStore.put(dto));

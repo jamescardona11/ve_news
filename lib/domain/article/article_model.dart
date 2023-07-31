@@ -32,6 +32,8 @@ class ArticleModel extends Equatable {
     this.categories = const [],
   });
 
+  String summaryStr(int percentage) => '${(body.length * percentage) ~/ 100}';
+
   String get category {
     if (categories.isEmpty) return 'News';
 
