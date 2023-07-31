@@ -5,9 +5,11 @@ import 'package:ve_news/common/data/preferences_repository_impl.dart';
 import 'package:ve_news/common/domain/repository/preferences_repository.dart';
 import 'package:ve_news/data/article/articles_repository_impl.dart';
 import 'package:ve_news/data/source/sources_repository_impl.dart';
+import 'package:ve_news/data/summary/audio_player_repository_impl.dart';
 import 'package:ve_news/data/summary/summary_repository_impl.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
+import 'package:ve_news/domain/summary/repository/audio_player_repository.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 
 @module
@@ -23,6 +25,9 @@ abstract class DataModule {
 
   @LazySingleton(as: SummaryRepository)
   SummaryRepositoryImpl get summaryRepository;
+
+  @LazySingleton(as: AudioPlayerRepository)
+  AudioPlayerRepositoryImpl get audioPlayerRepository;
 }
 
 FutureOr<void> disposeSourceRepository(SourcesRepository provider) {
