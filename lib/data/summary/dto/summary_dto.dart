@@ -26,7 +26,14 @@ class SummaryArticlesDto {
   factory SummaryArticlesDto.fromModel(SummaryArticles model) => SummaryArticlesDto(
         id: model.id ?? Isar.autoIncrement,
         articles: model.articles.map((e) => e.uuid).toList(),
-        resumeArticles: model.resumeArticles.map((model) => ArticleResumeDto(articleId: model.articleId, content: model.content)).toList(),
+        resumeArticles: model.resumeArticles
+            .map((model) => ArticleResumeDto(
+                  articleId: model.articleId,
+                  content: model.content,
+                  path: model.path,
+                  lang: model.lang,
+                ))
+            .toList(),
         isCompleted: model.isCompleted,
         isCreatingVoiceSummary: model.isCreatingVoiceSummary,
         voiceSummaryPath: model.voiceSummaryPath,
@@ -37,7 +44,14 @@ class SummaryArticlesDto {
         isCompleted: isCompleted,
         isCreatingVoiceSummary: isCreatingVoiceSummary,
         voiceSummaryPath: voiceSummaryPath,
-        resumeArticles: resumeArticles.map((e) => ArticleResumeModel(articleId: e.articleId, content: e.content)).toList(),
+        resumeArticles: resumeArticles
+            .map((e) => ArticleResumeModel(
+                  articleId: e.articleId,
+                  content: e.content,
+                  lang: e.lang!,
+                  path: e.path,
+                ))
+            .toList(),
       );
 
   SummaryArticlesDto copyWith({
@@ -64,11 +78,13 @@ class SummaryArticlesDto {
 class ArticleResumeDto {
   final String? articleId;
   final String? content;
+  final String? path;
   final String? lang;
 
   ArticleResumeDto({
     this.articleId,
     this.content,
+    this.path,
     this.lang = 'English',
   });
 }

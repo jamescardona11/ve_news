@@ -15,6 +15,7 @@ class NewSummaryState extends Equatable {
   List<Object?> get props => [
         summary,
         isLoading,
+        loadingMessage,
       ];
 
   NewSummaryState copyWith({

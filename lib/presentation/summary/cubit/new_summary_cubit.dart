@@ -31,29 +31,29 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
   Future<void> onStartSummary() async {
     if (state.summary == null) return;
 
-    final uncompletedArticles = state.summary!.uncompletedArticles;
+    final uncompletedArticles = state.summary!.uncompletedTextArticles;
     if (uncompletedArticles.isNotEmpty) {
       await _onCreateGPTResume(uncompletedArticles);
     }
 
     await _onElevenLabsVoice();
-
-    emit(state.copyWith(isLoading: false, loadingMessage: ''));
   }
 
   Future<void> _onElevenLabsVoice() async {
-    _changeVoiceLoadingState();
+    final uncompletedArticles = state.summary!.uncompletedVoiceSummaries;
+    final total = state.summary!.articles.length;
+    int completed = (total - uncompletedArticles.length);
 
-    final response = await _requestVoiceSummaryUseCase.call(state.summary!);
-    if (response == null) return;
+    _changeLoadingState(kind: 'Voice', completed: ++completed, total: total);
 
-    final summaryWithVoice = state.summary!.copyWith(
-      isCompleted: true,
-      voiceSummaryPath: response,
-    );
-    await _summaryRepository.complete(summaryWithVoice);
+    _requestVoiceSummaryUseCase.call(state.summary!).listen((event) {
+      _changeLoadingState(kind: 'Voice', completed: ++completed, total: total);
+    }).onDone(() async {
+      final summaryWithVoice = state.summary!.copyWith(isCompleted: true);
+      await _summaryRepository.complete(summaryWithVoice);
 
-    emit(state.copyWith(summary: summaryWithVoice));
+      emit(state.copyWith(summary: summaryWithVoice, isLoading: false, loadingMessage: ''));
+    });
   }
 
   Future<void> _onCreateGPTResume(List<ArticleModel> uncompletedArticles) async {
@@ -62,12 +62,12 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     final total = state.summary!.articles.length;
     int completed = (total - uncompletedArticles.length);
 
-    _changeLoadingState(completed, total);
+    _changeLoadingState(completed: completed, total: total);
 
     for (var article in uncompletedArticles) {
       final response = await _requestTextSummaryUseCase.call(article, language, summaryPercentage);
       if (response == null) {
-        _changeLoadingState(++completed, total);
+        _changeLoadingState(completed: ++completed, total: total);
         continue;
       }
 
@@ -77,22 +77,20 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       final summary = state.summary!.copyWith(resumeArticles: resumeArticles);
       await _summaryRepository.update(summary);
 
-      _changeLoadingState(++completed, total, summary: summary);
+      _changeLoadingState(completed: ++completed, total: total, summary: summary);
     }
   }
 
-  void _changeLoadingState(int completed, int total, {SummaryArticles? summary}) {
+  void _changeLoadingState({
+    required int completed,
+    required int total,
+    String kind = 'Text',
+    SummaryArticles? summary,
+  }) {
     emit(state.copyWith(
       isLoading: true,
-      loadingMessage: 'Creating text summary\n $completed/$total completed news',
+      loadingMessage: 'Creating $kind summary\n $completed/$total completed news',
       summary: summary,
-    ));
-  }
-
-  void _changeVoiceLoadingState() {
-    emit(state.copyWith(
-      isLoading: true,
-      loadingMessage: 'Creating voice summary',
     ));
   }
 

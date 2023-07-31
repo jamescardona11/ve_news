@@ -36,8 +36,11 @@ class SummaryArticles extends Equatable {
   String get summaryStr => '${(bodyLength * summaryPercentage) ~/ 100}';
   String get summaryTimeStr => '~${(bodyLength / _time).toStringAsFixed(0)} min';
 
-  List<ArticleModel> get uncompletedArticles =>
-      articles.where((article) => resumeArticles.where((resume) => resume.articleId == article.uuid).isEmpty).toList();
+  List<ArticleModel> get uncompletedTextArticles => articles
+      .where((article) => resumeArticles.where((resume) => resume.articleId == article.uuid && resume.content?.isNotEmpty == true).isEmpty)
+      .toList();
+
+  List<ArticleResumeModel> get uncompletedVoiceSummaries => resumeArticles.where((resume) => resume.path?.isNotEmpty != true).toList();
 
   bool get textCompleted => resumeArticles.length >= articles.length;
 
