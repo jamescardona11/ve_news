@@ -97,6 +97,12 @@ final class SummaryRepositoryImpl extends SummaryRepository {
     return right(result);
   }
 
+  @override
+  Future<void> createPending() async {
+    await _readUncompletedSummary();
+  }
+
+  @override
   Future<SummaryArticles> createNamed(String name, List<ArticleModel> articles) async {
     final dto = SummaryArticlesDto(
       name: name,

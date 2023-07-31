@@ -54,6 +54,7 @@ class SummaryArticles extends Equatable {
     bool? isCreatingVoiceSummary,
     int? summaryPercentage,
     String? voiceSummaryPath,
+    LanguageEnum? language,
   }) {
     return SummaryArticles(
       id: id ?? this.id,
@@ -63,6 +64,7 @@ class SummaryArticles extends Equatable {
       isCompleted: isCompleted ?? this.isCompleted,
       isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
       summaryPercentage: summaryPercentage ?? this.summaryPercentage,
+      language: language ?? this.language,
     );
   }
 
@@ -90,6 +92,17 @@ enum LanguageEnum {
   final String value;
 
   const LanguageEnum(this.value);
+
+  String get withEmoji =>
+      {
+        LanguageEnum.en: '🇺🇸 English',
+        LanguageEnum.fr: '🇫🇷 French',
+        LanguageEnum.es: '🇪🇸 Spanish',
+        LanguageEnum.de: '🇩🇪 German',
+        LanguageEnum.it: '🇮🇹 Italian',
+        LanguageEnum.pt: '🇵🇹 Portuguese',
+      }[this] ??
+      '';
 }
 
 extension LanguageEnumX on LanguageEnum {

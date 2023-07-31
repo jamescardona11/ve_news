@@ -37,11 +37,21 @@ class _NewSummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewSummaryCubit, NewSummaryState>(
       builder: (context, state) {
-        if (state.summary == null) {
-          return const EmptyWidget(label: 'Pending Summary');
-        }
-
         final cubit = context.read<NewSummaryCubit>();
+
+        if (state.summary == null) {
+          return EmptyWidget(
+            label: 'Pending Summary',
+            action: CircularIconButton(
+              color: AppColors.pureWhite,
+              size: AppDimens.size50,
+              onPressed: () {
+                cubit.createNewPendingSummary();
+              },
+              icon: FontAwesomeIcons.plus,
+            ),
+          );
+        }
 
         return Stack(
           fit: StackFit.expand,
@@ -54,6 +64,7 @@ class _NewSummaryView extends StatelessWidget {
                     summary: state.summary!,
                     onEditPressed: (value) => cubit.onChangeSummaryPercentage(value),
                     onActionPressed: context.read<NewSummaryCubit>().onStartSummary,
+                    onLanguagePressed: (value) => cubit.onChangeSummaryLanguage(value),
                   ),
                   Expanded(
                     child: ListView.builder(

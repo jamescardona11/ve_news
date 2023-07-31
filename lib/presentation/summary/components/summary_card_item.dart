@@ -12,6 +12,7 @@ class SummaryCardItem extends StatelessWidget {
     Key? key,
     required this.summary,
     this.onEditPressed,
+    this.onLanguagePressed,
     this.onActionPressed,
     this.onPlayPressed,
     this.index,
@@ -22,6 +23,7 @@ class SummaryCardItem extends StatelessWidget {
   final int? index;
   final bool isPlaying;
   final ValueChanged<int>? onEditPressed;
+  final ValueChanged<LanguageEnum>? onLanguagePressed;
   final VoidCallback? onActionPressed;
   final Function(SummaryArticles)? onPlayPressed;
 
@@ -102,6 +104,11 @@ class SummaryCardItem extends StatelessWidget {
                                       if (!summary.isCompleted && !summary.textCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
                                     ],
                                   ),
+                                  if (!summary.isCompleted && !summary.textCompleted)
+                                    _LanguageDropDownWidget(
+                                      language: summary.language,
+                                      onEditPressed: onLanguagePressed,
+                                    )
                                 ],
                               ),
                               if (summary.isCompleted)
@@ -181,9 +188,9 @@ class SummaryCardItem extends StatelessWidget {
   String get actionStr => summary.textCompleted ? 'Get audio summary' : 'Start text summary';
 
   double get height => summary.isCompleted
-      ? 280
+      ? 270
       : summary.isNotEmpty
-          ? 280
+          ? 290
           : 160;
 }
 
@@ -224,6 +231,72 @@ class _EditDropDownWidget extends StatelessWidget {
               .toList(),
           onChanged: (value) {
             onEditPressed?.call(value ?? 70);
+          },
+          dropdownStyleData: DropdownStyleData(
+            width: 160,
+            padding: const EdgeInsets.symmetric(vertical: AppDimens.size6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppDimens.size4),
+              color: AppColors.pureWhite,
+            ),
+            offset: const Offset(0, 8),
+          ),
+          menuItemStyleData: MenuItemStyleData(
+            customHeights: List<double>.filled(possiblePercentages.length, 35),
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.size16),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LanguageDropDownWidget extends StatelessWidget {
+  const _LanguageDropDownWidget({
+    Key? key,
+    this.onEditPressed,
+    required this.language,
+  }) : super(key: key);
+
+  final ValueChanged<LanguageEnum>? onEditPressed;
+  final LanguageEnum language;
+
+  static const List<LanguageEnum> possiblePercentages = [LanguageEnum.en, LanguageEnum.es];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AppDimens.size4),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          customButton: SizedBox(
+            width: 200,
+            height: 30,
+            child: RoundContainer(
+              color: AppColors.white,
+              child: Center(
+                child: Text(
+                  'Language: ${language.withEmoji}',
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.black,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          items: possiblePercentages
+              .map(
+                (item) => DropdownMenuItem<LanguageEnum>(
+                  value: item,
+                  child: Text(
+                    item.withEmoji,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            onEditPressed?.call(value ?? LanguageEnum.en);
           },
           dropdownStyleData: DropdownStyleData(
             width: 160,

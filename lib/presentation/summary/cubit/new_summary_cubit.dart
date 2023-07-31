@@ -28,6 +28,10 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     emit(state.copyWith(summary: state.summary?.copyWith(summaryPercentage: value)));
   }
 
+  void createNewPendingSummary() {
+    _summaryRepository.createPending();
+  }
+
   Future<void> onStartSummary() async {
     if (state.summary == null) return;
 
@@ -108,5 +112,9 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
 
   Future<void> removeArticle(ArticleModel article) async {
     await _removeArticleUseCase.call(article);
+  }
+
+  onChangeSummaryLanguage(LanguageEnum value) {
+    emit(state.copyWith(summary: state.summary?.copyWith(language: value)));
   }
 }

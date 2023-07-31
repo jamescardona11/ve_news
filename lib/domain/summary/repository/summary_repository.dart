@@ -21,4 +21,6 @@ abstract base class SummaryRepository {
   Future<Either<AppError, ChatGptResponse>> sendSummaryRequest(ChatGptRequest request);
 
   Future<Either<AppError, String>> sendVoiceSummaryRequest(String text, {String voiceId = '21m00Tcm4TlvDq8ikWAM'});
+
+  Future<void> createPending();
 }
