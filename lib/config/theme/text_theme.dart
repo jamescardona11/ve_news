@@ -38,7 +38,7 @@ class AppTextTheme extends TextTheme {
         );
 
   static double get fontSize800 => 42;
-  static double get fontSize700 => 32;
+  static double get fontSize700 => 28;
   static double get fontSize600 => 22;
   static double get fontSize500 => 20;
   static double get fontSize400 => 18;

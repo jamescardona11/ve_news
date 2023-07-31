@@ -36,7 +36,6 @@ class SummaryCubit extends Cubit<SummaryState> {
   }
 
   Future<void> onClosePlayerPressed() async {
-    if (state.notCurrent) return;
     emit(state.copyWith(currentPlayingSummaryId: -1));
 
     await _audioPlayerRepository.stop();

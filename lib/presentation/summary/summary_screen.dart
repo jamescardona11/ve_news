@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
@@ -26,22 +27,25 @@ class SummaryScreen extends StatelessWidget {
                 itemBuilder: (context, index) => SummaryCardItem(
                   summary: state.summaries[index],
                   index: index,
+                  isPlaying: state.currentPlayingSummaryId == state.summaries[index].id,
                   onPlayPressed: (summary) {
                     cubit.onPlaySummaryPressed(summary);
                   },
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                bottom: state.notCurrent ? -200 : 0,
                 child: BottomBarComponent(
-                  height: 130,
+                  height: 150,
                   first: PlayerWidget(
-                    label: state.currentPlayingArticle?.title ?? '',
+                    summary: state.summaries.firstWhereOrNull((element) => element.id == state.currentPlayingSummaryId),
                     audioPlayerState: cubit.audioPlayerState,
                     onPlayPressed: cubit.onMainActionPlayerPressed,
                     onNextPressed: cubit.onNextMessagePlayerPressed,
                     onBackPressed: cubit.onBackMessagePlayerPressed,
                     onSeekChanged: cubit.onSeekPlayerChanged,
+                    onClosePressed: cubit.onClosePlayerPressed,
                   ),
                 ),
               )

@@ -2,6 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/summary/export_summary.dart';
 
 class PlayerWidget extends StatelessWidget {
@@ -9,7 +10,8 @@ class PlayerWidget extends StatelessWidget {
     Key? key = const ValueKey('playing'),
     required this.audioPlayerState,
     this.leadingBar,
-    this.label = '',
+    this.onClosePressed,
+    this.summary,
     this.onSeekChanged,
     this.onNextPressed,
     this.onBackPressed,
@@ -17,13 +19,15 @@ class PlayerWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Widget? leadingBar;
-  final String label;
+
   final Stream<AudioPlayerState> audioPlayerState;
+  final SummaryArticles? summary;
 
   final ValueChanged<Duration>? onSeekChanged;
   final VoidCallback? onNextPressed;
   final VoidCallback? onBackPressed;
   final VoidCallback? onPlayPressed;
+  final VoidCallback? onClosePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,11 @@ class PlayerWidget extends StatelessWidget {
         final buffered = audioPlayerState?.bufferPosition ?? Duration.zero;
         final total = audioPlayerState?.duration ?? Duration.zero;
 
+        String label = '';
+        if (summary != null && audioPlayerState != null) {
+          label = '${summary!.articles[audioPlayerState.articleIndex].title.substring(0, 38)}...';
+        }
+
         return Padding(
           padding: const EdgeInsets.only(
             left: AppDimens.size10,
@@ -44,7 +53,22 @@ class PlayerWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(label),
+              Row(
+                children: [
+                  Text(label, style: context.textTheme.bodySmall),
+                  const Spacer(),
+                  InkWell(
+                    onTap: onClosePressed,
+                    child: const Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.close,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(height: AppDimens.size10),
               Flexible(
                 child: Row(

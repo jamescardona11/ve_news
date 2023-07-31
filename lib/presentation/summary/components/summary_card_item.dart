@@ -15,10 +15,12 @@ class SummaryCardItem extends StatelessWidget {
     this.onActionPressed,
     this.onPlayPressed,
     this.index,
+    this.isPlaying = false,
   }) : super(key: key);
 
   final SummaryArticles summary;
   final int? index;
+  final bool isPlaying;
   final ValueChanged<int>? onEditPressed;
   final VoidCallback? onActionPressed;
   final Function(SummaryArticles)? onPlayPressed;
@@ -107,13 +109,13 @@ class SummaryCardItem extends StatelessWidget {
                                   padding: const EdgeInsets.only(left: AppDimens.size20),
                                   child: BounceWrapper(
                                     onPressed: () => onPlayPressed?.call(summary),
-                                    child: const CircularContainer(
+                                    child: CircularContainer(
                                       size: AppDimens.size50,
-                                      color: AppColors.lightGrey100,
+                                      color: isPlaying ? AppColors.primary : AppColors.lightGrey100,
                                       child: Icon(
-                                        Icons.play_arrow,
+                                        isPlaying ? Icons.pause : Icons.play_arrow,
                                         size: AppDimens.size30,
-                                        color: AppColors.black,
+                                        color: isPlaying ? AppColors.white : AppColors.black,
                                       ),
                                     ),
                                   ),
