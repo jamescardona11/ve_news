@@ -1,5 +1,5 @@
 enum BottomBarState {
-  playing(200),
+  playing(150),
   recording(500),
   normal(90);
 

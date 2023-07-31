@@ -66,9 +66,9 @@ class PlayerWidget extends StatelessWidget {
                         buffered: buffered,
                         total: total,
                         onSeek: onSeekChanged,
-                        baseBarColor: AppColors.secondary.withOpacity(0.1),
+                        baseBarColor: AppColors.primary.withOpacity(0.1),
                         thumbColor: AppColors.primary,
-                        bufferedBarColor: AppColors.secondary.withOpacity(0.2),
+                        bufferedBarColor: AppColors.primary.withOpacity(0.2),
                         progressBarColor: AppColors.primary.withOpacity(0.7),
                       ),
                     ),
@@ -84,7 +84,10 @@ class PlayerWidget extends StatelessWidget {
                       child: const SizedBox(
                         width: 35,
                         height: 35,
-                        child: Icon(Icons.skip_previous),
+                        child: Icon(
+                          Icons.skip_previous,
+                          color: AppColors.black,
+                        ),
                       ),
                     ),
                     Padding(
@@ -120,7 +123,10 @@ class PlayerWidget extends StatelessWidget {
                       child: const SizedBox(
                         width: 35,
                         height: 35,
-                        child: Icon(Icons.skip_next),
+                        child: Icon(
+                          Icons.skip_next,
+                          color: AppColors.black,
+                        ),
                       ),
                     ),
                   ],

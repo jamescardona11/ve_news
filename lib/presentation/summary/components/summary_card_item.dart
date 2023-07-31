@@ -67,32 +67,52 @@ class SummaryCardItem extends StatelessWidget {
                         const SizedBox(height: AppDimens.size10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
                             children: [
-                              _IconText(
-                                icon: FontAwesomeIcons.newspaper,
-                                label: 'Articles length: ${summary.bodyLength}',
-                              ),
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  _IconText(
+                                    icon: FontAwesomeIcons.newspaper,
+                                    label: 'Articles length: ${summary.bodyLength}',
+                                  ),
+                                  Row(
                                     children: [
-                                      _IconText(
-                                        icon: FontAwesomeIcons.book,
-                                        label: 'Length: ${summary.summaryStr}',
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          _IconText(
+                                            icon: FontAwesomeIcons.book,
+                                            label: 'Length: ${summary.summaryStr}',
+                                          ),
+                                          _IconText(
+                                            icon: FontAwesomeIcons.solidClock,
+                                            label: 'Time: ${summary.summaryTimeStr}',
+                                          ),
+                                        ],
                                       ),
-                                      _IconText(
-                                        icon: FontAwesomeIcons.solidClock,
-                                        label: 'Time: ${summary.summaryTimeStr}',
-                                      ),
+                                      Text('(${summary.summaryPercentage}%)'),
+                                      if (!summary.isCompleted && !summary.textCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
                                     ],
                                   ),
-                                  Text('(${summary.summaryPercentage}%)'),
-                                  if (!summary.isCompleted && !summary.textCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
                                 ],
                               ),
+                              if (summary.isCompleted)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: AppDimens.size20),
+                                  child: BounceWrapper(
+                                    onPressed: onPlayPressed,
+                                    child: const CircularContainer(
+                                      size: AppDimens.size50,
+                                      color: AppColors.lightGrey100,
+                                      child: Icon(
+                                        Icons.play_arrow,
+                                        size: AppDimens.size30,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
