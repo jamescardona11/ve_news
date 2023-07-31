@@ -54,9 +54,9 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Search'),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
-          children: const [
+          children: [
             // Search Bar
             SearchBar(),
             Divider(

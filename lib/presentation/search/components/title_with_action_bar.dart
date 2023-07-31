@@ -19,7 +19,7 @@ class TitleWithActionBar extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         // Action Button
         TextButton(onPressed: onTap, child: Text(buttonText ?? 'Show All'))

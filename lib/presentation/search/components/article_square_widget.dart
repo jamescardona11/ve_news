@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
+import 'package:ve_news/config/theme/text_theme.dart';
 
 class ArticleSquareWidget extends StatelessWidget {
   const ArticleSquareWidget({Key? key, required this.title, required this.imageSrc, this.category, this.time, this.width})
@@ -31,10 +32,10 @@ class ArticleSquareWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
             maxLines: 3,
           ),
           const SizedBox(height: 10),
@@ -45,9 +46,9 @@ class ArticleSquareWidget extends StatelessWidget {
               children: [
                 Text(
                   category!,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: AppColors.primary,
-                      ),
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    color: AppColors.primary,
+                  ),
                 ),
                 const SizedBox(width: 10),
                 const Icon(

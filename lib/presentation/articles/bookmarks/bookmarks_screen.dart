@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ve_news/common/presentation/empty_widget.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/presentation/articles/components/articles_list.dart';

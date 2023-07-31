@@ -7,10 +7,10 @@ class Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return // Tags
-        Wrap(
+        const Wrap(
       spacing: 8.0,
       alignment: WrapAlignment.start,
-      children: const [
+      children: [
         TagChip(
           label: '#trending',
         ),

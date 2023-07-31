@@ -1,11 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/presentation/summary/cubit/new_summary_cubit.dart';
 
 class SummaryCardItem extends StatelessWidget {
   const SummaryCardItem({
@@ -56,7 +58,7 @@ class SummaryCardItem extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
                           child: _HeaderWidget(articles: summary.articles),
                         ),
-                        if (!summary.isEmpty) ...[
+                        if (summary.isNotEmpty) ...[
                           const SizedBox(height: AppDimens.size10),
                           CategoriesList(categories: summary.categories),
                         ],
@@ -110,19 +112,19 @@ class SummaryCardItem extends StatelessWidget {
                         child: ClipRRect(
                           child: RippleEffectWrapper(
                             splashColor: AppColors.primaryLight,
-                            onPressed: () {},
+                            onPressed: context.read<NewSummaryCubit>().onStartSummary,
                             child: Padding(
                               padding: const EdgeInsets.all(AppDimens.defaultPadding),
                               child: Row(
                                 children: [
-                                  const FaIcon(
-                                    FontAwesomeIcons.solidEye,
+                                  FaIcon(
+                                    summary.isCompleted ? FontAwesomeIcons.solidEye : FontAwesomeIcons.play,
                                     color: AppColors.black,
                                     size: 18,
                                   ),
                                   const SizedBox(width: AppDimens.size8),
                                   Text(
-                                    'View Articles',
+                                    summary.isCompleted ? 'View Articles' : 'Start summary',
                                     style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black),
                                   ),
                                 ],
