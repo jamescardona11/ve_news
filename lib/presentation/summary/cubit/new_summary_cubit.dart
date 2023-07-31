@@ -7,18 +7,21 @@ import 'package:ve_news/domain/summary/article_resume_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
-import 'package:ve_news/domain/summary/use_cases/request_summary_use_case.dart';
+import 'package:ve_news/domain/summary/use_cases/request_text_summary_use_case.dart';
+import 'package:ve_news/domain/summary/use_cases/request_voice_summary_use_case.dart';
 
 part 'new_summary_state.dart';
 
 class NewSummaryCubit extends Cubit<NewSummaryState> {
   final SummaryRepository _summaryRepository;
-  final RequestSummaryUseCase _requestSummaryUseCase;
+  final RequestTextSummaryUseCase _requestTextSummaryUseCase;
+  final RequestVoiceSummaryUseCase _requestVoiceSummaryUseCase;
   final RemoveArticleUseCase _removeArticleUseCase;
 
   NewSummaryCubit(
     this._summaryRepository,
-    this._requestSummaryUseCase,
+    this._requestTextSummaryUseCase,
+    this._requestVoiceSummaryUseCase,
     this._removeArticleUseCase,
   ) : super(const NewSummaryState()) {
     _init();
@@ -43,7 +46,20 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     emit(state.copyWith(isLoading: false, loadingMessage: ''));
   }
 
-  Future<void> _onElevenLabsVoice() async {}
+  Future<void> _onElevenLabsVoice() async {
+    _changeVoiceLoadingState();
+
+    final response = await _requestVoiceSummaryUseCase.call(state.summary!);
+    if (response == null) return;
+
+    final summaryWithVoice = state.summary!.copyWith(
+      isCompleted: true,
+      voiceSummaryPath: response,
+    );
+    await _summaryRepository.complete(summaryWithVoice);
+
+    emit(state.copyWith(summary: summaryWithVoice));
+  }
 
   Future<void> _onCreateGPTResume(List<ArticleModel> uncompletedArticles) async {
     final language = state.summary!.language.value;
@@ -54,7 +70,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     _changeLoadingState(completed, total);
 
     for (var article in uncompletedArticles) {
-      final response = await _requestSummaryUseCase.call(article, language, summaryPercentage);
+      final response = await _requestTextSummaryUseCase.call(article, language, summaryPercentage);
       if (response == null) {
         _changeLoadingState(++completed, total);
         continue;
@@ -75,6 +91,13 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       isLoading: true,
       loadingMessage: 'Creating text summary\n $completed/$total completed news',
       summary: summary,
+    ));
+  }
+
+  void _changeVoiceLoadingState() {
+    emit(state.copyWith(
+      isLoading: true,
+      loadingMessage: 'Creating voice summary',
     ));
   }
 

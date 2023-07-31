@@ -54,6 +54,7 @@ class _NewSummaryView extends StatelessWidget {
                   SummaryCardItem(
                     summary: state.summary!,
                     onEditPressed: (value) => cubit.onChangeSummaryPercentage(value),
+                    onActionPressed: context.read<NewSummaryCubit>().onStartSummary,
                   ),
                   Expanded(
                     child: ListView.builder(

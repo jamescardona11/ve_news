@@ -17,7 +17,14 @@ abstract class ExternalModule {
   Future<SharedPreferences> get sharedPreferences => SharedPreferences.getInstance();
 
   @singleton
-  Projectile projectile() => Projectile(client: HttpClient(config: const BaseConfig(enableLog: false)));
+  Projectile projectile() => Projectile(
+        client: HttpClient(
+          config: const BaseConfig(
+            enableLog: false,
+            timeout: Duration(minutes: 5),
+          ),
+        ),
+      );
 
   @Named('IsarSchemas')
   List<CollectionSchema> get isarSchemas => [

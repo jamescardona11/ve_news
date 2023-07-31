@@ -3,10 +3,10 @@ import 'package:ve_news/domain/summary/article_resume_model.dart';
 import 'package:ve_news/domain/summary/chat_gpt_request.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 
-class RequestSummaryUseCase {
+class RequestTextSummaryUseCase {
   final SummaryRepository _summaryRepository;
 
-  RequestSummaryUseCase(this._summaryRepository);
+  RequestTextSummaryUseCase(this._summaryRepository);
 
   Future<ArticleResumeModel?> call(ArticleModel article, String language, int percentage) async {
     final summaryStr = article.summaryStr(percentage);
