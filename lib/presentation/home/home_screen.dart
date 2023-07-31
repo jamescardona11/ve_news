@@ -8,6 +8,8 @@ import 'package:ve_news/presentation/account/account_screen.dart';
 import 'package:ve_news/presentation/articles/bookmarks/bookmarks_screen.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 import 'package:ve_news/presentation/articles/feed/feed_screen.dart';
+import 'package:ve_news/presentation/quick_actions/cubit/quick_actions_cubit.dart';
+import 'package:ve_news/presentation/quick_actions/quick_actions.dart';
 import 'package:ve_news/presentation/summary/cubit/summary_cubit.dart';
 import 'package:ve_news/presentation/summary/summary_screen.dart';
 
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       providers: [
         BlocProvider<SummaryCubit>(create: (_) => getIt<SummaryCubit>()),
         BlocProvider<ArticlesCubit>(create: (_) => getIt<ArticlesCubit>()),
+        BlocProvider<QuickActionsCubit>(create: (_) => getIt<QuickActionsCubit>()),
       ],
       child: Scaffold(
         body: PageView(
@@ -45,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           physics: const NeverScrollableScrollPhysics(),
           children: const [
             FeedScreen(),
-            SizedBox(),
+            QuickActions(),
             BookmarksScreen(),
             SummaryScreen(),
             AccountScreen(),

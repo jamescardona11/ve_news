@@ -6,6 +6,7 @@ import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 import 'package:ve_news/presentation/intro/cubit/intro_cubit.dart';
+import 'package:ve_news/presentation/quick_actions/cubit/quick_actions_cubit.dart';
 import 'package:ve_news/presentation/summary/cubit/new_summary_cubit.dart';
 import 'package:ve_news/presentation/summary/cubit/summary_cubit.dart';
 
@@ -31,4 +32,6 @@ abstract class PresentationModule {
   SummaryCubit get summaryCubit;
 
   NewSummaryCubit get newSummaryCubit;
+
+  QuickActionsCubit get quickActionsCubit;
 }
