@@ -10,11 +10,11 @@ class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
   int? messageId;
 
   @override
-  Future<void> play(int id, String path) async {
+  Future<void> play(SummaryArticles summary) async {
     if (player.playing) await stop();
 
-    messageId = id;
-    await player.setFilePath(path);
+    messageId = summary.id;
+    await player.setFilePath(summary.voiceSummaryPath!);
 
     await player.play();
   }
@@ -37,6 +37,22 @@ class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
   @override
   Future<void> seek(Duration position) async {
     await player.seek(position);
+  }
+
+  @override
+  Future<bool> seekToNext() async {
+    final hasNext = player.hasNext;
+    await player.seekToNext();
+
+    return hasNext;
+  }
+
+  @override
+  Future<bool> seekToPrevious() async {
+    final hasPrevious = player.hasNext;
+    await player.seekToPrevious();
+
+    return hasPrevious;
   }
 
   @override

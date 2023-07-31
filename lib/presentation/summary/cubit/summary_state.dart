@@ -11,6 +11,8 @@ class SummaryState extends Equatable {
     this.currentPlayingSummaryId,
   });
 
+  bool get notCurrent => currentPlayingSummaryId == null || currentPlayingSummaryId! == -1;
+
   @override
   List<Object?> get props => [
         summaries,

@@ -21,27 +21,32 @@ class SummaryCubit extends Cubit<SummaryState> {
 
   int? _currentPlayingSummaryId;
   final Map<int, int> _mapIdIndex = {};
-  int get _currentPlayingIndex => _mapIdIndex[_currentPlayingSummaryId]!;
-  SummaryArticles get _currentPlayingSummary => state.summaries[_currentPlayingIndex];
 
-  void onPlaySummaryPressed(SummaryArticles summary) {
+  Future<void> onPlaySummaryPressed(SummaryArticles summary) async {
     if (summary.voiceSummaryPath != null) {
-      _onPlayAudio(summary);
+      _currentPlayingSummaryId = summary.id;
+
+      emit(state.copyWith(
+        bottomBarState: BottomBarState.playing,
+        currentPlayingSummaryId: _currentPlayingSummaryId,
+      ));
+
+      await _audioPlayerRepository.play(summary);
     }
   }
 
-  Future<void> _onPlayAudio(SummaryArticles composed) async {
-    _currentPlayingSummaryId = composed.id;
+  Future<void> onClosePlayerPressed() async {
+    if (state.notCurrent) return;
+    emit(state.copyWith(bottomBarState: BottomBarState.normal, currentPlayingSummaryId: -1));
 
-    emit(state.copyWith(
-      bottomBarState: BottomBarState.playing,
-      currentPlayingSummaryId: _currentPlayingSummaryId,
-    ));
-
-    await _audioPlayerRepository.play(composed.id!, composed.voiceSummaryPath!);
+    await _audioPlayerRepository.stop();
   }
 
-  void onMainActionPlayerPressed() {}
+  Future<void> onMainActionPlayerPressed() async {
+    if (state.notCurrent) return;
+
+    await _audioPlayerRepository.pause();
+  }
 
   void onNextMessagePlayerPressed() {}
 
