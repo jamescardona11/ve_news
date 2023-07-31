@@ -19,6 +19,28 @@ class SummaryCubit extends Cubit<SummaryState> {
 
   Stream<AudioPlayerState> get audioPlayerState => _audioPlayerRepository.audioPlayerState;
 
+  int? _currentPlayingSummaryId;
+  final Map<int, int> _mapIdIndex = {};
+  int get _currentPlayingIndex => _mapIdIndex[_currentPlayingSummaryId]!;
+  SummaryArticles get _currentPlayingSummary => state.summaries[_currentPlayingIndex];
+
+  void onPlaySummaryPressed(SummaryArticles summary) {
+    if (summary.voiceSummaryPath != null) {
+      _onPlayAudio(summary);
+    }
+  }
+
+  Future<void> _onPlayAudio(SummaryArticles composed) async {
+    _currentPlayingSummaryId = composed.id;
+
+    emit(state.copyWith(
+      bottomBarState: BottomBarState.playing,
+      currentPlayingSummaryId: _currentPlayingSummaryId,
+    ));
+
+    await _audioPlayerRepository.play(composed.id!, composed.voiceSummaryPath!);
+  }
+
   void onMainActionPlayerPressed() {}
 
   void onNextMessagePlayerPressed() {}
@@ -38,6 +60,10 @@ class SummaryCubit extends Cubit<SummaryState> {
   Future<void> _init() async {
     _summarySubscription = _summaryRepository.watch().listen((summaries) {
       emit(state.copyWith(summaries: summaries));
+
+      for (int index = 0; index < summaries.length; index++) {
+        _mapIdIndex[summaries[index].id!] = index;
+      }
     });
   }
 }

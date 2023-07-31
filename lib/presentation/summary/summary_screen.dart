@@ -23,8 +23,13 @@ class SummaryScreen extends StatelessWidget {
             children: [
               ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
-                itemCount: 1,
-                itemBuilder: (context, index) => SummaryCardItem(summary: state.summaries[index]),
+                itemCount: state.summaries.where((element) => element.isCompleted).length,
+                itemBuilder: (context, index) => SummaryCardItem(
+                  summary: state.summaries[index],
+                  onPlayPressed: (summary) {
+                    cubit.onPlaySummaryPressed(summary);
+                  },
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

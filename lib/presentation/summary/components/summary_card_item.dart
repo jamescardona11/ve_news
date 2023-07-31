@@ -19,7 +19,7 @@ class SummaryCardItem extends StatelessWidget {
   final SummaryArticles summary;
   final ValueChanged<int>? onEditPressed;
   final VoidCallback? onActionPressed;
-  final VoidCallback? onPlayPressed;
+  final Function(SummaryArticles)? onPlayPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class SummaryCardItem extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: AppDimens.size20),
                                   child: BounceWrapper(
-                                    onPressed: onPlayPressed,
+                                    onPressed: () => onPlayPressed?.call(summary),
                                     child: const CircularContainer(
                                       size: AppDimens.size50,
                                       color: AppColors.lightGrey100,
