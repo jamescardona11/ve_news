@@ -9,6 +9,7 @@ import 'package:ve_news/core/errors/app_error.dart';
 import 'package:ve_news/core/logger/logger.dart';
 import 'package:ve_news/data/summary/dto/chat_gpt_response_dto.dart';
 import 'package:ve_news/data/summary/dto/summary_dto.dart';
+import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/summary/export_summary.dart';
 
@@ -96,6 +97,19 @@ final class SummaryRepositoryImpl extends SummaryRepository {
     return right(result);
   }
 
+  Future<SummaryArticles> createNamed(String name, List<ArticleModel> articles) async {
+    final dto = SummaryArticlesDto(
+      name: name,
+      articles: articles.map((e) => e.uuid).toList(),
+      language: LanguageEnum.en.value,
+    );
+    final id = await _isar.writeTxn(() {
+      return _summaryStore.put(dto);
+    });
+
+    return dto.toModel(id).copyWith(articles: articles);
+  }
+
   @override
   Stream<List<SummaryArticles>> watch() =>
       _summaryStore.where().sortByDateTime().watch(fireImmediately: true).asyncMap((summariesDtos) async {
@@ -158,9 +172,7 @@ final class SummaryRepositoryImpl extends SummaryRepository {
         return _summaryStore.put(dto);
       });
 
-      final articles = await _articlesRepository.readByIds(dto.articles);
-
-      _lastSummaryController.add(dto.toModel(id).copyWith(articles: articles));
+      _lastSummaryController.add(dto.toModel(id));
     }
   }
 }

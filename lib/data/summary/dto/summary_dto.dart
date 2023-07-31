@@ -7,6 +7,7 @@ part 'summary_dto.g.dart';
 @Name('Summary')
 class SummaryArticlesDto {
   final Id id;
+  final String? name;
   final List<String> articles;
   final List<ArticleResumeDto> resumeArticles;
   final bool isCompleted;
@@ -18,6 +19,7 @@ class SummaryArticlesDto {
 
   SummaryArticlesDto({
     this.id = Isar.autoIncrement,
+    this.name = '',
     this.articles = const [],
     this.resumeArticles = const [],
     this.isCompleted = false,
@@ -28,6 +30,7 @@ class SummaryArticlesDto {
 
   factory SummaryArticlesDto.fromModel(SummaryArticles model) => SummaryArticlesDto(
         id: model.id ?? Isar.autoIncrement,
+        name: model.name,
         articles: model.articles.map((e) => e.uuid).toList(),
         resumeArticles: model.resumeArticles
             .map((model) => ArticleResumeDto(
@@ -45,6 +48,7 @@ class SummaryArticlesDto {
 
   SummaryArticles toModel([int? id]) => SummaryArticles(
         id: id ?? this.id,
+        name: name,
         isCompleted: isCompleted,
         isCreatingVoiceSummary: isCreatingVoiceSummary,
         language: LanguageEnumX.fromValue(language) ?? LanguageEnum.en,
@@ -61,6 +65,7 @@ class SummaryArticlesDto {
 
   SummaryArticlesDto copyWith({
     Id? id,
+    String? name,
     List<String>? articles,
     List<ArticleResumeDto>? resumeArticles,
     bool? isCompleted,
@@ -72,6 +77,7 @@ class SummaryArticlesDto {
   }) {
     return SummaryArticlesDto(
       id: id ?? this.id,
+      name: name ?? this.name,
       articles: articles ?? this.articles,
       resumeArticles: resumeArticles ?? this.resumeArticles,
       isCompleted: isCompleted ?? this.isCompleted,

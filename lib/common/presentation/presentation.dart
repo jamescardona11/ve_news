@@ -2,6 +2,7 @@ export 'categories_list_chip.dart';
 export 'custom_tag.dart';
 export 'empty_widget.dart';
 export 'image_container.dart';
+export 'loading_screen.dart';
 export 'source_logo.dart';
 export 've_news_scaffold.dart';
 export 'widgets/bounce_wrapper.dart';

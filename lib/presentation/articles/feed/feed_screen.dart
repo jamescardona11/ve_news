@@ -17,7 +17,7 @@ class FeedScreen extends StatelessWidget {
       builder: (context, state) => VeNewsScaffold(
         title: 'VeNews',
         iconLeft: FontAwesomeIcons.inbox,
-        iconRight: FontAwesomeIcons.magnifyingGlass,
+        // iconRight: FontAwesomeIcons.magnifyingGlass,
         showLeftNotification: state.summary?.isNotEmpty ?? false,
         onRightTap: () {},
         onLeftTap: () {

@@ -17,29 +17,35 @@ class QuickActions extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<QuickActionsCubit>();
 
-          return Padding(
-            padding: const EdgeInsets.all(AppDimens.defaultPadding),
-            child: Column(
-              children: [
-                _TempCard(
-                  label: '10 Minutes News',
-                  onPressed: cubit.onTemp10MinutesNews,
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppDimens.defaultPadding),
+                child: Column(
+                  children: [
+                    _TempCard(
+                      label: '10 Minutes News',
+                      onPressed: cubit.onTemp10MinutesNews,
+                    ),
+                    _TempCard(
+                      label: '5 The Guardian News',
+                      onPressed: cubit.onTemp5TheGuardianNews,
+                    ),
+                    _TempCard(
+                      label: '5 Sports News',
+                      onPressed: cubit.onTemp5SportsNews,
+                    ),
+                    const SizedBox(height: AppDimens.size30),
+                    const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text('More Comming soon'),
+                    ),
+                  ],
                 ),
-                _TempCard(
-                  label: '5 The Guardian News',
-                  onPressed: cubit.onTemp5TheGuardianNews,
-                ),
-                _TempCard(
-                  label: '5 Sports News',
-                  onPressed: cubit.onTemp5SportsNews,
-                ),
-                const SizedBox(height: AppDimens.size30),
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text('More Comming soon'),
-                ),
-              ],
-            ),
+              ),
+              if (state.isLoading) LoadingScreen(label: state.loadingMessage),
+            ],
           );
         },
       ),

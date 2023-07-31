@@ -6,6 +6,7 @@ import 'article_resume_model.dart';
 
 class SummaryArticles extends Equatable {
   final int? id;
+  final String? name;
   final List<ArticleModel> articles;
   final List<ArticleResumeModel> resumeArticles;
   final bool isCompleted;
@@ -16,6 +17,7 @@ class SummaryArticles extends Equatable {
 
   const SummaryArticles({
     this.id,
+    this.name,
     this.articles = const [],
     this.resumeArticles = const [],
     this.isCompleted = false,
@@ -45,6 +47,7 @@ class SummaryArticles extends Equatable {
 
   SummaryArticles copyWith({
     int? id,
+    String? name,
     List<ArticleModel>? articles,
     List<ArticleResumeModel>? resumeArticles,
     bool? isCompleted,
@@ -54,6 +57,7 @@ class SummaryArticles extends Equatable {
   }) {
     return SummaryArticles(
       id: id ?? this.id,
+      name: name ?? this.name,
       articles: articles ?? this.articles,
       resumeArticles: resumeArticles ?? this.resumeArticles,
       isCompleted: isCompleted ?? this.isCompleted,
@@ -65,6 +69,7 @@ class SummaryArticles extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        name,
         articles,
         resumeArticles,
         isCompleted,
