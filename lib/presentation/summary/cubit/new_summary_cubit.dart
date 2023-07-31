@@ -6,6 +6,7 @@ import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/summary/article_resume_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
 import 'package:ve_news/domain/summary/use_cases/request_summary_use_case.dart';
 
 part 'new_summary_state.dart';
@@ -13,8 +14,13 @@ part 'new_summary_state.dart';
 class NewSummaryCubit extends Cubit<NewSummaryState> {
   final SummaryRepository _summaryRepository;
   final RequestSummaryUseCase _requestSummaryUseCase;
+  final RemoveArticleUseCase _removeArticleUseCase;
 
-  NewSummaryCubit(this._summaryRepository, this._requestSummaryUseCase) : super(const NewSummaryState()) {
+  NewSummaryCubit(
+    this._summaryRepository,
+    this._requestSummaryUseCase,
+    this._removeArticleUseCase,
+  ) : super(const NewSummaryState()) {
     _init();
   }
 
@@ -78,5 +84,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
     });
   }
 
-  Future<void> removeArticle(ArticleModel article) async {}
+  Future<void> removeArticle(ArticleModel article) async {
+    await _removeArticleUseCase.call(article);
+  }
 }

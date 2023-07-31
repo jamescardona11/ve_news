@@ -8,6 +8,7 @@ import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
 
 part 'articles_state.dart';
 
@@ -15,11 +16,13 @@ class ArticlesCubit extends Cubit<ArticlesState> {
   final SourcesRepository _sourcesRepository;
   final ArticlesRepository _articlesRepository;
   final SummaryRepository _summaryRepository;
+  final RemoveArticleUseCase _removeArticleUseCase;
 
   ArticlesCubit(
     this._sourcesRepository,
     this._articlesRepository,
-    this._summaryRepository, {
+    this._summaryRepository,
+    this._removeArticleUseCase, {
     SourceModel? sourceFilter,
   }) : super(const ArticlesState()) {
     _init(sourceFilter);
@@ -37,11 +40,8 @@ class ArticlesCubit extends Cubit<ArticlesState> {
     _updateSummary(articles);
   }
 
-  void removeArticleToSummary(ArticleModel article) {
-    final articles = List<ArticleModel>.from(state.summary?.articles ?? <String>[]);
-    articles.remove(article);
-
-    _updateSummary(articles);
+  Future<void> removeArticleToSummary(ArticleModel article) async {
+    await _removeArticleUseCase.call(article);
   }
 
   Future<void> _updateSummary(List<ArticleModel> articles) async {
