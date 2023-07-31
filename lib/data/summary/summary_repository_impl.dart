@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 import 'package:projectile/projectile.dart';
@@ -15,6 +16,7 @@ import 'package:ve_news/domain/summary/repository/summary_repository.dart';
 import 'package:ve_news/domain/summary/summary.dart';
 
 import 'dto/chat_gpt_request_dto.dart';
+import 'files_repository.dart';
 
 final class SummaryRepositoryImpl extends SummaryRepository {
   final Isar _isar;
@@ -34,7 +36,7 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   final _lastSummaryController = BehaviorSubject<SummaryArticles>();
 
   @override
-  Future<Either<AppError, ChatGptResponse>> sendQuestion(ChatGptRequest request) async {
+  Future<Either<AppError, ChatGptResponse>> sendSummaryRequest(ChatGptRequest request) async {
     final dto = ChatGptRequestDto.fromDomain(request);
 
     final response = await _projectile
@@ -57,6 +59,44 @@ final class SummaryRepositoryImpl extends SummaryRepository {
     }
 
     return right(ChatGptResponseDto.fromJson(response.data).toDomain());
+  }
+
+  @override
+  Future<Either<AppError, String>> sendVoiceSummaryRequest(String text, {String voiceId = '21m00Tcm4TlvDq8ikWAM'}) async {
+    final response = await _projectile
+        .request(
+          ProjectileRequest(
+            method: Method.POST,
+            target: UrlRoutes.textToSpeech,
+            headers: {
+              'xi-api-key': Env.audioAPI,
+              HeadersKeys.accept: 'audio/mpeg',
+              HeadersKeys.contentType: ContentType.json,
+            },
+            urlParams: {
+              'voiceId': voiceId,
+            },
+            body: {
+              'text': text,
+              'model_id': 'eleven_multilingual_v1',
+            },
+          ),
+        )
+        .fire();
+
+    if (response.isFailure) {
+      return left(HttpResponseError());
+    }
+
+    final localPath = await ElevenLabsFileIsolate.localPath();
+    final result = await compute(
+      ElevenLabsFileIsolate.saveFile,
+      FileData(response.data as Uint8List, localPath),
+    );
+
+    if (result == null) return left(UnexpectedError());
+
+    return right(result);
   }
 
   @override

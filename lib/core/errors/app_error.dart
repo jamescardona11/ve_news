@@ -13,7 +13,6 @@ sealed class AppError {
   bool get isHttpResponseError => this is HttpResponseError;
   bool get isNoInternetError => this is NoInternetError;
   bool get isNoPermissionError => this is NoPermissionError;
-  bool get isSpeechError => this is SpeechError;
   bool get isNoCreditsError => this is NoCreditsError;
 }
 
@@ -31,10 +30,6 @@ final class UnexpectedError extends AppError {
 
 final class NoPermissionError extends AppError {
   NoPermissionError({String? type}) : super('No ${type ?? ''} permission error.');
-}
-
-final class SpeechError extends AppError {
-  SpeechError({String? message}) : super(message ?? 'Speech error.');
 }
 
 final class NoCreditsError extends AppError {

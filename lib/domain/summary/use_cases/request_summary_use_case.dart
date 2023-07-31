@@ -11,7 +11,7 @@ class RequestSummaryUseCase {
   Future<ArticleResumeModel?> call(ArticleModel article, String language, int percentage) async {
     final summaryStr = article.summaryStr(percentage);
 
-    final response = await _summaryRepository.sendQuestion(
+    final response = await _summaryRepository.sendSummaryRequest(
       ChatGptRequest(
         messages: [
           ChatGptContentMessage(

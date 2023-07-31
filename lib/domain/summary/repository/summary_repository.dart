@@ -17,5 +17,7 @@ abstract base class SummaryRepository {
 
   Future<void> deleteAll();
 
-  Future<Either<AppError, ChatGptResponse>> sendQuestion(ChatGptRequest request);
+  Future<Either<AppError, ChatGptResponse>> sendSummaryRequest(ChatGptRequest request);
+
+  Future<Either<AppError, String>> sendVoiceSummaryRequest(String text, {String voiceId = '21m00Tcm4TlvDq8ikWAM'});
 }
