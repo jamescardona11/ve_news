@@ -13,7 +13,11 @@ class QuickActionsState extends Equatable {
   });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        articles,
+        isLoading,
+        loadingMessage,
+      ];
 
   QuickActionsState copyWith({
     List<ArticleModel>? articles,

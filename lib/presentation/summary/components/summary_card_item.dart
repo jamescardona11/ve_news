@@ -66,7 +66,7 @@ class SummaryCardItem extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
                           child: _HeaderWidget(
                             articles: summary.articles,
-                            index: index,
+                            name: summary.name,
                           ),
                         ),
                         if (summary.isNotEmpty) ...[
@@ -351,11 +351,11 @@ class _HeaderWidget extends StatelessWidget {
   const _HeaderWidget({
     Key? key,
     required this.articles,
-    this.index,
+    this.name,
   }) : super(key: key);
 
   final List<ArticleModel> articles;
-  final int? index;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -401,16 +401,16 @@ class _HeaderWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppDimens.size10),
+          if (name != null)
+            Text(
+              name!,
+              style: textTheme.titleMedium,
+            ),
           Text(
             '${articles.length} articles',
-            style: textTheme.titleMedium,
+            style: name == null ? textTheme.titleMedium : textTheme.bodyMedium,
           ),
           const Spacer(),
-          // if (index != null)
-          //   Text(
-          //     'S-${index! + 1}',
-          //     style: textTheme.titleMedium,
-          //   ),
         ],
       ),
     );

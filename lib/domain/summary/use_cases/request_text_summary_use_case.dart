@@ -17,9 +17,13 @@ class RequestTextSummaryUseCase {
             role: ChatGptRole.system,
           ),
           ChatGptContentMessage(
-            content: article.body,
+            content: article.title,
             role: ChatGptRole.user,
           ),
+          // ChatGptContentMessage(
+          //   content: article.body,
+          //   role: ChatGptRole.user,
+          // ),
         ],
       ),
     );
@@ -27,7 +31,7 @@ class RequestTextSummaryUseCase {
     if (response.isRight()) {
       final result = response.toNullable()!;
       if (result.content.isEmpty) return null;
-      return ArticleResumeModel(articleId: article.uuid, content: result.content);
+      return ArticleResumeModel(articleId: article.uuid, content: result.content, lang: language);
     }
 
     return null;

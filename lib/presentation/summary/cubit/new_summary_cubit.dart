@@ -26,6 +26,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
 
   void onChangeSummaryPercentage(int value) {
     emit(state.copyWith(summary: state.summary?.copyWith(summaryPercentage: value)));
+    _summaryRepository.update(state.summary!);
   }
 
   void createNewPendingSummary() {
@@ -116,5 +117,6 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
 
   onChangeSummaryLanguage(LanguageEnum value) {
     emit(state.copyWith(summary: state.summary?.copyWith(language: value)));
+    _summaryRepository.update(state.summary!);
   }
 }
