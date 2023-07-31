@@ -11,8 +11,10 @@ class SummaryArticlesDto {
   final List<ArticleResumeDto> resumeArticles;
   final bool isCompleted;
   final bool isCreatingVoiceSummary;
-  final String? voiceSummaryPath;
+
   final int dateTime;
+  final String? language;
+  final int? summaryPercentage;
 
   SummaryArticlesDto({
     this.id = Isar.autoIncrement,
@@ -20,7 +22,8 @@ class SummaryArticlesDto {
     this.resumeArticles = const [],
     this.isCompleted = false,
     this.isCreatingVoiceSummary = false,
-    this.voiceSummaryPath,
+    this.language,
+    this.summaryPercentage,
   }) : dateTime = DateTime.now().millisecondsSinceEpoch;
 
   factory SummaryArticlesDto.fromModel(SummaryArticles model) => SummaryArticlesDto(
@@ -36,14 +39,16 @@ class SummaryArticlesDto {
             .toList(),
         isCompleted: model.isCompleted,
         isCreatingVoiceSummary: model.isCreatingVoiceSummary,
-        voiceSummaryPath: model.voiceSummaryPath,
+        language: model.language.value,
+        summaryPercentage: model.summaryPercentage,
       );
 
   SummaryArticles toModel([int? id]) => SummaryArticles(
         id: id ?? this.id,
         isCompleted: isCompleted,
         isCreatingVoiceSummary: isCreatingVoiceSummary,
-        voiceSummaryPath: voiceSummaryPath,
+        language: LanguageEnumX.fromValue(language) ?? LanguageEnum.en,
+        summaryPercentage: summaryPercentage ?? 70,
         resumeArticles: resumeArticles
             .map((e) => ArticleResumeModel(
                   articleId: e.articleId,
@@ -62,6 +67,8 @@ class SummaryArticlesDto {
     bool? isCreatingVoiceSummary,
     String? voiceSummaryPath,
     int? dateTime,
+    String? language,
+    int? summaryPercentage,
   }) {
     return SummaryArticlesDto(
       id: id ?? this.id,
@@ -69,7 +76,8 @@ class SummaryArticlesDto {
       resumeArticles: resumeArticles ?? this.resumeArticles,
       isCompleted: isCompleted ?? this.isCompleted,
       isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
-      voiceSummaryPath: voiceSummaryPath ?? this.voiceSummaryPath,
+      language: language ?? this.language,
+      summaryPercentage: summaryPercentage ?? this.summaryPercentage,
     );
   }
 }
@@ -87,4 +95,11 @@ class ArticleResumeDto {
     this.path,
     this.lang = 'English',
   });
+
+  ArticleResumeModel toModel() => ArticleResumeModel(
+        articleId: articleId,
+        content: content,
+        path: path,
+        lang: lang!,
+      );
 }

@@ -1,5 +1,6 @@
 class AudioPlayerState {
-  final int messageId;
+  final int summaryId;
+  final int articleIndex;
   final bool isPlaying;
   final Duration? duration;
   final Duration position;
@@ -7,7 +8,8 @@ class AudioPlayerState {
   final AudioPlayerProcessingState processingState;
 
   AudioPlayerState({
-    required this.messageId,
+    required this.summaryId,
+    this.articleIndex = -1,
     this.isPlaying = false,
     this.duration,
     this.position = Duration.zero,

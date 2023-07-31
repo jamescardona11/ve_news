@@ -7,21 +7,24 @@ import 'package:ve_news/domain/summary/repository/audio_player_repository.dart';
 
 class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
   final player = AudioPlayer();
-  int? messageId;
+  int? elementId;
 
   @override
   Future<void> play(SummaryArticles summary) async {
     if (player.playing) await stop();
+    elementId = summary.id;
 
-    messageId = summary.id;
-    await player.setFilePath(summary.voiceSummaryPath!);
+    final playlist = ConcatenatingAudioSource(
+        children: summary.resumeArticles.where((element) => element.path != null).map((e) => AudioSource.file(e.path!)).toList());
 
-    await player.play();
+    await player.setAudioSource(playlist);
+
+    if (playlist.children.isNotEmpty) await player.play();
   }
 
   @override
   Future<void> stop() async {
-    messageId = null;
+    elementId = null;
     await player.stop();
   }
 
@@ -56,15 +59,17 @@ class AudioPlayerRepositoryImpl implements AudioPlayerRepository {
   }
 
   @override
-  Stream<AudioPlayerState> get audioPlayerState => CombineLatestStream.combine4(
+  Stream<AudioPlayerState> get audioPlayerState => CombineLatestStream.combine5(
         player.positionStream,
         player.bufferedPositionStream,
         player.durationStream,
         player.playerStateStream,
-        (Duration position, Duration buffered, Duration? duration, PlayerState state) {
-          return messageId != null
+        player.sequenceStateStream,
+        (Duration position, Duration buffered, Duration? duration, PlayerState state, SequenceState? sequenceState) {
+          return elementId != null
               ? AudioPlayerState(
-                  messageId: messageId!,
+                  summaryId: elementId!,
+                  articleIndex: sequenceState?.currentIndex ?? -1,
                   isPlaying: state.playing,
                   processingState: _mapToAudioPlayerProcessingState(state.processingState),
                   position: position,

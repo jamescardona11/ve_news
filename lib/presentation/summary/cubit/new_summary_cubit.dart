@@ -50,7 +50,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       _changeLoadingState(kind: 'Voice', completed: ++completed, total: total);
     }).onDone(() async {
       final summaryWithVoice = state.summary!.copyWith(isCompleted: true);
-      await _summaryRepository.complete(summaryWithVoice);
+      await _summaryRepository.complete();
 
       emit(state.copyWith(summary: summaryWithVoice, isLoading: false, loadingMessage: ''));
     });

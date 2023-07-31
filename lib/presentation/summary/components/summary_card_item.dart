@@ -14,9 +14,11 @@ class SummaryCardItem extends StatelessWidget {
     this.onEditPressed,
     this.onActionPressed,
     this.onPlayPressed,
+    this.index,
   }) : super(key: key);
 
   final SummaryArticles summary;
+  final int? index;
   final ValueChanged<int>? onEditPressed;
   final VoidCallback? onActionPressed;
   final Function(SummaryArticles)? onPlayPressed;
@@ -58,7 +60,10 @@ class SummaryCardItem extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: AppDimens.defaultPadding),
-                          child: _HeaderWidget(articles: summary.articles),
+                          child: _HeaderWidget(
+                            articles: summary.articles,
+                            index: index,
+                          ),
                         ),
                         if (summary.isNotEmpty) ...[
                           const SizedBox(height: AppDimens.size10),
@@ -271,9 +276,11 @@ class _HeaderWidget extends StatelessWidget {
   const _HeaderWidget({
     Key? key,
     required this.articles,
+    this.index,
   }) : super(key: key);
 
   final List<ArticleModel> articles;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -323,7 +330,12 @@ class _HeaderWidget extends StatelessWidget {
             '${articles.length} articles',
             style: textTheme.titleMedium,
           ),
-          const Spacer()
+          const Spacer(),
+          // if (index != null)
+          //   Text(
+          //     'S-${index! + 1}',
+          //     style: textTheme.titleMedium,
+          //   ),
         ],
       ),
     );

@@ -11,7 +11,7 @@ class SummaryArticles extends Equatable {
   final bool isCompleted;
   final bool isCreatingVoiceSummary;
   final int summaryPercentage;
-  final String? voiceSummaryPath;
+
   final LanguageEnum language;
 
   const SummaryArticles({
@@ -21,7 +21,6 @@ class SummaryArticles extends Equatable {
     this.isCompleted = false,
     this.isCreatingVoiceSummary = false,
     this.summaryPercentage = 70,
-    this.voiceSummaryPath,
     this.language = LanguageEnum.en,
   });
 
@@ -60,7 +59,6 @@ class SummaryArticles extends Equatable {
       isCompleted: isCompleted ?? this.isCompleted,
       isCreatingVoiceSummary: isCreatingVoiceSummary ?? this.isCreatingVoiceSummary,
       summaryPercentage: summaryPercentage ?? this.summaryPercentage,
-      voiceSummaryPath: voiceSummaryPath ?? this.voiceSummaryPath,
     );
   }
 
@@ -72,7 +70,6 @@ class SummaryArticles extends Equatable {
         isCompleted,
         isCreatingVoiceSummary,
         summaryPercentage,
-        voiceSummaryPath,
         language,
       ];
 }
@@ -88,4 +85,10 @@ enum LanguageEnum {
   final String value;
 
   const LanguageEnum(this.value);
+}
+
+extension LanguageEnumX on LanguageEnum {
+  static LanguageEnum? fromValue(String? value) {
+    return LanguageEnum.values.firstWhereOrNull((element) => element.value == value);
+  }
 }

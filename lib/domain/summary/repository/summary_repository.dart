@@ -7,7 +7,7 @@ abstract base class SummaryRepository {
 
   Stream<SummaryArticles> watchLastUncompleted();
 
-  Future<void> complete(SummaryArticles summary);
+  Future<void> complete();
 
   Future<void> update(SummaryArticles summary);
 

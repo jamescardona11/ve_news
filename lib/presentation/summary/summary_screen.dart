@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
-import 'package:ve_news/domain/summary/export_summary.dart';
 import 'package:ve_news/presentation/summary/components/bottom_bar_component.dart';
 
 import 'components/player_widget.dart';
@@ -26,6 +25,7 @@ class SummaryScreen extends StatelessWidget {
                 itemCount: state.summaries.where((element) => element.isCompleted).length,
                 itemBuilder: (context, index) => SummaryCardItem(
                   summary: state.summaries[index],
+                  index: index,
                   onPlayPressed: (summary) {
                     cubit.onPlaySummaryPressed(summary);
                   },
@@ -34,8 +34,9 @@ class SummaryScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: BottomBarComponent(
-                  height: BottomBarState.playing.value,
+                  height: 130,
                   first: PlayerWidget(
+                    label: state.currentPlayingArticle?.title ?? '',
                     audioPlayerState: cubit.audioPlayerState,
                     onPlayPressed: cubit.onMainActionPlayerPressed,
                     onNextPressed: cubit.onNextMessagePlayerPressed,

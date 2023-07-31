@@ -102,15 +102,16 @@ final class SummaryRepositoryImpl extends SummaryRepository {
         final result = <SummaryArticles>[];
         for (var summary in summariesDtos) {
           final articles = await _articlesRepository.readByIds(summary.articles);
-          result.add(
-            SummaryArticles(
-              id: summary.id,
-              articles: articles,
-              isCompleted: summary.isCompleted,
-              isCreatingVoiceSummary: summary.isCreatingVoiceSummary,
-              voiceSummaryPath: summary.voiceSummaryPath,
-            ),
-          );
+          result.add(summary.toModel().copyWith(articles: articles)
+              // SummaryArticles(
+              //   id: summary.id,
+              //   articles: articles,
+              //   resumeArticles: summary.resumeArticles.map((e) => e.toModel()).toList(),
+              //   language: LanguageEnumX.fromValue(summary.language) ?? LanguageEnum.en,
+              //   isCompleted: summary.isCompleted,
+              //   isCreatingVoiceSummary: summary.isCreatingVoiceSummary,
+              // ),
+              );
         }
         return result;
       });
@@ -119,11 +120,11 @@ final class SummaryRepositoryImpl extends SummaryRepository {
   Stream<SummaryArticles> watchLastUncompleted() => _lastSummaryController;
 
   @override
-  Future<void> complete(SummaryArticles summary) async {
-    final dto = SummaryArticlesDto.fromModel(summary);
-    await _isar.writeTxn(() => _summaryStore.put(dto));
+  Future<void> complete() async {
+    final dto = await _summaryStore.where().filter().isCompletedEqualTo(false).findFirst();
+    if (dto == null) return;
 
-    _lastSummaryController.add(summary);
+    await _isar.writeTxn(() => _summaryStore.put(dto.copyWith(isCompleted: true)));
 
     await _readUncompletedSummary();
   }

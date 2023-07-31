@@ -9,7 +9,7 @@ class PlayerWidget extends StatelessWidget {
     Key? key = const ValueKey('playing'),
     required this.audioPlayerState,
     this.leadingBar,
-    this.onClosePressed,
+    this.label = '',
     this.onSeekChanged,
     this.onNextPressed,
     this.onBackPressed,
@@ -17,8 +17,9 @@ class PlayerWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Widget? leadingBar;
+  final String label;
   final Stream<AudioPlayerState> audioPlayerState;
-  final VoidCallback? onClosePressed;
+
   final ValueChanged<Duration>? onSeekChanged;
   final VoidCallback? onNextPressed;
   final VoidCallback? onBackPressed;
@@ -36,21 +37,14 @@ class PlayerWidget extends StatelessWidget {
         final total = audioPlayerState?.duration ?? Duration.zero;
 
         return Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: AppDimens.size10,
             right: AppDimens.size10,
-            top: onClosePressed != null ? AppDimens.size10 : AppDimens.size30,
+            top: AppDimens.size10,
           ),
           child: Column(
             children: [
-              if (onClosePressed != null)
-                InkWell(
-                  onTap: onClosePressed,
-                  child: const Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(Icons.close),
-                  ),
-                ),
+              Text(label),
               const SizedBox(height: AppDimens.size10),
               Flexible(
                 child: Row(

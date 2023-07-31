@@ -1,6 +1,5 @@
 export 'models/article_resume_model.dart';
 export 'models/audio_player/audio_player_state.dart';
-export 'models/audio_player/bottom_bar_state.dart';
 export 'models/gpt/chat_gpt_request.dart';
 export 'models/gpt/chat_gpt_response.dart';
 export 'models/summary.dart';
