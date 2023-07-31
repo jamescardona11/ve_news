@@ -33,13 +33,19 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
   Future<void> onStartSummary() async {
     if (state.summary == null) return;
 
-    await _onCreateGPTResume();
+    final uncompletedArticles = state.summary!.uncompletedArticles;
+    if (uncompletedArticles.isNotEmpty) {
+      await _onCreateGPTResume(uncompletedArticles);
+    }
+
+    await _onElevenLabsVoice();
 
     emit(state.copyWith(isLoading: false, loadingMessage: ''));
   }
 
-  Future<void> _onCreateGPTResume() async {
-    final uncompletedArticles = state.summary!.uncompletedArticles;
+  Future<void> _onElevenLabsVoice() async {}
+
+  Future<void> _onCreateGPTResume(List<ArticleModel> uncompletedArticles) async {
     final language = state.summary!.language.value;
     final summaryPercentage = state.summary!.summaryPercentage;
     final total = state.summary!.articles.length;

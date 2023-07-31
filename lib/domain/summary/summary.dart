@@ -24,6 +24,8 @@ class SummaryArticles extends Equatable {
     this.language = LanguageEnum.en,
   });
 
+  static const int _time = 833;
+
   bool get isNotEmpty => articles.isNotEmpty;
   List<Category> get categories => articles.map((e) => e.categories.isNotEmpty ? e.categories.first : null).whereNotNull().toSet().toList();
 
@@ -36,7 +38,7 @@ class SummaryArticles extends Equatable {
   List<ArticleModel> get uncompletedArticles =>
       articles.where((article) => resumeArticles.where((resume) => resume.articleId == article.uuid).isEmpty).toList();
 
-  static const int _time = 833;
+  bool get textCompleted => resumeArticles.length >= articles.length;
 
   SummaryArticles copyWith({
     int? id,

@@ -33,7 +33,7 @@ class SummaryCardItem extends StatelessWidget {
             right: 0,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: AppColors.grey,
+                color: summary.isCompleted ? AppColors.grey : AppColors.primaryLight,
                 border: Border.all(color: AppColors.black, width: AppDimens.size1),
                 borderRadius: const BorderRadius.all(AppDimens.radius10),
               ),
@@ -88,7 +88,7 @@ class SummaryCardItem extends StatelessWidget {
                                     ],
                                   ),
                                   Text('(${summary.summaryPercentage}%)'),
-                                  if (!summary.isCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
+                                  if (!summary.isCompleted && !summary.textCompleted) _EditDropDownWidget(onEditPressed: onEditPressed)
                                 ],
                               ),
                             ],
@@ -118,13 +118,13 @@ class SummaryCardItem extends StatelessWidget {
                               child: Row(
                                 children: [
                                   FaIcon(
-                                    summary.isCompleted ? FontAwesomeIcons.solidEye : FontAwesomeIcons.play,
+                                    icon,
                                     color: AppColors.black,
                                     size: 18,
                                   ),
                                   const SizedBox(width: AppDimens.size8),
                                   Text(
-                                    summary.isCompleted ? 'View Articles' : 'Start summary',
+                                    summary.isCompleted ? 'View Articles' : actionStr,
                                     style: context.textTheme.bodyMedium?.copyWith(color: AppColors.black),
                                   ),
                                 ],
@@ -142,6 +142,14 @@ class SummaryCardItem extends StatelessWidget {
       ),
     );
   }
+
+  IconData get icon => summary.isCompleted
+      ? FontAwesomeIcons.solidEye
+      : summary.textCompleted
+          ? FontAwesomeIcons.podcast
+          : FontAwesomeIcons.font;
+
+  String get actionStr => summary.textCompleted ? 'Get audio summary' : 'Start text summary';
 
   double get height => summary.isCompleted
       ? 280
