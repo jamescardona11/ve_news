@@ -27,7 +27,12 @@ class RequestSummaryUseCase {
         ),
       );
 
-      if (response.isRight()) {}
+      if (response.isRight()) {
+        final result = response.toNullable()!;
+        if (result.content.isEmpty) continue;
+        final resumeArticle = ArticleResumeModel(articleId: article.uuid, content: result.content);
+        resumeArticles.add(resumeArticle);
+      }
     }
   }
 }
