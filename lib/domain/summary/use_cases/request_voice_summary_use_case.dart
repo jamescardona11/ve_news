@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 import 'package:ve_news/domain/summary/repository/summary_repository.dart';
-import 'package:ve_news/domain/summary/summary.dart';
 
 class RequestVoiceSummaryUseCase {
   final SummaryRepository _summaryRepository;

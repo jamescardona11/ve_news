@@ -10,10 +10,7 @@ import 'package:ve_news/core/logger/logger.dart';
 import 'package:ve_news/data/summary/dto/chat_gpt_response_dto.dart';
 import 'package:ve_news/data/summary/dto/summary_dto.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
-import 'package:ve_news/domain/summary/chat_gpt_request.dart';
-import 'package:ve_news/domain/summary/chat_gpt_response.dart';
-import 'package:ve_news/domain/summary/repository/summary_repository.dart';
-import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 import 'dto/chat_gpt_request_dto.dart';
 import 'files_repository.dart';

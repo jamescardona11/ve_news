@@ -1,8 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:ve_news/core/errors/app_error.dart';
-import 'package:ve_news/domain/summary/chat_gpt_request.dart';
-import 'package:ve_news/domain/summary/chat_gpt_response.dart';
-import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 abstract base class SummaryRepository {
   Stream<List<SummaryArticles>> watch();

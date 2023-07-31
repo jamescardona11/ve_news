@@ -1,7 +1,5 @@
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/domain/summary/article_resume_model.dart';
-import 'package:ve_news/domain/summary/chat_gpt_request.dart';
-import 'package:ve_news/domain/summary/repository/summary_repository.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 class RequestTextSummaryUseCase {
   final SummaryRepository _summaryRepository;

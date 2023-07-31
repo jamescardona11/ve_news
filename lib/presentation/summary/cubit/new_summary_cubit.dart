@@ -3,12 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/domain/summary/article_resume_model.dart';
-import 'package:ve_news/domain/summary/repository/summary_repository.dart';
-import 'package:ve_news/domain/summary/summary.dart';
-import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
-import 'package:ve_news/domain/summary/use_cases/request_text_summary_use_case.dart';
-import 'package:ve_news/domain/summary/use_cases/request_voice_summary_use_case.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 part 'new_summary_state.dart';
 

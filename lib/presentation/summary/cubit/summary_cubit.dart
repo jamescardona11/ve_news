@@ -4,7 +4,7 @@ import 'package:ve_news/common/domain/models/image_value_object.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/source/source_model.dart';
-import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 part 'summary_state.dart';
 

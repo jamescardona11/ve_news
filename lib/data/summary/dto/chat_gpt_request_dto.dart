@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ve_news/domain/summary/chat_gpt_request.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 part 'chat_gpt_request_dto.g.dart';
 

@@ -1,6 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:ve_news/domain/summary/article_resume_model.dart';
-import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 part 'summary_dto.g.dart';
 

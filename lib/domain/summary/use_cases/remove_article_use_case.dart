@@ -1,6 +1,5 @@
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/domain/summary/article_resume_model.dart';
-import 'package:ve_news/domain/summary/repository/summary_repository.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 class RemoveArticleUseCase {
   final SummaryRepository _summaryRepository;

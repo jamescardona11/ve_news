@@ -5,7 +5,7 @@ import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/domain/summary/summary.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 class SummaryCardItem extends StatelessWidget {
   const SummaryCardItem({

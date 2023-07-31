@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ve_news/domain/article/article_model.dart';
-import 'package:ve_news/domain/summary/article_resume_model.dart';
+
+import 'article_resume_model.dart';
 
 class SummaryArticles extends Equatable {
   final int? id;

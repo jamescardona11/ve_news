@@ -6,9 +6,7 @@ import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/article/repository/articles_repository.dart';
 import 'package:ve_news/domain/source/repository/sources_repository.dart';
 import 'package:ve_news/domain/source/source_model.dart';
-import 'package:ve_news/domain/summary/repository/summary_repository.dart';
-import 'package:ve_news/domain/summary/summary.dart';
-import 'package:ve_news/domain/summary/use_cases/remove_article_use_case.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 
 part 'articles_state.dart';
 
