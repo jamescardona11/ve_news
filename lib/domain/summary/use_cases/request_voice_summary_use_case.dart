@@ -41,7 +41,7 @@ class RequestVoiceSummaryUseCase {
 
     if (articleTitle != null) {
       text += '$articleTitle - \n';
-      // text += '${resume.content} - \n';
+      text += '${resume.content} - \n';
     }
 
     final response = await _summaryRepository.sendVoiceSummaryRequest(text);

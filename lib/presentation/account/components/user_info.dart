@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
 
@@ -30,9 +29,9 @@ class UserInfo extends StatelessWidget {
           // User Picture
           CircleAvatar(
             child: Container(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: const NetworkImageWithLoader('https://i.imgur.com/TMxSwfM.png'),
-            ),
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                // child: const NetworkImageWithLoader('https://i.imgur.com/TMxSwfM.png'),
+                child: Image.asset('assets/logo.png')),
           )
         ],
       ),
