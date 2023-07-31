@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ve_news/domain/article/article_model.dart';
 import 'package:ve_news/domain/source/source_model.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 import 'package:ve_news/presentation/articles/by_source/by_source_screen.dart';
 import 'package:ve_news/presentation/articles/full_screen/article_screen.dart';
 import 'package:ve_news/presentation/home/home_screen.dart';
 import 'package:ve_news/presentation/intro/intro_screen.dart';
 import 'package:ve_news/presentation/summary/new_summary_screen.dart';
+import 'package:ve_news/presentation/summary/summary_detail.dart';
 
 final class AppRouter {
   RouterConfig<Object>? get config => _router;
@@ -16,6 +18,7 @@ final class AppRouter {
   static const String newSummary = '/new';
   static const String articleScreen = '/article';
   static const String bySourceScreen = '/source';
+  static const String summaryDetail = '/summary_detail';
 
   final _router = GoRouter(
     routes: [
@@ -43,6 +46,13 @@ final class AppRouter {
         builder: (context, state) {
           final source = state.extra as SourceModel;
           return BySourceScreen(source: source);
+        },
+      ),
+      GoRoute(
+        path: summaryDetail,
+        builder: (context, state) {
+          final summary = state.extra as SummaryArticles;
+          return SummaryDetailScreen(summary: summary);
         },
       ),
     ],

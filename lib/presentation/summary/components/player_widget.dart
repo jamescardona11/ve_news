@@ -41,8 +41,9 @@ class PlayerWidget extends StatelessWidget {
         final total = audioPlayerState?.duration ?? Duration.zero;
 
         String label = '';
+
         if (summary != null && audioPlayerState != null) {
-          label = '${summary!.articles[audioPlayerState.articleIndex].title.substring(0, 38)}...';
+          label = '${summary!.articles[audioPlayerState.articleIndex].title.substring(0, 30)}...';
         }
 
         return Padding(
@@ -55,7 +56,12 @@ class PlayerWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(label, style: context.textTheme.bodySmall),
+                  if (summary != null && audioPlayerState != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: AppDimens.size8),
+                      child: Text('${audioPlayerState.articleIndex + 1}/${summary!.articles.length}', style: context.textTheme.bodyMedium),
+                    ),
+                  Text(label, style: context.textTheme.bodySmall?.copyWith(fontSize: AppTextTheme.fontSize100)),
                   const Spacer(),
                   InkWell(
                     onTap: onClosePressed,
@@ -95,8 +101,9 @@ class PlayerWidget extends StatelessWidget {
               ),
               Flexible(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    const Spacer(),
                     InkWell(
                       onTap: onBackPressed,
                       child: const SizedBox(
@@ -147,6 +154,7 @@ class PlayerWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const Spacer()
                   ],
                 ),
               ),

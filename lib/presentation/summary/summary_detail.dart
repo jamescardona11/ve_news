@@ -5,22 +5,26 @@ import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
 import 'package:ve_news/config/theme/text_theme.dart';
+import 'package:ve_news/domain/summary/export_summary.dart';
 import 'package:ve_news/presentation/summary/cubit/new_summary_cubit.dart';
 
 import 'components/smaill_article_tile.dart';
 import 'components/summary_card_item.dart';
 
-class NewSummaryScreen extends StatelessWidget {
-  const NewSummaryScreen({
+class SummaryDetailScreen extends StatelessWidget {
+  const SummaryDetailScreen({
     Key? key,
+    required this.summary,
   }) : super(key: key);
+
+  final SummaryArticles summary;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<NewSummaryCubit>(),
       child: VeNewsScaffold(
-        title: 'New Summary',
+        title: 'Summary Detail',
         iconLeft: FontAwesomeIcons.chevronLeft,
         onLeftTap: () => Navigator.pop(context),
         body: const _NewSummaryView(),
@@ -38,10 +42,6 @@ class _NewSummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewSummaryCubit, NewSummaryState>(
       builder: (context, state) {
-        if (state.summary == null) {
-          return const EmptyWidget(label: 'Pending Summary');
-        }
-
         final cubit = context.read<NewSummaryCubit>();
 
         return Stack(
@@ -62,12 +62,26 @@ class _NewSummaryView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return SmallArticleTile(
                           article: state.summary!.articles[index],
-                          trailingWidget: CircularIconButton(
-                            icon: FontAwesomeIcons.xmark,
-                            color: AppColors.red,
-                            iconColor: AppColors.white,
-                            size: AppDimens.size30,
-                            onPressed: () => cubit.removeArticle(state.summary!.articles[index]),
+                          trailingWidget: CircularContainer(
+                            size: 50,
+                            color: AppColors.lightGrey100,
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 200),
+                              transitionBuilder: (Widget child, Animation<double> animation) {
+                                return FadeTransition(opacity: animation, child: child);
+                              },
+                              child: true
+                                  ? const Icon(
+                                      Icons.play_arrow,
+                                      size: AppDimens.size30,
+                                      color: AppColors.black,
+                                    )
+                                  : Icon(
+                                      Icons.play_arrow,
+                                      size: AppDimens.size30,
+                                      color: AppColors.white,
+                                    ),
+                            ),
                           ),
                         );
                       },
