@@ -46,12 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
         body: PageView(
           controller: pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            FeedScreen(),
-            QuickActions(),
-            BookmarksScreen(),
-            SummaryScreen(),
-            AccountScreen(),
+          children: [
+            FeedScreen(
+              changePage: changePage,
+            ),
+            const QuickActions(),
+            const BookmarksScreen(),
+            const SummaryScreen(),
+            const AccountScreen(),
           ],
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(
@@ -113,5 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void changePage(int index) {
+    selectedIndex.value = index;
   }
 }

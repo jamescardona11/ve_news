@@ -57,7 +57,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       final summaryWithVoice = state.summary!.copyWith(isCompleted: true);
       await _summaryRepository.complete();
 
-      emit(state.copyWith(summary: summaryWithVoice, isLoading: false, loadingMessage: ''));
+      emit(state.copyWith(summary: summaryWithVoice, isLoading: false, loadingMessage: '', isDone: true));
     });
   }
 
@@ -96,6 +96,7 @@ class NewSummaryCubit extends Cubit<NewSummaryState> {
       isLoading: true,
       loadingMessage: 'Creating $kind summary\n $completed/$total completed news',
       summary: summary,
+      isDone: false,
     ));
   }
 

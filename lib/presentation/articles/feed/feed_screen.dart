@@ -9,20 +9,25 @@ import 'package:ve_news/presentation/articles/components/sources_list.dart';
 import 'package:ve_news/presentation/articles/cubit/articles_cubit.dart';
 
 class FeedScreen extends StatelessWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+  const FeedScreen({Key? key, required this.changePage}) : super(key: key);
+
+  final ValueChanged<int> changePage;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ArticlesCubit, ArticlesState>(
       builder: (context, state) => VeNewsScaffold(
         title: 'VeNews',
-        iconLeft: FontAwesomeIcons.inbox,
-        // iconRight: FontAwesomeIcons.magnifyingGlass,
+        // iconLeft: FontAwesomeIcons.inbox,
+        iconRight: state.summary?.isNotEmpty ?? false ? FontAwesomeIcons.inbox : null,
         showLeftNotification: state.summary?.isNotEmpty ?? false,
-        onRightTap: () {},
-        onLeftTap: () {
-          context.push(AppRouter.newSummary);
+        onRightTap: () async {
+          final result = await GoRouter.of(context).push(AppRouter.newSummary);
+          if (result == true) {
+            changePage(3);
+          }
         },
+        onLeftTap: () {},
         body: Column(
           children: [
             SizedBox(

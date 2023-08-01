@@ -18,7 +18,10 @@ class EmptyWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text('You don\'t have any $label yet'),
-          action ?? const SizedBox(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: action ?? const SizedBox(),
+          ),
         ],
       ),
     );

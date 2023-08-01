@@ -77,11 +77,25 @@ class VeNewsScaffold extends StatelessWidget {
                         if (iconRight != null)
                           Positioned(
                             right: 0,
-                            child: CircularIconButton(
-                              color: AppColors.pureWhite,
-                              size: AppDimens.size50,
-                              onPressed: onRightTap,
-                              icon: iconRight!,
+                            child: Stack(
+                              children: [
+                                CircularIconButton(
+                                  color: AppColors.pureWhite,
+                                  size: AppDimens.size50,
+                                  onPressed: onRightTap,
+                                  icon: iconRight!,
+                                ),
+                                if (showLeftNotification)
+                                  const Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: Icon(
+                                      FontAwesomeIcons.solidCircle,
+                                      size: AppDimens.size16,
+                                      color: AppColors.primary,
+                                    ),
+                                  )
+                              ],
                             ),
                           ),
                         if (title.isNotEmpty)

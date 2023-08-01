@@ -58,6 +58,7 @@ class SmallArticleTile extends StatelessWidget {
                 ],
               ),
             ),
+            trailingWidget
           ],
         ),
       ),

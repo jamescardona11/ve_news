@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ve_news/common/presentation/presentation.dart';
 import 'package:ve_news/config/di/di.dart';
 import 'package:ve_news/config/res/res.dart';
@@ -35,7 +36,13 @@ class _NewSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewSummaryCubit, NewSummaryState>(
+    return BlocConsumer<NewSummaryCubit, NewSummaryState>(
+      listenWhen: (previous, current) => current.isDone,
+      listener: (context, state) {
+        if (state.isDone) {
+          context.pop(true);
+        }
+      },
       builder: (context, state) {
         final cubit = context.read<NewSummaryCubit>();
 

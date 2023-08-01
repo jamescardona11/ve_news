@@ -16,14 +16,14 @@ class RequestTextSummaryUseCase {
             content: 'Create a summary\nSummary language: $language\nMaximum output: $summaryStr',
             role: ChatGptRole.system,
           ),
-          // ChatGptContentMessage(
-          //   content: article.title,
-          //   role: ChatGptRole.user,
-          // ),
           ChatGptContentMessage(
-            content: article.body,
+            content: article.title,
             role: ChatGptRole.user,
           ),
+          // ChatGptContentMessage(
+          //   content: article.body,
+          //   role: ChatGptRole.user,
+          // ),
         ],
       ),
     );
