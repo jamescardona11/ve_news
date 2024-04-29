@@ -93,9 +93,9 @@ final class ArticlesRepositoryImpl extends ArticlesRepository {
 
     if (result.isSuccess) {
       final articlesMap = result.data![_articlesKey] as Map<String, dynamic>;
-      final resultsListMap = articlesMap[_resultsKey] as List<dynamic>;
-      final articlesDtoList = resultsListMap.map((e) => ArticleDto.fromJson(e as Map<String, dynamic>)).toList();
-      final isarElements = articlesDtoList
+      final resultsListMap = articlesMap[_resultsKey] as List<dynamic>?;
+      final articlesDtoList = resultsListMap?.map((e) => ArticleDto.fromJson(e as Map<String, dynamic>)).toList();
+      final isarElements = (articlesDtoList ?? [])
           .map((e) {
             final source = sources.firstWhereOrNull((source) => source.url == e.sourceUri);
             if (source == null || source.id == null) return null;
